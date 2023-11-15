@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 
@@ -36,14 +37,20 @@ if (isset($_POST['reg_user'])) {
     $username = mysqli_real_escape_string($db, $_POST['username']);
     $password = mysqli_real_escape_string($db, $_POST['password']);
     $phone = mysqli_real_escape_string($db, $_POST['phone']);
+    $latitude = mysqli_real_escape_string($db, $_POST['clickedLatitude']);
+    $longitude = mysqli_real_escape_string($db, $_POST['clickedLongitude']);
 
-    // Check if latitude and longitude are set (user has clicked the map)
-    if (isset($_SESSION['clickedLatitude']) && isset($_SESSION['clickedLongitude'])) {
-        $latitude = $_SESSION['clickedLatitude'];
-        $longitude = $_SESSION['clickedLongitude'];
+    // Check if the username already exists in either table
+    $check_query = "SELECT * FROM combined_data FORCE INDEX (user_data) WHERE username='$username'";
+    
+    $check_result = mysqli_query($db, $check_query);
 
-        // Proceed with registration and insert latitude and longitude
-        $query = "INSERT INTO citizens (username, password, phone) VALUES ('$username', '$password', '$phone')";
+    if (mysqli_num_rows($check_result) > 0) {
+        // Username already exists, show an error message
+        $errors[] = "Username '$username' is already taken.";
+    } else {
+        // Username is available, proceed with registration and insert latitude and longitude
+        $query = "INSERT INTO citizens (username, password, phone, latitude, longitude) VALUES ('$username', '$password', '$phone', '$latitude', '$longitude')";
         mysqli_query($db, $query);
 
         $_SESSION['username'] = $username;
@@ -51,17 +58,14 @@ if (isset($_POST['reg_user'])) {
         $_SESSION['success'] = "You are now registered and logged in";
         header('location: citizens.php');
         exit();
-    } else {
-        // Latitude and longitude are not set, show an error message
-        $errors[] = "You need to select a location on the map.";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="/path/to/leaflet.css" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
@@ -92,8 +96,13 @@ if (isset($_POST['reg_user'])) {
                 <label for="phone">Phone:</label>
                 <input type="text" id="phone" name="phone" required>
 
+                <!-- Add hidden input fields for latitude and longitude -->
+                <input type="hidden" id="clickedLatitude" name="clickedLatitude">
+                <input type="hidden" id="clickedLongitude" name="clickedLongitude">
+
                 <button type="submit" name="reg_user">Register</button>
-            </form>
+             </form>
+
             <?php
             if (!empty($errors)) {
                 foreach ($errors as $error) {

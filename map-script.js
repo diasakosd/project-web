@@ -17,16 +17,16 @@ map.on('click', function (e) {
         .setContent("You clicked the map at " + e.latlng.toString())
         .openOn(map);
 
-    // Store the latitude and longitude in session variables
-    sessionStorage.setItem('clickedLatitude', clickedLatitude);
-    sessionStorage.setItem('clickedLongitude', clickedLongitude);
+    // Set the latitude and longitude in hidden form fields
+    document.getElementById('clickedLatitude').value = clickedLatitude;
+    document.getElementById('clickedLongitude').value = clickedLongitude;
 });
 
 // Add a function to validate the form before submission
 function validateForm() {
     // Check if latitude and longitude are set
-    var clickedLatitude = sessionStorage.getItem('clickedLatitude');
-    var clickedLongitude = sessionStorage.getItem('clickedLongitude');
+    var clickedLatitude = document.getElementById('clickedLatitude').value;
+    var clickedLongitude = document.getElementById('clickedLongitude').value;
 
     if (!clickedLatitude || !clickedLongitude) {
         alert("You need to select a location on the map.");
