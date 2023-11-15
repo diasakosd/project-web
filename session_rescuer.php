@@ -13,7 +13,8 @@ if ($_SESSION['userRole'] !== 'rescuer') {
     exit();
 }
 
+$_SESSION['userRole'] = 'rescuer';
+
 $username = $_SESSION['username'];
-$userRole = 'rescuer'; // Set the user's role
-$_SESSION['userRole'] = $userRole; // Store the user's role in the session
+$userRole = $_SESSION['userRole'];
 ?>

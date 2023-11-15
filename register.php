@@ -10,11 +10,13 @@ if (isset($_SESSION['username'])) {
     } elseif ($_SESSION['userRole'] === 'admin') {
         header('location: admin.php');
     } elseif ($_SESSION['userRole'] === 'rescuer') {
-        header('location: rescuer.php');
+        header('location: rescuers.php');
     }
     exit();
 }
 
+unset($_SESSION['username']);
+unset($_SESSION['userRole']);
 // initializing variables
 $username = "";
 $password = "";
@@ -35,15 +37,26 @@ if (isset($_POST['reg_user'])) {
     $password = mysqli_real_escape_string($db, $_POST['password']);
     $phone = mysqli_real_escape_string($db, $_POST['phone']);
 
-    $query = "INSERT INTO citizens (username, password, phone) VALUES ('$username', '$password', '$phone')";
-    mysqli_query($db, $query);
+    // Check if the username already exists
+    $check_query = "SELECT * FROM combined_data WHERE username='$username'";
+    $check_result = mysqli_query($db, $check_query);
 
-    $_SESSION['username'] = $username;
-    $_SESSION['userRole'] = 'citizen';
-    $_SESSION['success'] = "You are now registered and logged in";
-    header('location: citizens.php');
-    exit();
+    if (mysqli_num_rows($check_result) > 0) {
+        // Username already exists, show an error message
+        $errors[] = "Username '$username' is already taken.";
+    } else {
+        // Username is available, proceed with registration
+        $query = "INSERT INTO citizens (username, password, phone) VALUES ('$username', '$password', '$phone')";
+        mysqli_query($db, $query);
+
+        $_SESSION['username'] = $username;
+        $_SESSION['userRole'] = 'citizen';
+        $_SESSION['success'] = "You are now registered and logged in";
+        header('location: citizens.php');
+        exit();
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -72,6 +85,13 @@ if (isset($_POST['reg_user'])) {
 
                 <button type="submit" name="reg_user">Register</button>
             </form>
+            <?php
+            if (!empty($errors)) {
+                foreach ($errors as $error) {
+                    echo "<p class='error'>$error</p>";
+                }
+            }
+            ?>
             <p>Already have an account? <a href="index.php">Login</a></p>
         </div>
     </div>

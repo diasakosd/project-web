@@ -10,10 +10,12 @@ if (isset($_SESSION['username'])) {
     } elseif ($_SESSION['userRole'] === 'admin') {
         header('location: admin.php');
     } elseif ($_SESSION['userRole'] === 'rescuer') {
-        header('location: rescuer.php');
+        header('location: rescuers.php');
     }
     exit();
 }
+unset($_SESSION['username']);
+unset($_SESSION['userRole']);
 // initializing variables
 $username = "";
 $password = "";
@@ -51,7 +53,7 @@ if (isset($_POST['login_user'])) {
                     $_SESSION['userRole'] = 'citizen';
                     header('location: citizens.php');
                 } elseif ($table_name == 'rescuers') {
-                    $_SESSION['userRole'] = 'rescuers';
+                    $_SESSION['userRole'] = 'rescuer';
                     header('location: rescuers.php');
                 } elseif ($table_name == 'admin') {
                     $_SESSION['userRole'] = 'admin';
