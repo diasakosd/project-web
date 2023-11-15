@@ -12,6 +12,7 @@ body {
 .container {
     max-width: 600px;
     height: 320px;
+    width: 350px;
     border: 1px solid #423d3d;
     background-color: rgb(214, 214, 214);
     display: flex;
@@ -20,13 +21,8 @@ body {
     align-items: center;
 }
 
-
 .header {
     text-align: center;
-}
-
-.banner {
-    /* Add your banner styling here */
 }
 
 .login-form,
