@@ -24,7 +24,7 @@ if ($_SESSION['userRole'] !== 'citizen') {
 <body>
     <div class="container">
         <div class="header">
-            <h1>Welcome, <?php echo htmlspecialchars($userRole); ?>!</h1>
+            <h1>Welcome, <?php echo htmlspecialchars($userRole); echo " ";echo $username; ?>!</h1>
         </div>
         <div class="content">
             <!-- Add your citizen-specific content here -->
