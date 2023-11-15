@@ -4,9 +4,7 @@ body {
     padding: 0;
     background-color: rgb(63, 176, 194);
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center; /* Center the containers horizontally */
 }
 
 .container {
@@ -19,6 +17,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: auto; /* Center the container vertically */
 }
 
 .header {
@@ -57,3 +56,5 @@ button {
 button:hover {
     background-color: #000000;
 }
+
+#map { height: 50%; width: 85%; margin: 0 auto;}

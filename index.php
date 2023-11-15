@@ -22,7 +22,7 @@ $password = "";
 $errors = array();
 
 // connect to the database
-$db = mysqli_connect('localhost', 'root', '', 'web');
+$db = mysqli_connect('localhost', 'root', '', 'web',);
 
 // Check connection
 if (!$db) {
@@ -35,7 +35,7 @@ if (isset($_POST['login_user'])) {
     $password = mysqli_real_escape_string($db, $_POST['password']);
 
     // Query to check in combined_data table
-    $query = "SELECT table_name FROM combined_data WHERE username='$username' AND password='$password'";
+    $query = "SELECT table_name FROM combined_data FORCE INDEX (user_data) WHERE username='$username' AND password='$password'";
     $result = mysqli_query($db, $query);
 
     if ($result) {
