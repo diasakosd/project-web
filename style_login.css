@@ -1,28 +1,67 @@
-body {
+* {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: rgb(63, 176, 194);
-    height: 100vh;
+}
+
+body {
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: url('logo3.png') no-repeat;
+    background-size: 100% 100%;
+    width: auto;
+    height: auto;
 }
 
 .container {
     max-width: 600px;
-    height: 350px;
+    height: 300px;
     width: 350px;
     border: 1px solid #423d3d;
-    background-color: rgb(214, 214, 214);
+    background-color: lightblue;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
+    padding: 30px 0px;
 }
 
 .header {
     text-align: center;
+    color: #E42217;
+}
+
+.container .input-box{
+    position:relative;
+    width: 100%;
+    height: 50%;
+    margin: 10px 0;
+}
+
+.input-box input{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    border-radius: 40px;
+    color: #000;
+}
+
+.input-box input::placeholder{
+    color: #fff;
+}
+
+.input-box i{
+    position: absolute;
+    right: -2%;
+    top: 40%;
+    transform: translateY(-50%);
+    font-size: 20px;
 }
 
 .login-form,
@@ -45,15 +84,25 @@ input {
     max-width: 500px;
 }
 
-button {
-    background-color: #000000;
-    color: white;
-    padding: 10px;
+.container button{
+    width: 110%;
+    background: #fff;
+    color: #333;
+    padding: 10px 100px;
     border: none;
+    outline: none;
+    border-radius: 40px;
     cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
     max-width: 520px;
+    margin: 10px 0;
+}
+
+.reg p{
+    margin: 10px;
 }
 
 button:hover {
-    background-color: #000000;
+    background-color: lightblue;
 }
