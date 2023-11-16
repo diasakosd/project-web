@@ -34,6 +34,7 @@ if (!$db) {
 
 // REGISTER USER
 if (isset($_POST['reg_user'])) {
+    $full_name = mysqli_real_escape_string($db, $_POST['full_name']);
     $username = mysqli_real_escape_string($db, $_POST['username']);
     $password = mysqli_real_escape_string($db, $_POST['password']);
     $phone = mysqli_real_escape_string($db, $_POST['phone']);
@@ -50,7 +51,7 @@ if (isset($_POST['reg_user'])) {
         $errors[] = "Username '$username' is already taken.";
     } else {
         // Username is available, proceed with registration and insert latitude and longitude
-        $query = "INSERT INTO citizens (username, password, phone, latitude, longitude) VALUES ('$username', '$password', '$phone', '$latitude', '$longitude')";
+        $query = "INSERT INTO citizens (full_name,username, password, phone, latitude, longitude) VALUES ('$full_name','$username', '$password', '$phone', '$latitude', '$longitude')";
         mysqli_query($db, $query);
 
         $_SESSION['username'] = $username;
@@ -87,6 +88,10 @@ if (isset($_POST['reg_user'])) {
         </div>
         <div class="register-form">
             <form method="post" action="register.php" onsubmit="return validateForm()">
+
+            <label for="full_name">Full Name:</label>
+                <input type="text" id="full_name" name="full_name" required>
+
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
 
