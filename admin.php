@@ -22,21 +22,14 @@ if ($userRole !== 'admin') {
     <link rel="stylesheet" href="admin.css">
 </head>
 <body>
-<br>
-<br>
-     <!-- Menu Bar -->
-     <div class="menu">
-        <ul>
-            <li><a href="admin_storage_managment.php">Storage Management</a></li>
-            <li><a href="admin_rescuer_managment.php">Rescuer Management</a></li>
-            <li><a href="admin_announcements.php">Announcements</a></li>
-            <li><a href="logout.php">Logout</a></li>
-            <br>
-            <li><?php 
-                echo htmlspecialchars($username);?></li>
-        </ul>
-    </div>
-<br>
+<div class="navbar">
+<img class="logo" src="Screenshot_5.png" alt="Logo">
+<p><a class="logout-button" href="logout.php">Logout</a></p>
+  <a href="admin_announcements.php">Announcements</a>
+  <a href="admin_rescuer_managment.php">Rescuer Managment</a>
+  <a href="admin_storage_managment.php">Storage Managment</a>
+  <a href="admin.php">Home</a>
+</div>
 
     <div class="container">
         <div class="header">
