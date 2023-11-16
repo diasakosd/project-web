@@ -1,6 +1,6 @@
 <?php
 include 'session_admin.php';
-
+include 'markers.php';
 // Check if the user is an admin
 if ($userRole !== 'admin') {
     // Redirect to some error page or display an error message
@@ -19,7 +19,11 @@ if ($userRole !== 'admin') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link rel="stylesheet" href="admin.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
 </head>
 <body>
 <div class="navbar">
@@ -45,11 +49,23 @@ if ($userRole !== 'admin') {
             <!-- Add your admin-specific content here -->
             <p>This is your admin page. Add more content as needed.</p>
         </div>
-        <div class="logout">
-            <p><a href="logout.php">Logout</a></p>
-        </div>
+        
     </div>
     <!-- Add your scripts here -->
+    <br>
+    <br>
+    <br>
+    <div id="map">
+
+
+
+
+
+    </div>
+    <br>
+    <br>
+    <br>
 </body>
+<script src="admin-map-script.js"></script>
 </html>
 
