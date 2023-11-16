@@ -132,5 +132,5 @@ if (isset($_POST['reg_user'])) {
     <br>
     <br>
 </body>
-<script src="map-script.js"></script>
+<script src="register-map-script.js"></script>
 </html>
