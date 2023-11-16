@@ -24,7 +24,12 @@ if ($userRole !== 'admin') {
 <body>
     <div class="container">
         <div class="header">
-            <h1>Welcome, <?php echo htmlspecialchars($username); ?> (Admin)!</h1>
+            <h1>Welcome, <?php echo htmlspecialchars($username);  
+                               echo "("; 
+                               echo htmlspecialchars($userRole); 
+                               echo ")!";
+                        ?> 
+            </h1>
         </div>
         <div class="content">
             <!-- Add your admin-specific content here -->
