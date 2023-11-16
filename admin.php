@@ -19,18 +19,35 @@ if ($userRole !== 'admin') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
-    <!-- Add your stylesheets here -->
+    <link rel="stylesheet" href="admin.css">
 </head>
 <body>
+<br>
+<br>
+     <!-- Menu Bar -->
+     <div class="menu">
+        <ul>
+            <li><a href="admin_storage_managment.php">Storage Management</a></li>
+            <li><a href="admin_rescuer_managment.php">Rescuer Management</a></li>
+            <li><a href="admin_announcements.php">Announcements</a></li>
+            <li><a href="logout.php">Logout</a></li>
+            <br>
+            <li><?php 
+                echo htmlspecialchars($username);?></li>
+        </ul>
+    </div>
+<br>
+
     <div class="container">
         <div class="header">
-            <h1>Welcome, <?php echo htmlspecialchars($username);  
-                               echo "("; 
-                               echo htmlspecialchars($userRole); 
-                               echo ")!";
-                        ?> 
-            </h1>
+            <h1>Welcome, <?php 
+                echo htmlspecialchars($username);
+                echo "(";
+                echo htmlspecialchars($userRole);
+                echo ")!";
+            ?></h1>
         </div>
+        <br>
         <div class="content">
             <!-- Add your admin-specific content here -->
             <p>This is your admin page. Add more content as needed.</p>
@@ -42,3 +59,4 @@ if ($userRole !== 'admin') {
     <!-- Add your scripts here -->
 </body>
 </html>
+
