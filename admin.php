@@ -1,6 +1,5 @@
 <?php
 include 'session_admin.php';
-include 'markers.php';
 // Check if the user is an admin
 if ($userRole !== 'admin') {
     // Redirect to some error page or display an error message

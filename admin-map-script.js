@@ -1,48 +1,47 @@
-var littleton = L.marker([39.61, -105.02]).bindPopup('This is Littleton, CO.'),
-    denver    = L.marker([39.74, -104.99]).bindPopup('This is Denver, CO.'),
-    aurora    = L.marker([39.73, -104.8]).bindPopup('This is Aurora, CO.'),
-    golden    = L.marker([39.77, -105.23]).bindPopup('This is Golden, CO.');
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function () {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+        // Include the markers directly as JavaScript code
+        eval(xhr.responseText);
 
-    var requests = L.layerGroup([littleton, denver, aurora, golden]);
+        // Use markersData variable for creating markers
+        var markers_rescuer = [];
+        for (var i = 0; i < markers_rescuer_Data.length; i++) {
+            var marker_rescuer = eval(markers_rescuer_Data[i]);
+            markers_rescuer.push(marker_rescuer);
+        }
 
-    var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap'
-    });
+        var rescuers = L.layerGroup(markers_rescuer);
 
-var osmHOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team hosted by OpenStreetMap France'});
+        var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        });
 
-var map = L.map('map', {
-    center: [38.2521, 21.7591],
-    zoom: 13,
-    layers: [osm, requests]
-});
+        var map = L.map('map', {
+            center: [38.2521, 21.7591],
+            zoom: 13,
+            layers: [osm, rescuers]
+        });
 
+        var overlayMaps = {
+            "Rescuers": rescuers
+        };
 
+        var baseMaps = {
+            "OpenStreetMap": osm
+        };
 
-var overlayMaps = {
-    "Requests": requests
+        var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+        var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: 'Map data: © OpenStreetMap contributors, SRTM | Map style: © OpenTopoMap (CC-BY-SA)'
+        });
+    }
 };
 
-var baseMaps = {
-    
-};
-
-var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
-
-
-
-var crownHill = L.marker([39.75, -105.09]).bindPopup('This is Crown Hill Park.'),
-    rubyHill = L.marker([39.68, -105.00]).bindPopup('This is Ruby Hill Park.');
-  
-var offers = L.layerGroup([crownHill, rubyHill]);
-
-layerControl.addOverlay(offers, "Offers");
-
-
-var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: 'Map data: © OpenStreetMap contributors, SRTM | Map style: © OpenTopoMap (CC-BY-SA)'
-});
+// Open the AJAX request
+xhr.open("GET", "markers.php", true);
+// Send the request
+xhr.send();
