@@ -9,7 +9,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('Andrew-tate-e.png') no-repeat;
+    background: url('word.png') no-repeat;
     background-size: 100% 100%;
     width: auto;
     height: auto;
@@ -20,7 +20,7 @@ body {
     height: 300px;
     width: 350px;
     border: 1px solid #423d3d;
-    background: lightblue;
+    background: rgb(78, 55, 55);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -104,5 +104,6 @@ input {
 }
 
 button:hover {
-    background-color: lightgoldenrodyellow;
+    background-color: lightblue;
+   /* background-color: lightgoldenrodyellow;*/
 }

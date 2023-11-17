@@ -73,7 +73,7 @@ if (isset($_POST['reg_user'])) {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link rel="stylesheet" href="style_register.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
     <br>
@@ -89,18 +89,29 @@ if (isset($_POST['reg_user'])) {
         <div class="register-form">
             <form method="post" action="register.php" onsubmit="return validateForm()">
 
-            <label for="full_name">Full Name:</label>
-                <input type="text" id="full_name" name="full_name" required>
+            <div class="input-box">
+                <label for="full_name">Fullname:</label><br>
+                <input type="text" id="full_name" name="Fullname" placeholder="Fullname" required>
+                <i class='bx bxs-user-plus'></i>
+            </div>
 
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+            <div class="input-box">
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username" placeholder="Username" required> 
+                <i class='bx bxs-user-circle'></i>
+            </div>
 
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+            <div class="input-box">
+                <label for="password">Password:</label><br>
+               <input type="password" id="password" name="password" placeholder="Password" required>
+               <i class='bx bxs-lock'></i>
+            </div>
 
-                <label for="phone">Phone:</label>
-                <input type="text" id="phone" name="phone" required>
-
+            <div class="input-box">
+                <label for="phone">Phone:</label><br>
+               <input type="text" id="phone" name="phone" placeholder="Phone" required>
+               <i class='bx bxs-phone'></i>
+            </div>
                 <!-- Add hidden input fields for latitude and longitude -->
                 <input type="hidden" id="clickedLatitude" name="clickedLatitude">
                 <input type="hidden" id="clickedLongitude" name="clickedLongitude">
@@ -116,18 +127,13 @@ if (isset($_POST['reg_user'])) {
             }
             ?>
             <p>Already have an account? <a href="index.php">Login</a></p>
+            
+            <div class="map" id="map"></div>
         </div>
     </div>
     <br>
     <br>
     <br>
-    <div id="map">
-
-
-
-
-
-    </div>
     <br>
     <br>
     <br>
