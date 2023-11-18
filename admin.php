@@ -56,10 +56,6 @@ if ($userRole !== 'admin') {
     <br>
     <div id="map">
 
-
-
-
-
     </div>
     <br>
     <br>

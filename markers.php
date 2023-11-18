@@ -8,7 +8,7 @@ if (!$db) {
 }
 
 // Fetch data from the rescuers and rescuer_inventory tables
-$query = "SELECT r.username, r.latitude, r.longitude, GROUP_CONCAT(ri.category , ': ' , ri.item , ' (' , ri.quantity , ') '  ) AS items
+$query = "SELECT r.username, r.latitude, r.longitude, GROUP_CONCAT(CONCAT(ri.category, ': ', ri.item, ' (', ri.quantity, ')') SEPARATOR ', ') AS items
           FROM rescuers r
           JOIN rescuer_inventory ri ON r.username = ri.username
           GROUP BY r.username";
@@ -25,7 +25,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $items = $row['items'];
 
     // Create a marker in the correct format
-    $marker_rescuer = "L.marker([$latitude, $longitude]).bindPopup('Username: <b>$username<b><br>Items:<br>$items ')";
+    $marker_rescuer = "L.marker([$latitude, $longitude]).bindPopup('Username: <b>$username<b><br>Items:<br>$items')";
     $markers_rescuer[] = $marker_rescuer;
 }
 

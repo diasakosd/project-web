@@ -91,7 +91,7 @@ if (isset($_POST['reg_user'])) {
 
             <div class="input-box">
                 <label for="full_name">Fullname:</label><br>
-                <input type="text" id="full_name" name="Fullname" placeholder="Fullname" required>
+                <input type="text" id="full_name" name="full_name" placeholder="Fullname" required>
                 <i class='bx bxs-user-plus'></i>
             </div>
 
