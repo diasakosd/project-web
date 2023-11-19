@@ -29,13 +29,23 @@ xhr.onreadystatechange = function () {
 
 
         // Use markersData variable for creating markers
-        var markers_rescuer = [];
-        for (var i = 0; i < markers_rescuer_Data.length; i++) {
-            var marker_rescuer = eval(markers_rescuer_Data[i]);
-            markers_rescuer.push(marker_rescuer);
+        var markers_rescuer_request = [];
+        for (var i = 0; i < markers_rescuer_request_Data.length; i++) {
+            var marker_rescuer_request = eval(markers_rescuer_request_Data[i]);
+            markers_rescuer_request.push(marker_rescuer_request);
         }
 
-        var rescuers = L.layerGroup(markers_rescuer);
+        var rescuers_request = L.layerGroup(markers_rescuer_request);
+
+
+        // Use markersData variable for creating markers
+        var markers_rescuer_offer = [];
+        for (var i = 0; i < markers_rescuer_offer_Data.length; i++) {
+            var marker_rescuer_offer = eval(markers_rescuer_offer_Data[i]);
+            markers_rescuer_offer.push(marker_rescuer_offer);
+        }
+
+        var rescuers_offer = L.layerGroup(markers_rescuer_offer);
 
         // Use markersData variable for creating markers
         var markers_citizen_request_no = [];
@@ -87,11 +97,11 @@ xhr.onreadystatechange = function () {
         var map = L.map('map', {
             center: [38.2521, 21.7591],
             zoom: 13,
-            layers: [osm, rescuers]
+            layers: [osm, rescuers_request]
         });
 
         var overlayMaps = {
-            "Rescuers": rescuers
+            "Rescuers Requests": rescuers_request
         };
 
         var baseMaps = {
@@ -101,6 +111,7 @@ xhr.onreadystatechange = function () {
         var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
     
     
+        layerControl.addOverlay(rescuers_offer, "Rescuers Offers");
         layerControl.addOverlay(requests_no, "Requests Pending");
         layerControl.addOverlay(offers_no, "Offers Pending");
         layerControl.addOverlay(requests_yes, "Requests Accepted");
