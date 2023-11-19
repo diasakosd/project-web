@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2023 at 10:09 AM
+-- Generation Time: Nov 19, 2023 at 04:29 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -138,8 +138,8 @@ CREATE TABLE `citizen_offer` (
   `item` varchar(255) NOT NULL,
   `quantity` int(11) NOT NULL,
   `time_created` timestamp NOT NULL DEFAULT current_timestamp(),
-  `accepted` int(11) DEFAULT 0,
-  `time_accepted` date DEFAULT NULL,
+  `accepted` varchar(4) DEFAULT 'NO',
+  `time_accepted` timestamp NULL DEFAULT NULL,
   `rescuer_username` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -148,8 +148,8 @@ CREATE TABLE `citizen_offer` (
 --
 
 INSERT INTO `citizen_offer` (`id`, `username`, `category`, `item`, `quantity`, `time_created`, `accepted`, `time_accepted`, `rescuer_username`) VALUES
-(1, 'paki', 'Clothing', 'T-Shirt', 3, '2023-11-18 09:09:20', 0, NULL, NULL),
-(2, 'sasgamaw', 'Electronics', 'Laptop', 2, '2023-11-18 09:09:20', 0, NULL, NULL);
+(1, 'paki', 'Clothing', 'T-Shirt', 3, '2023-11-18 09:09:20', 'NO', NULL, NULL),
+(2, 'sasgamaw', 'Electronics', 'Laptop', 2, '2023-11-18 09:09:20', 'YES', '2023-11-18 08:45:50', 'resquer1');
 
 -- --------------------------------------------------------
 
@@ -164,8 +164,8 @@ CREATE TABLE `citizen_request` (
   `item` varchar(255) NOT NULL,
   `quantity` int(11) NOT NULL,
   `time_created` timestamp NOT NULL DEFAULT current_timestamp(),
-  `accepted` int(11) DEFAULT 0,
-  `time_accepted` date DEFAULT NULL,
+  `accepted` varchar(4) DEFAULT 'NO',
+  `time_accepted` timestamp NULL DEFAULT NULL,
   `rescuer_username` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -174,9 +174,9 @@ CREATE TABLE `citizen_request` (
 --
 
 INSERT INTO `citizen_request` (`id`, `username`, `category`, `item`, `quantity`, `time_created`, `accepted`, `time_accepted`, `rescuer_username`) VALUES
-(1, 'papas123', 'Clothing', 'T-Shirt', 2, '2023-11-18 08:45:57', 0, NULL, NULL),
-(2, 'papas123', 'Electronics', 'Smartphone', 4, '2023-11-18 08:46:43', 0, NULL, NULL),
-(3, 'papas123', 'Medical', 'First Aid Kit', 3, '2023-11-18 08:47:00', 0, NULL, NULL);
+(1, 'papas123', 'Clothing', 'T-Shirt', 2, '2023-11-18 08:45:57', 'YES', '2023-11-18 22:00:00', 'resquer2'),
+(2, 'papas123', 'Electronics', 'Smartphone', 4, '2023-11-18 08:46:43', 'NO', NULL, NULL),
+(3, 'papas123', 'Medical', 'First Aid Kit', 3, '2023-11-18 08:47:00', 'NO', NULL, NULL);
 
 -- --------------------------------------------------------
 

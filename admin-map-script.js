@@ -1,8 +1,32 @@
+var LeafIcon = L.Icon.extend({
+    options: {
+        shadowUrl: 'marker-shadow.png',
+        iconSize: [38, 42],
+        shadowSize: [41, 41],
+        iconAnchor: [19, 42],  // Adjusted icon anchor
+        shadowAnchor: [4, 41], // Adjusted shadow anchor
+        popupAnchor: [0, -42]  // Adjusted popup anchor
+    }
+});
+
+
+
+
+var offers_noIcon = new LeafIcon({iconUrl: 'icons8-marker-o-50-1.png'}),
+offers_yesIcon = new LeafIcon({iconUrl: 'icons8-marker-o-50.png'}),
+requests_yesIcon = new LeafIcon({iconUrl: 'icons8-marker-r-50-1.png'}),
+requests_noIcon = new LeafIcon({iconUrl: 'icons8-marker-r-50.png'});
+
+
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200) {
         // Include the markers directly as JavaScript code
         eval(xhr.responseText);
+
+
+
+
 
         // Use markersData variable for creating markers
         var markers_rescuer = [];
@@ -13,6 +37,48 @@ xhr.onreadystatechange = function () {
 
         var rescuers = L.layerGroup(markers_rescuer);
 
+        // Use markersData variable for creating markers
+        var markers_citizen_request_no = [];
+        for (var i = 0; i < markers_citizen_request_Data_no.length; i++) {
+            var marker_citizen_request_no = eval(markers_citizen_request_Data_no[i]);
+            markers_citizen_request_no.push(marker_citizen_request_no);
+        }        
+        
+        var requests_no = L.layerGroup(markers_citizen_request_no);
+
+
+        // Use markersData variable for creating markers
+        var markers_citizen_offer_no = [];
+        for (var i = 0; i < markers_citizen_offer_Data_no.length; i++) {
+            var marker_citizen_offer_no = eval(markers_citizen_offer_Data_no[i]);
+            markers_citizen_offer_no.push(marker_citizen_offer_no);
+        }        
+        
+        var offers_no = L.layerGroup(markers_citizen_offer_no);
+
+
+        // Use markersData variable for creating markers
+        var markers_citizen_request_yes = [];
+        for (var i = 0; i < markers_citizen_request_Data_yes.length; i++) {
+            var marker_citizen_request_yes = eval(markers_citizen_request_Data_yes[i]);
+            markers_citizen_request_yes.push(marker_citizen_request_yes);
+        }        
+        
+        var requests_yes = L.layerGroup(markers_citizen_request_yes);
+
+
+        // Use markersData variable for creating markers
+        var markers_citizen_offer_yes = [];
+        for (var i = 0; i < markers_citizen_offer_Data_yes.length; i++) {
+            var marker_citizen_offer_yes = eval(markers_citizen_offer_Data_yes[i]);
+            markers_citizen_offer_yes.push(marker_citizen_offer_yes);
+        }        
+        
+        var offers_yes = L.layerGroup(markers_citizen_offer_yes);
+
+
+        
+        
         var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap'
@@ -33,6 +99,12 @@ xhr.onreadystatechange = function () {
         };
 
         var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+    
+    
+        layerControl.addOverlay(requests_no, "Requests Pending");
+        layerControl.addOverlay(offers_no, "Offers Pending");
+        layerControl.addOverlay(requests_yes, "Requests Accepted");
+        layerControl.addOverlay(offers_yes, "Offers Accepted");
 
         var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,

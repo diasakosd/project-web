@@ -8,17 +8,17 @@ if (!$db) {
 }
 
 // Fetch data from the rescuers and rescuer_inventory tables
-$query = "SELECT r.username, r.latitude, r.longitude, GROUP_CONCAT(CONCAT(ri.category, ': ', ri.item, ' (', ri.quantity, ')') SEPARATOR ', ') AS items
+$query1 = "SELECT r.username, r.latitude, r.longitude, GROUP_CONCAT(CONCAT(ri.category, ': ', ri.item, ' (', ri.quantity, ')') SEPARATOR ', ') AS items
           FROM rescuers r
           JOIN rescuer_inventory ri ON r.username = ri.username
           GROUP BY r.username";
-$result = mysqli_query($db, $query);
+$result1 = mysqli_query($db, $query1);
 
 // Create an array to store the markers
-$markers = array();
+$markers1 = array();
 
 // Loop through the results and add markers to the array
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = mysqli_fetch_assoc($result1)) {
     $username = $row['username'];
     $latitude = $row['latitude'];
     $longitude = $row['longitude'];
@@ -29,9 +29,109 @@ while ($row = mysqli_fetch_assoc($result)) {
     $markers_rescuer[] = $marker_rescuer;
 }
 
+// Fetch data from the rescuers and rescuer_inventory tables
+$query2 = "SELECT c.username, c.latitude, c.longitude, GROUP_CONCAT(CONCAT(cr.item, ': ', cr.quantity) SEPARATOR ', ') AS items
+FROM citizens c
+JOIN citizen_request cr ON c.username = cr.username
+WHERE cr.accepted = 'NO'
+GROUP BY c.username";
+$result2 = mysqli_query($db, $query2);
+
+// Create an array to store the markers
+$markers2 = array();
+
+// Loop through the results and add markers to the array
+while ($row = mysqli_fetch_assoc($result2)) {
+    $username = $row['username'];
+    $latitude = $row['latitude'];
+    $longitude = $row['longitude'];
+    $items = $row['items'];
+
+    // Create a marker in the correct format
+    //$marker_citizen_request_no = "L.marker([$latitude, $longitude]).bindPopup('Username: <b>$username<b><br>Items:<br>$items')";
+    $marker_citizen_request_no = "L.marker([$latitude, $longitude], {icon: requests_noIcon}).bindPopup('Username: <b>$username</b><br>Items:<br>$items')";
+    $markers_citizen_request_no[] = $marker_citizen_request_no;
+}
+
+// Fetch data from the rescuers and rescuer_inventory tables
+$query3 = "SELECT c.username, c.latitude, c.longitude, GROUP_CONCAT(CONCAT(co.item, ': ', co.quantity) SEPARATOR ', ') AS items
+FROM citizens c
+JOIN citizen_offer co ON c.username = co.username
+WHERE co.accepted = 'NO'
+GROUP BY c.username";
+$result3 = mysqli_query($db, $query3);
+
+// Create an array to store the markers
+$markers3 = array();
+
+// Loop through the results and add markers to the array
+while ($row1 = mysqli_fetch_assoc($result3)) {
+    $username = $row1['username'];
+    $latitude = $row1['latitude'];
+    $longitude = $row1['longitude'];
+    $items = $row1['items'];
+
+    // Create a marker in the correct format
+    //$marker_citizen_offer_no = "L.marker([$latitude, $longitude]).bindPopup('Username: <b>$username<b><br>Items:<br>$items')";
+    $marker_citizen_offer_no = "L.marker([$latitude, $longitude], {icon: offers_noIcon}).bindPopup('Username: <b>$username</b><br>Items:<br>$items')";
+    $markers_citizen_offer_no[] = $marker_citizen_offer_no;
+}
+
+// Fetch data from the rescuers and rescuer_inventory tables
+$query4 = "SELECT c.username, c.latitude, c.longitude, GROUP_CONCAT(CONCAT(cr.item, ': ', cr.quantity) SEPARATOR ', ') AS items
+FROM citizens c
+JOIN citizen_request cr ON c.username = cr.username
+WHERE cr.accepted = 'YES'
+GROUP BY c.username";
+$result4 = mysqli_query($db, $query4);
+
+// Create an array to store the markers
+$markers4 = array();
+
+// Loop through the results and add markers to the array
+while ($row = mysqli_fetch_assoc($result4)) {
+    $username = $row['username'];
+    $latitude = $row['latitude'];
+    $longitude = $row['longitude'];
+    $items = $row['items'];
+
+    // Create a marker in the correct format
+    //$marker_citizen_request_yes = "L.marker([$latitude, $longitude]).bindPopup('Username: <b>$username<b><br>Items:<br>$items')";
+    $marker_citizen_request_yes = "L.marker([$latitude, $longitude], {icon: requests_yesIcon}).bindPopup('Username: <b>$username</b><br>Items:<br>$items')";
+    $markers_citizen_request_yes[] = $marker_citizen_request_yes;
+}
+
+// Fetch data from the rescuers and rescuer_inventory tables
+$query5 = "SELECT c.username, c.latitude, c.longitude, GROUP_CONCAT(CONCAT(co.item, ': ', co.quantity) SEPARATOR ', ') AS items
+FROM citizens c
+JOIN citizen_offer co ON c.username = co.username
+WHERE co.accepted = 'YES'
+GROUP BY c.username";
+$result5 = mysqli_query($db, $query5);
+
+// Create an array to store the markers
+$markers5 = array();
+
+// Loop through the results and add markers to the array
+while ($row = mysqli_fetch_assoc($result5)) {
+    $username = $row['username'];
+    $latitude = $row['latitude'];
+    $longitude = $row['longitude'];
+    $items = $row['items'];
+
+    // Create a marker in the correct format
+   //$marker_citizen_offer_yes = "L.marker([$latitude, $longitude]).bindPopup('Username: <b>$username<b><br>Items:<br>$items')";
+    $marker_citizen_offer_yes = "L.marker([$latitude, $longitude], {icon: offers_yesIcon}).bindPopup('Username: <b>$username</b><br>Items:<br>$items')";
+    $markers_citizen_offer_yes[] = $marker_citizen_offer_yes;
+}
+
 // Close the database connection
 mysqli_close($db);
 
 // Output the markers as a JavaScript array
 echo "var markers_rescuer_Data = [", implode(',', $markers_rescuer), "];";
+echo "var markers_citizen_request_Data_no = [", implode(',', $markers_citizen_request_no), "];";
+echo "var markers_citizen_offer_Data_no = [", implode(',', $markers_citizen_offer_no), "];";
+echo "var markers_citizen_request_Data_yes = [", implode(',', $markers_citizen_request_yes), "];";
+echo "var markers_citizen_offer_Data_yes = [", implode(',', $markers_citizen_offer_yes), "];";
 ?>
