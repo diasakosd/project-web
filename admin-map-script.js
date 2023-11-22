@@ -122,6 +122,7 @@ xhr.onreadystatechange = function () {
             attribution: 'Map data: © OpenStreetMap contributors, SRTM | Map style: © OpenTopoMap (CC-BY-SA)'
         });
     }
+    
 };
 
 // Open the AJAX request
