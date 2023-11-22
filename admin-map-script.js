@@ -29,23 +29,23 @@ xhr.onreadystatechange = function () {
 
 
         // Use markersData variable for creating markers
-        var markers_rescuer_request = [];
-        for (var i = 0; i < markers_rescuer_request_Data.length; i++) {
-            var marker_rescuer_request = eval(markers_rescuer_request_Data[i]);
-            markers_rescuer_request.push(marker_rescuer_request);
+        var markers_rescuer_active = [];
+        for (var i = 0; i < markers_rescuer_active_Data.length; i++) {
+            var marker_rescuer_active = eval(markers_rescuer_active_Data[i]);
+            markers_rescuer_active.push(marker_rescuer_active);
         }
 
-        var rescuers_request = L.layerGroup(markers_rescuer_request);
+        var rescuers_active = L.layerGroup(markers_rescuer_active);
 
 
         // Use markersData variable for creating markers
-        var markers_rescuer_offer = [];
-        for (var i = 0; i < markers_rescuer_offer_Data.length; i++) {
-            var marker_rescuer_offer = eval(markers_rescuer_offer_Data[i]);
-            markers_rescuer_offer.push(marker_rescuer_offer);
+        var markers_rescuer_noactive = [];
+        for (var i = 0; i < markers_rescuer_noactive_Data.length; i++) {
+            var marker_rescuer_noactive = eval(markers_rescuer_noactive_Data[i]);
+            markers_rescuer_noactive.push(marker_rescuer_noactive);
         }
 
-        var rescuers_offer = L.layerGroup(markers_rescuer_offer);
+        var rescuers_noactive = L.layerGroup(markers_rescuer_noactive);
 
         // Use markersData variable for creating markers
         var markers_citizen_request_no = [];
@@ -97,11 +97,11 @@ xhr.onreadystatechange = function () {
         var map = L.map('map', {
             center: [38.2521, 21.7591],
             zoom: 13,
-            layers: [osm, rescuers_request]
+            layers: [osm]
         });
 
         var overlayMaps = {
-            "Rescuers Active": rescuers_request
+            
         };
 
         var baseMaps = {
@@ -110,12 +110,12 @@ xhr.onreadystatechange = function () {
 
         var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
     
-    
-        layerControl.addOverlay(rescuers_offer, "Rescuers Non-Active");
+        layerControl.addOverlay(rescuers_active, "Rescuers Active");
+        layerControl.addOverlay(rescuers_noactive, "Rescuers Non-Active");
         layerControl.addOverlay(requests_no, "Requests Pending");
         layerControl.addOverlay(offers_no, "Offers Pending");
-        layerControl.addOverlay(requests_yes, "Requests Accepted");
-        layerControl.addOverlay(offers_yes, "Offers Accepted");
+       layerControl.addOverlay(requests_yes, "Requests Accepted");
+       layerControl.addOverlay(offers_yes, "Offers Accepted");
 
         var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,

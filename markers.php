@@ -31,8 +31,8 @@ while ($row = mysqli_fetch_assoc($result0)) {
     $items = $row['items'];
 
     // Create a marker in the correct format
-    $marker_rescuer_offer = "L.marker([$latitude, $longitude]).bindPopup('Username: <b>$username</b><br>Items in Car:<ul>$items</ul>')";
-    $markers_rescuer_offer[] = $marker_rescuer_offer;
+    $marker_rescuer_noactive = "L.marker([$latitude, $longitude]).bindPopup('Username: <b>$username</b><br>Items in Car:<ul>$items</ul>')";
+    $markers_rescuer_noactive[] = $marker_rescuer_noactive;
 }
 
 $query1 = "SELECT 
@@ -74,8 +74,8 @@ while ($row = mysqli_fetch_assoc($result1)) {
         $popupMessage .= "<br>$offerStatus";
     }
 
-    $marker_rescuer_request = "L.marker([$latitude, $longitude]).bindPopup('$popupMessage')";
-    $markers_rescuer_request[] = $marker_rescuer_request;
+    $marker_rescuer_active = "L.marker([$latitude, $longitude]).bindPopup('$popupMessage')";
+    $markers_rescuer_active[] = $marker_rescuer_active;
 }
 
 
@@ -180,8 +180,9 @@ while ($row = mysqli_fetch_assoc($result5)) {
 mysqli_close($db);
 
 // Output the markers as a JavaScript array
-echo "var markers_rescuer_request_Data = [", implode(',', $markers_rescuer_request), "];";
-echo "var markers_rescuer_offer_Data = [", implode(',', $markers_rescuer_offer), "];";
+
+echo "var markers_rescuer_active_Data = [", implode(',', $markers_rescuer_active), "];";
+echo "var markers_rescuer_noactive_Data = [", implode(',', $markers_rescuer_noactive), "];";
 echo "var markers_citizen_request_Data_no = [", implode(',', $markers_citizen_request_no), "];";
 echo "var markers_citizen_offer_Data_no = [", implode(',', $markers_citizen_offer_no), "];";
 echo "var markers_citizen_request_Data_yes = [", implode(',', $markers_citizen_request_yes), "];";
