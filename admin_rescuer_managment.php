@@ -1,6 +1,6 @@
 <?php
 include 'session_admin.php';
-$_SESSION['site'] = 'admin_rescuer_managments.php';
+$_SESSION['site'] = 'admin_rescuer_managment.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
