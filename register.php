@@ -71,7 +71,7 @@ if (isset($_SESSION['username'])) {
                 <button type="submit" name="reg_user">Register</button>
              </form>
 
-            <p>Already have an account? <a href="index.html">Login</a></p>
+            <p>Already have an account? <a href="index.php">Login</a></p>
             
             <div class="map" id="map"></div>
         </div>

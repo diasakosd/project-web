@@ -39,7 +39,7 @@ if (isset($_POST['login_user'])) {
     $result = mysqli_query($db, $query);
 
     if ($result) {
-        $row = mysqli_fetch_assoc($result);
+        $row = $result->fetch_assoc();
 
         if ($row !== null && isset($row['table_name'])) {
             $table_name = $row['table_name'];
@@ -77,5 +77,3 @@ if (isset($_POST['login_user'])) {
 }
 ?>
 
-<!-- Include your HTML file here -->
-<?php include 'index.html'; ?>
