@@ -39,7 +39,7 @@ if (isset($_SESSION['username'])) {
             <h1>Register</h1>
         </div>
         <div class="register-form">
-            <form method="post" action="register.php" onsubmit="return validateForm()">
+            <form method="post" action="register_get.php" onsubmit="return validateForm()">
 
             <div class="input-box">
                 <label for="full_name">Fullname:</label><br>
