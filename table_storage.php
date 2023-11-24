@@ -42,42 +42,49 @@ if (!$db) {
     exit();
 }
 
-// Iterate through items and insert into the base_storage table
-// Array to keep track of inserted category_id_names
-$table_names = [];
+// Initialize an array to store lowercase category and item pairs
+$insertedPairs = [];
 
 // Iterate through items and insert into the base_storage table
 foreach ($jsonArray['items'] as $item) {
     $category_id = $item['category'];
     $itemName = $item['name'];
-    $quantity = 100;  // Set the default quantity to 100
 
-    $category_id_name = null;
+    // Check if the item is only whitespaces
+    if (!empty(trim($itemName))) {
+        $quantity = 100;  // Set the default quantity to 100
 
-    // Find the category details based on category_id
-    foreach ($jsonArray['categories'] as $category) {
-        if ($category['id'] === $category_id) {
-            $category_id_name = $category['category_name'];
-            break; // Stop searching once the category is found
+        $category_id_name = null;
+
+        // Find the category details based on category_id
+        foreach ($jsonArray['categories'] as $category) {
+            if ($category['id'] === $category_id) {
+                $category_id_name = $category['category_name'];
+                break; // Stop searching once the category is found
+            }
         }
-    }
 
-    // Your SQL query to insert data into base_storage
-    if ($category_id_name) {
-        // Check if category_id_name already exists in the array
-        if (!in_array($category_id_name, $table_names)) {
+        // Convert to lowercase and remove whitespaces from the start and end
+        $lowercaseCategory = strtolower(trim($category_id_name));
+        $lowercaseItem = strtolower(trim($itemName));
+
+        // Check if the pair exists in the insertedPairs array
+        $pairKey = $lowercaseCategory . '-' . $lowercaseItem;
+        if (!isset($insertedPairs[$pairKey])) {
+            // Your SQL query to insert data into base_storage
             $sql = "INSERT INTO base_storage (category, item, quantity) VALUES ('$category_id_name', '$itemName', $quantity)";
-            mysqli_query($db, $sql);
-            // Note: Make sure to use prepared statements to prevent SQL injection
-            // mysqli_query($yourDbConnection, $sql);
 
-            // Add the category_id_name to the array
-            $table_names[] = $category_id_name;
-        } else {
-            // Skip insertion because category_id_name already exists
+            // Execute the query
+            mysqli_query($db, $sql);
+
+            // Add the pair to the insertedPairs array to mark it as inserted
+            $insertedPairs[$pairKey] = true;
         }
     }
 }
+
+
+
 
 
 echo 'Data inserted successfully';
