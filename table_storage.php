@@ -41,7 +41,11 @@ if (!$db) {
     echo json_encode(array('error' => 'Connection failed: ' . mysqli_connect_error()));
     exit();
 }
-tablenames=[]
+
+// Iterate through items and insert into the base_storage table
+// Array to keep track of inserted category_id_names
+$table_names = [];
+
 // Iterate through items and insert into the base_storage table
 foreach ($jsonArray['items'] as $item) {
     $category_id = $item['category'];
@@ -60,10 +64,18 @@ foreach ($jsonArray['items'] as $item) {
 
     // Your SQL query to insert data into base_storage
     if ($category_id_name) {
-        $sql = "INSERT INTO base_storage (category, item, quantity) VALUES ('$category_id_name', '$itemName', $quantity)";
-        mysqli_query($db, $sql);
-        // Note: Make sure to use prepared statements to prevent SQL injection
-        // mysqli_query($yourDbConnection, $sql);
+        // Check if category_id_name already exists in the array
+        if (!in_array($category_id_name, $table_names)) {
+            $sql = "INSERT INTO base_storage (category, item, quantity) VALUES ('$category_id_name', '$itemName', $quantity)";
+            mysqli_query($db, $sql);
+            // Note: Make sure to use prepared statements to prevent SQL injection
+            // mysqli_query($yourDbConnection, $sql);
+
+            // Add the category_id_name to the array
+            $table_names[] = $category_id_name;
+        } else {
+            // Skip insertion because category_id_name already exists
+        }
     }
 }
 

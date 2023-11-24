@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2023 at 01:05 PM
+-- Generation Time: Nov 24, 2023 at 04:26 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -77,11 +77,21 @@ CREATE TABLE `base_storage` (
 --
 
 INSERT INTO `base_storage` (`id`, `category`, `item`, `quantity`) VALUES
-(1, 'Electronics', 'Laptop', 10),
-(2, 'Clothing', 'T-Shirt', 50),
-(3, 'Electronics', 'Smartphone', 20),
-(4, 'Food', 'Canned Beans', 100),
-(5, 'Medical', 'First Aid Kit', 5);
+(1, 'Beverages', 'Water', 100),
+(2, 'Food', 'Sardines', 100),
+(3, 'Clothing', 'Men Sneakers', 100),
+(4, '2d hacker', 'Test Product', 100),
+(5, 'Flood', 'Test Val', 100),
+(6, 'Medical Supplies', 'Bandages', 100),
+(7, 'Personal Hygiene ', 'Menstrual Pads', 100),
+(8, 'Cleaning Supplies', 'Cleaning rag', 100),
+(9, 'Tools', 'Hammer', 100),
+(10, 'Kitchen Supplies', 'Dishes', 100),
+(11, 'Insect Repellents', 'spray', 100),
+(12, 'Baby Essentials', 'Baby bottle', 100),
+(13, 'Electronic Devices', 'Radio', 100),
+(14, 'Cold weather', 'Winter hat', 100),
+(15, 'Animal Food', 'Dog Food ', 100);
 
 -- --------------------------------------------------------
 
@@ -106,7 +116,8 @@ INSERT INTO `citizens` (`full_name`, `username`, `password`, `phone`, `latitude`
 ('Poustonios Kyrios', 'malakas', '123', 123, 38.2356, 21.7262),
 ('Eimai kleutis', 'paki', 'paki', 999, 38.2493, 21.735),
 ('John Papas', 'papas123', 'papas', 123123123, 38.2306, 21.739),
-('Nai kala', 'sasgamaw', 'antreas', 7878, 38.2717, 21.7582);
+('Nai kala', 'sasgamaw', 'antreas', 7878, 38.2717, 21.7582),
+('xaxaxa', 'xaxa', '123', 123, 38.2674, 21.7529);
 
 --
 -- Triggers `citizens`
@@ -143,14 +154,6 @@ CREATE TABLE `citizen_offer` (
   `rescuer_username` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `citizen_offer`
---
-
-INSERT INTO `citizen_offer` (`id`, `username`, `category`, `item`, `quantity`, `time_created`, `accepted`, `time_accepted`, `rescuer_username`) VALUES
-(1, 'paki', 'Clothing', 'T-Shirt', 3, '2023-11-18 09:09:20', 'NO', NULL, 'resquer1'),
-(2, 'sasgamaw', 'Electronics', 'Laptop', 2, '2023-11-18 09:09:20', 'YES', '2023-11-18 08:45:50', 'resquer1');
-
 -- --------------------------------------------------------
 
 --
@@ -168,15 +171,6 @@ CREATE TABLE `citizen_request` (
   `time_accepted` timestamp NULL DEFAULT NULL,
   `rescuer_username` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `citizen_request`
---
-
-INSERT INTO `citizen_request` (`id`, `username`, `category`, `item`, `quantity`, `time_created`, `accepted`, `time_accepted`, `rescuer_username`) VALUES
-(1, 'papas123', 'Clothing', 'T-Shirt', 2, '2023-11-18 08:45:57', 'YES', '2023-11-18 22:00:00', 'resquer2'),
-(2, 'papas123', 'Electronics', 'Smartphone', 4, '2023-11-18 08:46:43', 'NO', NULL, NULL),
-(3, 'papas123', 'Medical', 'First Aid Kit', 3, '2023-11-18 08:47:00', 'NO', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -205,7 +199,8 @@ INSERT INTO `combined_data` (`username`, `password`, `table_name`) VALUES
 ('paki', 'paki', 'citizens'),
 ('malakas', '123', 'citizens'),
 ('sasgamaw', 'antreas', 'citizens'),
-('rescuer3', 'rescuer3', 'rescuers');
+('rescuer3', 'rescuer3', 'rescuers'),
+('xaxa', '123', 'citizens');
 
 -- --------------------------------------------------------
 
@@ -266,9 +261,6 @@ CREATE TABLE `rescuer_inventory` (
 --
 
 INSERT INTO `rescuer_inventory` (`id`, `username`, `category`, `item`, `quantity`) VALUES
-(1, 'resquer1', 'Electronics', 'Laptop', 5),
-(2, 'resquer2', 'Clothing', 'T-Shirt', 10),
-(3, 'resquer2', 'Food', 'Canned Beans', 20),
 (4, 'rescuer3', '', NULL, NULL);
 
 -- --------------------------------------------------------
@@ -379,7 +371,7 @@ ALTER TABLE `rescuer_inventory`
 -- AUTO_INCREMENT for table `base_storage`
 --
 ALTER TABLE `base_storage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `citizen_offer`
@@ -407,24 +399,24 @@ ALTER TABLE `rescuer_inventory`
 -- Constraints for table `citizen_offer`
 --
 ALTER TABLE `citizen_offer`
-  ADD CONSTRAINT `citizen_offer_ibfk_1` FOREIGN KEY (`username`) REFERENCES `citizens` (`username`),
-  ADD CONSTRAINT `citizen_offer_ibfk_2` FOREIGN KEY (`category`,`item`) REFERENCES `base_storage` (`category`, `item`),
-  ADD CONSTRAINT `fk_citizen_offer_rescuer` FOREIGN KEY (`rescuer_username`) REFERENCES `rescuers` (`username`);
+  ADD CONSTRAINT `citizen_offer_ibfk_1` FOREIGN KEY (`username`) REFERENCES `citizens` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `citizen_offer_ibfk_2` FOREIGN KEY (`category`,`item`) REFERENCES `base_storage` (`category`, `item`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_citizen_offer_rescuer` FOREIGN KEY (`rescuer_username`) REFERENCES `rescuers` (`username`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `citizen_request`
 --
 ALTER TABLE `citizen_request`
-  ADD CONSTRAINT `citizen_request_ibfk_1` FOREIGN KEY (`username`) REFERENCES `citizens` (`username`) ON DELETE CASCADE,
-  ADD CONSTRAINT `citizen_request_ibfk_2` FOREIGN KEY (`category`,`item`) REFERENCES `base_storage` (`category`, `item`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_citizen_request_rescuer` FOREIGN KEY (`rescuer_username`) REFERENCES `rescuers` (`username`);
+  ADD CONSTRAINT `citizen_request_ibfk_1` FOREIGN KEY (`username`) REFERENCES `citizens` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `citizen_request_ibfk_2` FOREIGN KEY (`category`,`item`) REFERENCES `base_storage` (`category`, `item`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_citizen_request_rescuer` FOREIGN KEY (`rescuer_username`) REFERENCES `rescuers` (`username`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `rescuer_inventory`
 --
 ALTER TABLE `rescuer_inventory`
-  ADD CONSTRAINT `rescuers_request_ibfk_1` FOREIGN KEY (`username`) REFERENCES `rescuers` (`username`) ON DELETE CASCADE,
-  ADD CONSTRAINT `rescuers_request_ibfk_2` FOREIGN KEY (`category`,`item`) REFERENCES `base_storage` (`category`, `item`) ON DELETE CASCADE;
+  ADD CONSTRAINT `rescuers_request_ibfk_1` FOREIGN KEY (`username`) REFERENCES `rescuers` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `rescuers_request_ibfk_2` FOREIGN KEY (`category`,`item`) REFERENCES `base_storage` (`category`, `item`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
