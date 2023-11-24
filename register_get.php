@@ -44,6 +44,7 @@ if (isset($_POST['reg_user'])) {
         // Username is available, proceed with registration and insert latitude and longitude
         $query = "INSERT INTO citizens (full_name,username, password, phone, latitude, longitude) VALUES ('$full_name','$username', '$password', '$phone', '$latitude', '$longitude')";
         mysqli_query($db, $query);
+        mysqli_close($db);
         $_SESSION['username'] = $username;
         $_SESSION['userRole'] = 'citizen';
         $_SESSION['success'] = "You are now registered and logged in";
