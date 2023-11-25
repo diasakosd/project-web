@@ -35,9 +35,13 @@ if (isset($_SESSION['username'])) {
     <br>
     <br>
     <div class="container">
-        <div class="header">
-            <h1>Register</h1>
+        <div class="top-overlay">
+            <br>
+            <div class="header"> 
+                <h1>Register</h1>
+            </div>
         </div>
+        
         <div class="register-form">
             <form method="post" action="register_get.php" onsubmit="return validateForm()">
 
@@ -74,6 +78,23 @@ if (isset($_SESSION['username'])) {
             <p>Already have an account? <a href="index.php">Login</a></p>
             
             <div class="map" id="map"></div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
         </div>
     </div>
     <br>
