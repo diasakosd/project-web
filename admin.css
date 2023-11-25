@@ -125,4 +125,88 @@ body {
     text-align: center;
 }
 
+/* Add this to your existing CSS or in a style block within the <head> */
 
+.table-container {
+    max-height: 450px; /* Adjust the height as needed */
+    overflow: auto;
+    border: 1px solid #ccc; /* Add a border for better visibility */
+}
+
+.table_base {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table_base th, .table_base td {
+    border: 1px solid #ddd; /* Add borders to cells */
+    padding: 8px; /* Add padding to cells */
+}
+
+.table_base th {
+    background-color: #f2f2f2; /* Gray background for header */
+    color: black; /* Black text for header */
+}
+
+.table_base td {
+    background-color: white; /* White background for cells */
+    color: black; /* Black text for cells */
+}
+
+.form-container {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    max-width: 600px; /* Adjust the width as needed */
+    margin: 0 auto; /* Center the container on the page */
+}
+
+.message-container {
+    font-weight: bold;
+    color: red;
+}
+
+.form-container form {
+    font-size: 16px;
+    max-width: 400px; /* Adjust the width as needed */
+    margin: 0 auto; /* Center the form */
+}
+
+.form-container label {
+    margin-bottom: 10px;
+    display: block;
+    margin-bottom: 8px;
+    color: rgb(255, 255, 255); /* Black text color for labels */
+}
+
+
+
+.form-container input[type="text"],
+.form-container input[type="file"],
+.form-container input[type="submit"],
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.form-container input[type="submit"] {
+    background-color: #4CAF50; /* Green background color for submit button */
+    color: white; /* White text color for submit button */
+    cursor: pointer;
+}
+
+.form-container input[type="submit"]:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.form-container button {
+    background-color: #ccc; /* Light gray background color for clear button */
+    color: black; /* Black text color for clear button */
+    cursor: pointer;
+}
+
+.form-container button:hover {
+    background-color: #ddd; /* Slightly darker gray on hover */
+}

@@ -33,12 +33,43 @@ $_SESSION['site'] = 'admin_storage_managment.php';
         <!-- Include any additional HTML content here if needed -->
     </div>
 <br>
-<br>
-<br>
-<div class="table_base">
+<div class="table-container">
+        <div class="table_base" id="tableBase"></div>
 </div>
 <br>
+<button id="updateTableBtn">Update Table</button>
+<br><br>
+
+
+    <div class="form-container">
+        <p><h3>Update the Storage Table either by URL or File</h3></p>
+        <br>
+        <form action="table_storage.php" method="post" onsubmit="return validate_url_file()" enctype="multipart/form-data">
+            <!-- URL Input -->
+            <label for="url">URL:</label>
+            <input type="text" name="url" id="url">
+            <br>    
+            <br>
+            <!-- File Input -->
+            <label for="file">File:</label>
+            <input type="file" name="file" id="file">
+            <button type="button" onclick="clearFileInput()">Clear File</button>
+            <br>
+            <br>
+            <!-- Submit Button -->
+            <input type="submit" value="Submit">
+            <br>
+            <br>
+            <div class="message-container" id="messageContainer"></div>
+        </form>
+    </div>
+    
+<br>
     <!-- Add your scripts here -->
-    <script src="admin-details-script.js"></script>
+    <script src="url-file.js"></script>
+    <script src ="url-file-validate.js"></script>
+    <script src="clear_file.js"></script>
+    <script src="base_table.js"></script>
+   <script src="admin-details-script.js"></script>
 </body>
 </html>
