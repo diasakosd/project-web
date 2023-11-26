@@ -1,7 +1,6 @@
 <?php
 
 session_start();
-
 // If the user is already logged in, redirect to the appropriate page
 if (isset($_SESSION['username'])) {
     // Check the user's role
@@ -14,8 +13,13 @@ if (isset($_SESSION['username'])) {
     }
     exit();
 }
+if (!(isset($_POST['username'])) || !(isset($_POST['password']))) {
+    header('location: index.php');
+    exit();
+}
 unset($_SESSION['username']);
 unset($_SESSION['userRole']);
+
 // initializing variables
 $username = "";
 $password = "";
@@ -29,6 +33,8 @@ if (!$db) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+
+
 // LOGIN USER
 if (isset($_POST['login_user'])) {
     $username = mysqli_real_escape_string($db, $_POST['username']);
@@ -37,7 +43,7 @@ if (isset($_POST['login_user'])) {
     // Query to check in combined_data table
     $query = "SELECT table_name FROM combined_data FORCE INDEX (user_data) WHERE username='$username' AND password='$password'";
     $result = mysqli_query($db, $query);
-
+    echo "hi5";
     if ($result) {
         $row = $result->fetch_assoc();
 

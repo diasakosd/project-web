@@ -25,6 +25,10 @@ $db = mysqli_connect('localhost', 'root', '', 'web');
 if (!$db) {
     die("Connection failed: " . mysqli_connect_error());
 }
+echo "hi";
+echo $_POST['username'];
+echo $_POST['reg_user'];
+echo "hi";
 // REGISTER USER
 if (isset($_POST['reg_user'])) {
     $full_name = mysqli_real_escape_string($db, $_POST['full_name']);
@@ -34,10 +38,11 @@ if (isset($_POST['reg_user'])) {
     $latitude = mysqli_real_escape_string($db, $_POST['clickedLatitude']);
     $longitude = mysqli_real_escape_string($db, $_POST['clickedLongitude']);
     // Check if the username already exists in either table
-    $check_query = "SELECT * FROM combined_data FORCE INDEX (user_data) WHERE username='$username'";
-    
+    $check_query = "SELECT * FROM combined_data FORCE INDEX (user_data) WHERE username='$username';";
+    echo "hi1";
     $check_result = mysqli_query($db, $check_query);
     if (mysqli_num_rows($check_result) > 0) {
+        echo "hi2";
         // Username already exists, show an error message
         $errors[] = "Username '$username' is already taken.";
     } else {

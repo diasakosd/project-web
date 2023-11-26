@@ -15,6 +15,12 @@ if (isset($_SESSION['username'])) {
     }
     exit();
 }
+else{
+    session_destroy();
+    unset($_SESSION['username']);
+    unset($_SESSION['userRole']);
+    unset($_SESSION['site']);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +49,7 @@ if (isset($_SESSION['username'])) {
         </div>
         
         <div class="register-form">
-            <form method="post" action="register_get.php" onsubmit="return validateForm()">
+            <form method="post" action="register_get.php" onsubmit="return validateForm()" id="registerForm">
 
             <div class="input-box">
                 <label for="full_name">Fullname:</label><br>
@@ -73,7 +79,10 @@ if (isset($_SESSION['username'])) {
                 <input type="hidden" id="clickedLongitude" name="clickedLongitude">
 
                 <button type="submit" name="reg_user">Register</button>
+                <div class="error_message">
+        </div>
              </form>
+             <br>
 
             <p>Already have an account? <a href="index.php">Login</a></p>
             
@@ -104,5 +113,6 @@ if (isset($_SESSION['username'])) {
     <br>
     <br>
     <script src="register-map-script.js"></script>
+    <script src="register_error.js"></script>
 </body>
 </html>

@@ -126,6 +126,6 @@ xhr.onreadystatechange = function () {
 };
 
 // Open the AJAX request
-xhr.open("GET", "markers.php", true);
+xhr.open("GET", "markers_admin.php", true);
 // Send the request
 xhr.send();
