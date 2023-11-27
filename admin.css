@@ -238,3 +238,20 @@ body {
     transform: translateY(-50%);
     font-size: 20px;
 }
+
+/* Style for the form container */
+.update-form {
+    background-color: #383131;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    margin: 0 auto;
+    color:#f2f2f2;
+}
+
+/* Style for the error message */
+.update-form .err_message {
+    color: red;
+    margin-top: 10px;
+}
+

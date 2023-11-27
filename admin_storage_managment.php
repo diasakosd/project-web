@@ -40,7 +40,7 @@ $_SESSION['site'] = 'admin_storage_managment.php';
 <button id="updateTableBtn">Update Table</button>
 <br><br>
 <div class="update-form">
-    <form id="updateTableForm" method="post" action="update_table.php">
+    <form id="updateTableForm" method="post" action="update_table.php" novalidate>
 
         <div class="input-box">
             <label for="category-form">Category:</label><br>
