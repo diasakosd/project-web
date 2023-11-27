@@ -87,6 +87,24 @@ xhr.onreadystatechange = function () {
         var offers_yes = L.layerGroup(markers_citizen_offer_yes);
 
 
+
+        var lines_request_yes = [];
+        for (var i = 0; i < lines_request_yes_Data.length; i++) {
+            var line_request_yes = eval(lines_request_yes_Data[i]);
+            lines_request_yes.push(line_request_yes);
+        }        
+        
+        var lines_request = L.polyline(lines_request_yes, { color: 'red' });
+
+
+
+        var lines_offer_yes = [];
+        for (var i = 0; i < lines_offer_yes_Data.length; i++) {
+            var line_offer_yes = eval(lines_offer_yes_Data[i]);
+            lines_offer_yes.push(line_offer_yes);
+        }        
+        
+        var lines_offer = L.polyline(lines_offer_yes, { color: 'red' });
         
         
         var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -108,14 +126,23 @@ xhr.onreadystatechange = function () {
             "OpenStreetMap": osm
         };
 
+
+
         var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
-    
+        
+       
+
         layerControl.addOverlay(rescuers_active, "Rescuers Active");
         layerControl.addOverlay(rescuers_noactive, "Rescuers Non-Active");
         layerControl.addOverlay(requests_no, "Requests Pending");
         layerControl.addOverlay(offers_no, "Offers Pending");
        layerControl.addOverlay(requests_yes, "Requests Accepted");
        layerControl.addOverlay(offers_yes, "Offers Accepted");
+     
+       // Create an overlay map for the line
+
+       layerControl.addOverlay(lines_offer, "Lines - Offers");
+       layerControl.addOverlay(lines_request, "Lines - Request");
 
         var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
