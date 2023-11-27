@@ -127,6 +127,21 @@ xhr.onreadystatechange = function () {
         };
 
 
+        // Assuming you have a Leaflet map object named 'map'
+        var baseIcon = L.icon({
+            iconUrl: 'house.png', // Path to your custom icon image
+        iconSize: [50, 50], // Size of the icon
+        iconAnchor: [25, 25], // Anchor point of the icon, set to the middle of the icon
+        shadowUrl: 'marker-shadow.png', // Path to your shadow image
+        shadowSize: [41, 41], // Size of the shadow
+        shadowAnchor: [20.5, 25], // Anchor point of the shadow, adjusted to align with the icon's middle
+        popupAnchor: [0, -25] // Popup anchor point, offsets the popup relative to the icon's center
+        });
+
+        var baseMarker = L.marker([baseLocation.lat, baseLocation.lng], { icon: baseIcon }).addTo(map);
+        baseMarker.bindPopup('Base Location').openPopup();
+
+
 
         var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
         

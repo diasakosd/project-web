@@ -8,6 +8,25 @@ if (!$db) {
 }
 
 
+// Fetch data from the storage_location table
+$queryBaseLocation = "SELECT latitude, longitude FROM storage_location";
+$resultBaseLocation = mysqli_query($db, $queryBaseLocation);
+
+// Check if there are rows in the result set
+if ($resultBaseLocation && mysqli_num_rows($resultBaseLocation) > 0) {
+    // Fetch the base location
+    $baseLocation = $resultBaseLocation->fetch_assoc();
+    $baseLatitude = $baseLocation['latitude'];
+    $baseLongitude = $baseLocation['longitude'];
+
+    // Output the base location as JavaScript variable
+    echo "var baseLocation = { lat: $baseLatitude, lng: $baseLongitude };";
+} else {
+    // Provide default coordinates if no base location is found
+    echo "var baseLocation = { lat: 0, lng: 0 };";
+}
+
+
 // Fetch data from the rescuers, rescuer_inventory, and citizens_request tables
 $query0 = "SELECT r.username, r.latitude, r.longitude, 
     GROUP_CONCAT(CONCAT('<li>', ri.category, ': ', ri.item, ' (', ri.quantity, ')','</li>') SEPARATOR '') AS items
