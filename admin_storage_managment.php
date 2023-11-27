@@ -39,12 +39,49 @@ $_SESSION['site'] = 'admin_storage_managment.php';
 <br>
 <button id="updateTableBtn">Update Table</button>
 <br><br>
+<div class="update-form">
+    <form id="updateTableForm" method="post" action="update_table.php">
+
+        <div class="input-box">
+            <label for="category-form">Category:</label><br>
+            <input type="text" id="category-form" name="category-form" placeholder="Category" required>
+            <i class='bx bxs-user-plus'></i>
+        </div>
+
+        <div class="input-box">
+            <label for="item-form">Item:</label><br>
+            <input type="text" id="item-form" name="item-form" placeholder="Item" required>
+            <i class='bx bxs-user-circle'></i>
+        </div>
+
+        <div class="input-box">
+            <label for="quantity-form">Quantity:</label><br>
+            <input type="number" id="quantity-form" name="quantity-form" placeholder="Quantity" required>
+            <i class='bx bxs-lock'></i>
+        </div>
+
+        <div class="input-box">
+            <label for="action-form">Action:</label><br>
+            <select id="action-form" name="action-form" required>
+                <option value="ADD">Add</option>
+                <option value="UPDATE">Update</option>
+                <option value="DELETE">Delete</option>
+            </select>
+            <i class='bx bxs-phone'></i>
+        </div>
+        <br>
+        <button type="submit" name="table_submit">Submit</button>
+        <br>
+        <div class="err_message"> </div>
+    </form>
+</div>
 
 
+<br><br>
     <div class="form-container">
         <p><h3>Update the Storage Table either by URL or File</h3></p>
         <br>
-        <form action="table_storage.php" method="post" onsubmit="return validate_url_file()" enctype="multipart/form-data">
+        <form id = "jsonForm" action="table_storage.php" method="post" onsubmit="return validate_url_file()" enctype="multipart/form-data">
             <!-- URL Input -->
             <label for="url">URL:</label>
             <input type="text" name="url" id="url">
@@ -66,6 +103,7 @@ $_SESSION['site'] = 'admin_storage_managment.php';
     
 <br>
     <!-- Add your scripts here -->
+    <script src="update_table_error.js"></script>
     <script src="url-file.js"></script>
     <script src ="url-file-validate.js"></script>
     <script src="clear_file.js"></script>

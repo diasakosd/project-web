@@ -1,21 +1,20 @@
 // url-file-validate.js
-var flag = 0;
 document.addEventListener('DOMContentLoaded', function () {
     // Attach submit event to the form
-    var form = document.querySelector('#jsonForm');
+    var form = document.getElementById('updateTableForm');
     form.addEventListener('submit', function (event) {
         event.preventDefault();  // Prevent the default form submission
 
         // Get the form data
         var formData = new FormData(form);
 
-        // Make an AJAX request 
+        // Make an AJAX request
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'table_storage.php', true);
+        xhr.open('POST', form.action, true);
         xhr.onload = function () {
             if (xhr.status === 200) {
                 // Update the message container with the response
-                document.getElementById('messageContainer').textContent = xhr.responseText;
+                document.querySelector('.err_message').textContent = xhr.responseText;
                 document.getElementById('updateTableBtn').click();
             }
         };
