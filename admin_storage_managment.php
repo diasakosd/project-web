@@ -33,9 +33,19 @@ $_SESSION['site'] = 'admin_storage_managment.php';
         <!-- Include any additional HTML content here if needed -->
     </div>
 <br>
+
 <div class="table-container">
+    <div class="table-content">
         <div class="table_base" id="tableBase"></div>
+    </div>
+    <div class="category-container">
+        <div class="category-menu" id="categoryMenu"></div>
+    </div>
 </div>
+
+
+
+
 <br>
 <button id="updateTableBtn">Update Table</button>
 <br><br>

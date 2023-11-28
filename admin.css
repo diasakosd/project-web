@@ -255,3 +255,25 @@ body {
     margin-top: 10px;
 }
 
+.table-container {
+    display: flex;
+    align-items: flex-start;
+}
+
+.table-content {
+    flex-grow: 1; /* Allow the table to grow and take remaining space */
+}
+
+.category-container {
+    margin-left: 20px; /* Adjust the margin between the table and the category menu */
+}
+
+.category-menu {
+    white-space: nowrap; /* Prevent categories from wrapping to a new line */
+}
+
+.category-menu label {
+    display: block;
+    margin-bottom: 5px; /* Adjust the spacing between categories */
+}
+

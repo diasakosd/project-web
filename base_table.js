@@ -1,11 +1,14 @@
-// base_table.js
-
 document.addEventListener('DOMContentLoaded', function () {
-    // Function to update the table
+    // Function to update the table based on selected categories
     function updateTable() {
-        // Make an AJAX request to base_get.php
+        // Get selected categories
+        var selectedCategories = Array.from(document.querySelectorAll('.category-checkbox:checked')).map(function (checkbox) {
+            return checkbox.value;
+        });
+
+        // Make an AJAX request to base_get.php with selected categories
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'base_get.php', true);
+        xhr.open('GET', 'base_get.php?categories=' + selectedCategories.join(','), true);
         xhr.onload = function () {
             if (xhr.status === 200) {
                 // Update the table container with the response
@@ -17,12 +20,30 @@ document.addEventListener('DOMContentLoaded', function () {
         xhr.send();
     }
 
-    // Initial table update
-    updateTable();
+    // Function to fetch categories via AJAX and create checkboxes
+    function fetchCategories() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'get_categories.php', true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // Update the category menu with checkboxes
+                document.querySelector('#categoryMenu').innerHTML = xhr.responseText;
 
-    // Add an event listener to the "Update Table" button
-    document.getElementById('updateTableBtn').addEventListener('click', function () {
-        // Call the updateTable function when the button is clicked
-        updateTable();
-    });
+                // Add event listener to category checkboxes
+                var categoryCheckboxes = document.querySelectorAll('.category-checkbox');
+                categoryCheckboxes.forEach(function (checkbox) {
+                    checkbox.addEventListener('change', updateTable);
+                });
+
+                // Initial table update
+                updateTable();
+            }
+        };
+
+        // Send the AJAX request
+        xhr.send();
+    }
+
+    // Fetch categories and create checkboxes
+    fetchCategories();
 });

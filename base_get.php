@@ -1,5 +1,4 @@
 <?php
-
 // Connect to the database
 $db = mysqli_connect('localhost', 'root', '', 'web');
 
@@ -9,8 +8,21 @@ if (!$db) {
     exit();
 }
 
-// Fetch data from the base_storage table
+// Fetch category parameters from the client-side (JavaScript)
+$categories = isset($_GET['categories']) ? $_GET['categories'] : '';
+
+// Build the SQL query based on the selected categories
 $sql = "SELECT * FROM base_storage";
+if (!empty($categories)) {
+    // Sanitize the input to prevent SQL injection
+    $categories = implode(',', array_map(function ($cat) use ($db) {
+        return "'" . mysqli_real_escape_string($db, $cat) . "'";
+    }, explode(',', $categories)));
+
+    // Include the selected categories in the query
+    $sql .= " WHERE category IN ($categories)";
+}
+
 $result = mysqli_query($db, $sql);
 
 // Check if there are rows in the result
