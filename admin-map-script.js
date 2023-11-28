@@ -127,19 +127,58 @@ xhr.onreadystatechange = function () {
         };
 
 
-        // Assuming you have a Leaflet map object named 'map'
-        var baseIcon = L.icon({
-            iconUrl: 'house.png', // Path to your custom icon image
-        iconSize: [50, 50], // Size of the icon
-        iconAnchor: [25, 25], // Anchor point of the icon, set to the middle of the icon
-        shadowUrl: 'marker-shadow.png', // Path to your shadow image
-        shadowSize: [41, 41], // Size of the shadow
-        shadowAnchor: [20.5, 25], // Anchor point of the shadow, adjusted to align with the icon's middle
-        popupAnchor: [0, -25] // Popup anchor point, offsets the popup relative to the icon's center
+                  // Assuming you have a Leaflet map object named 'map'
+var baseIcon = L.icon({
+    iconUrl: 'house.png',
+    iconSize: [50, 50],
+    iconAnchor: [25, 25],
+    shadowUrl: 'marker-shadow.png',
+    shadowSize: [41, 41],
+    shadowAnchor: [20.5, 25],
+    popupAnchor: [0, -25],
+});
+
+        var baseMarker = L.marker([baseLocation.lat, baseLocation.lng], { icon: baseIcon, draggable: 'true' }).addTo(map);
+
+        // Set the initial popup content
+        baseMarker.bindPopup('Base Location at: ' + baseLocation.lat + ', ' + baseLocation.lng).openPopup();
+
+        baseMarker.on('dragend', function (event) {
+            var marker = event.target;
+            var position = marker.getLatLng();
+
+            // Update the marker's position in the popup content
+            marker.setPopupContent('Base Location at: ' + position.lat + ', ' + position.lng);
+
+            // Send the new location to the server using AJAX
+            updateBaseLocation(position.lat, position.lng);
         });
 
-        var baseMarker = L.marker([baseLocation.lat, baseLocation.lng], { icon: baseIcon }).addTo(map);
-        baseMarker.bindPopup('Base Location').openPopup();
+        function updateBaseLocation(latitude, longitude) {
+            // Create an XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+
+            // Define the PHP script URL
+            var url = 'update_location.php';
+
+            // Create the data to be sent in the request
+            var data = 'latitude=' + latitude + '&longitude=' + longitude;
+
+            // Configure the request
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+            // Set up the callback function to handle the response
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Handle the response (if needed)
+                    console.log(xhr.responseText);
+                }
+            };
+
+            // Send the request with the data
+            xhr.send(data);
+        }
 
 
 
