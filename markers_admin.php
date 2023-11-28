@@ -66,7 +66,9 @@ JOIN rescuer_inventory ri ON r.username = ri.username
 LEFT JOIN citizen_request cr ON r.username = cr.rescuer_username
 LEFT JOIN citizen_offer co ON r.username = co.rescuer_username
 WHERE cr.username IS NOT NULL OR co.username IS NOT NULL
+  AND cr.accepted != 'DONE' OR co.accepted != 'DONE' -- Exclude rescuers with accepted = 'DONE'
 GROUP BY r.username";
+
 
 $result1 = mysqli_query($db, $query1);
 

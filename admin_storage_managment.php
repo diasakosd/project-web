@@ -110,9 +110,18 @@ $_SESSION['site'] = 'admin_storage_managment.php';
             <div class="message-container" id="messageContainer"></div>
         </form>
     </div>
+
+<br>
+<div>
+  <canvas id="myChart" width="800" height="400"></canvas>
+</div>
+
     
 <br>
+
     <!-- Add your scripts here -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="graph.js"></script>
     <script src="update_table_error.js"></script>
     <script src="url-file.js"></script>
     <script src ="url-file-validate.js"></script>
