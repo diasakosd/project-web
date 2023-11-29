@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             flag = 1;
         }
+        
     });
 });
 

@@ -5,11 +5,11 @@ session_start();
 if (isset($_SESSION['username'])) {
     // Check the user's role
     if ($_SESSION['userRole'] === 'citizen') {
-        header('location: citizens.php');
+        header('location: citizen/citizens.php');
     } elseif ($_SESSION['userRole'] === 'admin') {
-        header('location: admin.php');
+        header('location: admin/admin.php');
     } elseif ($_SESSION['userRole'] === 'rescuer') {
-        header('location: rescuers.php');
+        header('location: rescuer/rescuers.php');
     }
     exit();
 }
@@ -57,16 +57,16 @@ if (isset($_POST['login_user'])) {
                 // Redirect based on table_name
                 if ($table_name == 'citizens') {
                     $_SESSION['userRole'] = 'citizen';
-                    $_SESSION['site'] = 'citizen.php';
-                    header('location: citizens.php');
+                    $_SESSION['site'] = 'citizen/citizen.php';
+                    header('location: citizen/citizen.php');
                 } elseif ($table_name == 'rescuers') {
                     $_SESSION['userRole'] = 'rescuer';
-                    $_SESSION['site'] = 'rescuer.php';
-                    header('location: rescuers.php');
+                    $_SESSION['site'] = 'rescuer/rescuer.php';
+                    header('location: rescuer/rescuer.php');
                 } elseif ($table_name == 'admin') {
                     $_SESSION['userRole'] = 'admin';
-                    $_SESSION['site'] = 'admin.php';
-                    header('location: admin.php');
+                    $_SESSION['site'] = 'admin/admin.php';
+                    header('location: admin/admin.php');
                 } else {
                     $errors[] = "Unknown table name: $table_name";
                 }

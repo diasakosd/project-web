@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo 'The file you uploaded is not a valid JSON or PHP file.';
             } else {
                 // Move the uploaded file to the tempfiles directory
-                $tempFilePath = "tempfiles/" . $fileName;
+                $tempFilePath = "../tempfiles/" . $fileName;
                 if (move_uploaded_file($tempFile, $tempFilePath)) {
                     // Fetch JSON data from the uploaded file
                     $jsonArray = fetchJsonFromFile($tempFilePath);

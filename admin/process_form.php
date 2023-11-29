@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $tempFile = $uploadedFile["tmp_name"];
 
             // Move the uploaded file to a desired location
-            move_uploaded_file($tempFile, "tempfiles/" . $fileName);
+            move_uploaded_file($tempFile, "../tempfiles/" . $fileName);
 
             echo "You uploaded a file: $fileName";
         }

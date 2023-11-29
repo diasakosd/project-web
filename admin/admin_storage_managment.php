@@ -1,6 +1,6 @@
 <?php
 include 'session_admin.php';
-$_SESSION['site'] = 'admin_storage_managment.php';
+$_SESSION['site'] = '../admin/admin_storage_managment.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,7 @@ $_SESSION['site'] = 'admin_storage_managment.php';
 <body>
     <div class="navbar">
         <img class="logo" src="Screenshot_5.png" alt="Logo">
-        <p><a class="logout-button" href="logout.php">Logout</a></p>
+        <p><a class="logout-button" href="../logout.php">Logout</a></p>
         <a href="admin_announcements.php">Announcements</a>
         <a href="admin_rescuer_managment.php">Rescuer Managment</a>
         <a href="admin_storage_managment.php">Storage Managment</a>

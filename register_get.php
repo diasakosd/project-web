@@ -4,11 +4,11 @@ session_start();
 if (isset($_SESSION['username'])) {
     // Check the user's role
     if ($_SESSION['userRole'] === 'citizen') {
-        header('location: citizens.php');
+        header('location: citizen/citizens.php');
     } elseif ($_SESSION['userRole'] === 'admin') {
-        header('location: admin.php');
+        header('location: admin/admin.php');
     } elseif ($_SESSION['userRole'] === 'rescuer') {
-        header('location: rescuers.php');
+        header('location: rescuer/rescuers.php');
     }
     exit();
 }
@@ -53,8 +53,8 @@ if (isset($_POST['reg_user'])) {
         $_SESSION['username'] = $username;
         $_SESSION['userRole'] = 'citizen';
         $_SESSION['success'] = "You are now registered and logged in";
-        $_SESSION['site'] = 'citizen.php';
-        header('location: citizens.php');
+        $_SESSION['site'] = '../citizen/citizen.php';
+        header('location: citizen/citizens.php');
         exit();
     }
 }
