@@ -25,19 +25,58 @@ $_SESSION['site'] = '../admin/admin_rescuer_managment.php';
     </div>
 
     <div class="container">
-        <div class="header">
-            
-        </div>
+        <div class="header"></div>
         <br><br>
         <div class="content">
             <p>This is your admin page for Rescuer Managment. Add more content as needed.</p>
         </div>
-        <!-- Include any additional HTML content here if needed -->
     </div>
-<br>
-<br>
-<br><br>
-    <!-- Add your scripts here -->
+        <div class="container1">
+            <div class="top-overlay">
+                <br>
+                <div class="header"> 
+                    <h1>Rescuer Creator</h1>
+                </div>
+            </div>
+            
+            <div class="register-form">
+                <form method="post" action="register_get.php" onsubmit="return validateForm()" id="registerForm">
+
+
+                    <div class="input-box">
+                        <label for="username">Username:</label><br>
+                        <input type="text" id="username" name="username" placeholder="Username" required> 
+                        <i class='bx bxs-user-circle'></i>
+                    </div>
+
+                    <div class="input-box">
+                        <label for="password">Password:</label><br>
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                        <i class='bx bxs-lock'></i>
+                    </div>
+
+                    <div class="input-box">
+                        <label for="phone">Phone:</label><br>
+                        <input type="text" id="phone" name="phone" placeholder="Phone" required>
+                        <i class='bx bxs-phone'></i>
+                    </div>
+                    <!-- Add hidden input fields for latitude and longitude -->
+                    <input type="hidden" id="clickedLatitude" name="clickedLatitude">
+                    <input type="hidden" id="clickedLongitude" name="clickedLongitude">
+
+                    <button type="submit" name="reg_user">Register</button>
+                    <div class="error_message"></div>
+        
+                </form>
+            </div>
+
+        <p>Already have an account? <a href="index.php">Login</a></p>
+                
+    </div>
+    <div class="map1" id="map"></div>
+
+    <script src="rescuer_manage_map.js"></script>
+    <script src="register_error.js"></script>
     <script src="admin-details-script.js"></script>
 </body>
 </html>

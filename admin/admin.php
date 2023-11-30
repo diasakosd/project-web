@@ -36,7 +36,7 @@ $_SESSION['site'] = '../admin/admin.php';
     </div>
 <br>
 <br>
-<div id="map">
+<div class="map" id="map">
 
 </div>
 <br><br>
