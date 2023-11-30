@@ -1,6 +1,6 @@
 <?php
 include 'session_admin.php';
-$_SESSION['site'] = 'admin_storage_managment.php';
+$_SESSION['site'] = '../admin/admin_announcements.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,11 +11,13 @@ $_SESSION['site'] = 'admin_storage_managment.php';
     
     <!-- Adjust the paths to your CSS file and Leaflet map script -->
     <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 <body>
     <div class="navbar">
         <img class="logo" src="Screenshot_5.png" alt="Logo">
-        <p><a class="logout-button" href="logout.php">Logout</a></p>
+        <p><a class="logout-button" href="../logout.php">Logout</a></p>
         <a href="admin_announcements.php">Announcements</a>
         <a href="admin_rescuer_managment.php">Rescuer Managment</a>
         <a href="admin_storage_managment.php">Storage Managment</a>
@@ -28,16 +30,13 @@ $_SESSION['site'] = 'admin_storage_managment.php';
         </div>
         <br><br>
         <div class="content">
-            <p>This is your admin page for Storage Managment. Add more content as needed.</p>
+            <p>This is your admin page for Announcements. Add more content as needed.</p>
         </div>
         <!-- Include any additional HTML content here if needed -->
     </div>
 <br>
 <br>
-<br>
-<div class="table_base">
-</div>
-<br>
+<br><br>
     <!-- Add your scripts here -->
     <script src="admin-details-script.js"></script>
 </body>

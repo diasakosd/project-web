@@ -11,7 +11,7 @@ if (!$db) {
 // Check if the user is logged in
 session_start();
 if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
-    echo json_encode(array('error' => 'User not logged in'));
+    echo "You cant access this file";
     exit();
 }
 

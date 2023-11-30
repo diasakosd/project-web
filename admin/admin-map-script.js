@@ -87,6 +87,24 @@ xhr.onreadystatechange = function () {
         var offers_yes = L.layerGroup(markers_citizen_offer_yes);
 
 
+
+        var lines_request_yes = [];
+        for (var i = 0; i < lines_request_yes_Data.length; i++) {
+            var line_request_yes = eval(lines_request_yes_Data[i]);
+            lines_request_yes.push(line_request_yes);
+        }        
+        
+        var lines_request = L.polyline(lines_request_yes, { color: 'red' });
+
+
+
+        var lines_offer_yes = [];
+        for (var i = 0; i < lines_offer_yes_Data.length; i++) {
+            var line_offer_yes = eval(lines_offer_yes_Data[i]);
+            lines_offer_yes.push(line_offer_yes);
+        }        
+        
+        var lines_offer = L.polyline(lines_offer_yes, { color: 'red' });
         
         
         var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -108,14 +126,77 @@ xhr.onreadystatechange = function () {
             "OpenStreetMap": osm
         };
 
+
+                  // Assuming you have a Leaflet map object named 'map'
+var baseIcon = L.icon({
+    iconUrl: 'house.png',
+    iconSize: [50, 50],
+    iconAnchor: [25, 25],
+    shadowUrl: 'marker-shadow.png',
+    shadowSize: [41, 41],
+    shadowAnchor: [20.5, 25],
+    popupAnchor: [0, -25],
+});
+
+        var baseMarker = L.marker([baseLocation.lat, baseLocation.lng], { icon: baseIcon, draggable: 'true' }).addTo(map);
+
+        // Set the initial popup content
+        baseMarker.bindPopup('Base Location at: ' + baseLocation.lat + ', ' + baseLocation.lng).openPopup();
+
+        baseMarker.on('dragend', function (event) {
+            var marker = event.target;
+            var position = marker.getLatLng();
+
+            // Update the marker's position in the popup content
+            marker.setPopupContent('Base Location at: ' + position.lat + ', ' + position.lng);
+
+            // Send the new location to the server using AJAX
+            updateBaseLocation(position.lat, position.lng);
+        });
+
+        function updateBaseLocation(latitude, longitude) {
+            // Create an XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+
+            // Define the PHP script URL
+            var url = 'update_location.php';
+
+            // Create the data to be sent in the request
+            var data = 'latitude=' + latitude + '&longitude=' + longitude;
+
+            // Configure the request
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+            // Set up the callback function to handle the response
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Handle the response (if needed)
+                    console.log(xhr.responseText);
+                }
+            };
+
+            // Send the request with the data
+            xhr.send(data);
+        }
+
+
+
         var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
-    
+        
+       
+
         layerControl.addOverlay(rescuers_active, "Rescuers Active");
         layerControl.addOverlay(rescuers_noactive, "Rescuers Non-Active");
         layerControl.addOverlay(requests_no, "Requests Pending");
         layerControl.addOverlay(offers_no, "Offers Pending");
        layerControl.addOverlay(requests_yes, "Requests Accepted");
        layerControl.addOverlay(offers_yes, "Offers Accepted");
+     
+       // Create an overlay map for the line
+
+       layerControl.addOverlay(lines_offer, "Lines - Offers");
+       layerControl.addOverlay(lines_request, "Lines - Request");
 
         var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -126,6 +207,6 @@ xhr.onreadystatechange = function () {
 };
 
 // Open the AJAX request
-xhr.open("GET", "markers.php", true);
+xhr.open("GET", "markers_admin.php", true);
 // Send the request
 xhr.send();

@@ -1,8 +1,7 @@
 <?php
-include 'session_rescuer.php';
-$_SESSION['site'] = 'rescuers.php';
+include 'session_citizen.php';
+$_SESSION['site'] = '../citizen/citizens.php';
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,13 +17,13 @@ $_SESSION['site'] = 'rescuers.php';
         </div>
         <div class="content">
             <!-- Add your citizen-specific content here -->
-            <p>This is your rescuer page. Add more content as needed.</p>
+            <p>This is your citizens page. Add more content as needed.</p>
         </div>
         <div class="logout">
-            <p><a href="logout.php">Logout</a></p>
+            <p><a href="../logout.php">Logout</a></p>
         </div>
     </div>
     <!-- Add your scripts here -->
-    <script src="rescuer-details-script.js"></script>
+    <script src="citizen-details-script.js"></script>
 </body>
 </html>
