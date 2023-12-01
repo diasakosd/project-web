@@ -5,11 +5,11 @@ session_start();
 if (isset($_SESSION['username'])) {
     // Check the user's role
     if ($_SESSION['userRole'] === 'citizen') {
-        header('location: citizen/citizens.php');
+        header('location: citizen/citizen.php');
     } elseif ($_SESSION['userRole'] === 'admin') {
         header('location: admin/admin.php');
     } elseif ($_SESSION['userRole'] === 'rescuer') {
-        header('location: rescuer/rescuers.php');
+        header('location: rescuer/rescuer.php');
     }
     exit();
 }
