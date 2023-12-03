@@ -21,6 +21,7 @@ $_SESSION['site'] = '../rescuer/rescuer.php';
         <p><a class="logout-button" href="../logout.php">Logout</a></p>
         <a href="resc_see_cargo.php">See cargo</a>
         <a href="resc_load_manag.php">Load cargo</a>
+        <a href="resc_discharge_cargo.php">Discharge cargo</a>
         <a href="rescuer.php">Home</a>
     </div>   
     
@@ -37,6 +38,14 @@ $_SESSION['site'] = '../rescuer/rescuer.php';
 <br>
 <br>
 <br><br>
+<div class="table-container">
+    <div class="table-content">
+        <div class="table_base" id="tableBase"></div>
+    </div>
+    <div class="category-container">
+        <div class="category-menu" id="categoryMenu"></div>
+    </div>
+</div>
 
     <script src="rescuer-details-script.js"></script>
 </body>
