@@ -1,6 +1,13 @@
 <?php
 include 'session_rescuer.php';
 $_SESSION['site'] = '../rescuer/rescuer.php';
+
+$db = "localhost";
+$dbUsername = "root";
+$dbPassword = "";
+$dbName = "web";
+
+$conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,20 +39,26 @@ $_SESSION['site'] = '../rescuer/rescuer.php';
         <br><br>
         <div class="content">
             <p>This is your rescuer page to see your loaded cargo. Add more content as needed.</p>
+            <div id="loadedCargo"></div>
         </div>
 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+            $(document).ready(function(){
+            $.ajax({
+                url: 'get_rescuer_details.php', // PHP file to retrieve data
+                method: 'GET',
+                success: function(response){
+                    $('#loadedCargo').html(response); // Display the loaded cargo in the specified container
+                    }
+                });
+            });
+        </script>
     </div>
 <br>
 <br>
 <br><br>
-<div class="table-container">
-    <div class="table-content">
-        <div class="table_base" id="tableBase"></div>
-    </div>
-    <div class="category-container">
-        <div class="category-menu" id="categoryMenu"></div>
-    </div>
-</div>
 
     <script src="rescuer-details-script.js"></script>
 </body>

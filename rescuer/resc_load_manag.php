@@ -32,7 +32,22 @@ $_SESSION['site'] = '../rescuer/rescuer.php';
         <br><br>
         <div class="content">
             <p>This is your rescuer page for cargo management. Add more content as needed.</p>
+            <div id="loadedCargo"></div>
         </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+        $(document).ready(function(){
+            $.ajax({
+                url: 'get_rescuer_details.php', // PHP file to retrieve data
+                method: 'GET',
+                success: function(response){
+                    $('#loadedCargo').append(response); // Insert the loaded cargo into the specified container
+                }
+            });
+        });
+    </script>
 
     </div>
 <br>

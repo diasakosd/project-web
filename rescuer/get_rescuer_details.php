@@ -15,25 +15,25 @@ if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
     exit();
 }
 
-// Get the admin name based on the session username
+// Get the rescuer name based on the session username
 $username = $_SESSION['username'];
 
-// Query to get the admin name from the admin table (change the table name accordingly)
-$query = "SELECT username FROM rescuers WHERE username = '$username'";
-$result = mysqli_query($db, $query);
+// Query to get the categories from the base_storage table 
+$seeContent = "SELECT * FROM rescuer_inventory WHERE username = '$username'";
+$result = mysqli_query($db, $seeContent);
 
 if ($result) {
-    $row = mysqli_fetch_assoc($result);
-
-    if ($row !== null && isset($row['username'])) {
-        $rescuerName = $row['username'];
-        echo json_encode(array('rescuerName' => $rescuerName));
+    if (mysqli_num_rows($result) == 0) {
+        echo "You do not have any cargo yet!";
     } else {
-        echo json_encode(array('error' => 'Rescuer name not found'));
+        while ($row = mysqli_fetch_assoc($result)) {
+            echo $row['category'] . "\t" . $row['item'] . "<br>"; // Output loaded cargo
+        }
     }
+    
 } else {
-    echo json_encode(array('error' => 'Query failed: ' . mysqli_error($db)));
-}
+        echo "No loaded cargo found";
+    } 
 
 // Close the database connection
 mysqli_close($db);
