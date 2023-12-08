@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2023 at 03:51 PM
+-- Generation Time: Dec 08, 2023 at 12:05 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -58,6 +58,28 @@ CREATE TRIGGER `tr_admin_after_insert` AFTER INSERT ON `admin` FOR EACH ROW BEGI
 END
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `announcements`
+--
+
+CREATE TABLE `announcements` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `body` text NOT NULL,
+  `date_written` datetime NOT NULL DEFAULT current_timestamp(),
+  `status` varchar(255) NOT NULL DEFAULT 'NO',
+  `admin` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `announcements`
+--
+
+INSERT INTO `announcements` (`id`, `title`, `body`, `date_written`, `status`, `admin`) VALUES
+(1, 'asda', 'ssss', '2023-12-08 13:04:45', 'NO', 'damianos');
 
 -- --------------------------------------------------------
 
@@ -153,7 +175,19 @@ INSERT INTO `base_storage` (`id`, `category`, `item`, `quantity`) VALUES
 (74, 'Animal Food', 'Dog Food ', 100),
 (75, 'Animal Food', 'Cat Food', 100),
 (76, 'Food', 'Canned', 100),
-(84, 'Cleaning Supplies', 'Chlorine', 0);
+(77, 'Cleaning Supplies', 'Chlorine', 100),
+(78, 'Cleaning Supplies', 'Medical gloves', 100),
+(79, 'Clothing', 'T-Shirt', 100),
+(80, 'Hot Weather', 'Cooling Fan', 100),
+(81, 'Hot Weather', 'Cool Scarf', 100),
+(82, 'Tools', 'Whistle', 100),
+(83, 'Cold weather', 'Blankets', 100),
+(84, 'Cold weather', 'Sleeping Bag', 100),
+(85, 'Medical Supplies', 'Thermometer', 100),
+(86, 'Food', 'Rice', 100),
+(87, 'Cleaning Supplies', 'Towels', 100),
+(88, 'Cleaning Supplies', 'Wet Wipes', 100),
+(89, 'Tools', 'Fire Extinguisher', 22);
 
 -- --------------------------------------------------------
 
@@ -216,15 +250,6 @@ CREATE TABLE `citizen_offer` (
   `rescuer_username` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `citizen_offer`
---
-
-INSERT INTO `citizen_offer` (`id`, `username`, `category`, `item`, `quantity`, `time_created`, `accepted`, `time_accepted`, `rescuer_username`) VALUES
-(3, 'paki', 'Baby Essentials', 'Baby bottle', 2, '2023-11-27 12:47:20', 'YES', '2023-11-27 12:46:38', 'resquer2'),
-(4, 'paki', 'Clothing', 'Underwear', 2, '2023-11-27 12:58:37', 'YES', '2023-11-27 13:07:22', 'rescuer4'),
-(5, 'paki', 'Personal Hygiene ', 'Baby wipes', 4, '2023-11-27 13:33:38', 'YES', '2023-11-27 13:33:15', 'rescuer4');
-
 -- --------------------------------------------------------
 
 --
@@ -242,15 +267,6 @@ CREATE TABLE `citizen_request` (
   `time_accepted` timestamp NULL DEFAULT NULL,
   `rescuer_username` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `citizen_request`
---
-
-INSERT INTO `citizen_request` (`id`, `username`, `category`, `item`, `quantity`, `time_created`, `accepted`, `time_accepted`, `rescuer_username`) VALUES
-(4, 'malakas', 'Animal Food', 'Cat Food', 22, '2023-11-27 12:56:59', 'NO', NULL, NULL),
-(5, 'malakas', 'Kitchen Supplies', 'Paring knives', 22, '2023-11-27 13:20:16', 'NO', NULL, NULL),
-(8, 'paki', 'Clothing', 'Underwear', 5, '2023-11-27 14:50:32', 'YES', '2023-11-27 14:50:06', 'resquer2');
 
 -- --------------------------------------------------------
 
@@ -351,10 +367,7 @@ CREATE TABLE `rescuer_inventory` (
 
 INSERT INTO `rescuer_inventory` (`id`, `username`, `category`, `item`, `quantity`) VALUES
 (4, 'rescuer3', '', NULL, NULL),
-(5, 'resquer2', 'Animal Food', 'Cat Food', 22),
-(6, 'resquer2', 'Cleaning Supplies', 'Dust mask', 33),
-(7, 'rescuer4', NULL, NULL, NULL),
-(8, 'resquer1', 'Tools', 'Flashlight', 2);
+(7, 'rescuer4', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -403,6 +416,13 @@ DELIMITER ;
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`username`);
+
+--
+-- Indexes for table `announcements`
+--
+ALTER TABLE `announcements`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `admin_anounce` (`admin`);
 
 --
 -- Indexes for table `base_storage`
@@ -461,10 +481,16 @@ ALTER TABLE `rescuer_inventory`
 --
 
 --
+-- AUTO_INCREMENT for table `announcements`
+--
+ALTER TABLE `announcements`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `base_storage`
 --
 ALTER TABLE `base_storage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT for table `citizen_offer`
@@ -487,6 +513,12 @@ ALTER TABLE `rescuer_inventory`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `announcements`
+--
+ALTER TABLE `announcements`
+  ADD CONSTRAINT `admin_anounce` FOREIGN KEY (`admin`) REFERENCES `admin` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `citizen_offer`
