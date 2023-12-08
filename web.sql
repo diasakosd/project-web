@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 08, 2023 at 12:05 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Εξυπηρετητής: 127.0.0.1
+-- Χρόνος δημιουργίας: 08 Δεκ 2023 στις 19:38:04
+-- Έκδοση διακομιστή: 10.4.28-MariaDB
+-- Έκδοση PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `web`
+-- Βάση δεδομένων: `web`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
+-- Δομή πίνακα για τον πίνακα `admin`
 --
 
 CREATE TABLE `admin` (
@@ -33,7 +33,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `admin`
+-- Άδειασμα δεδομένων του πίνακα `admin`
 --
 
 INSERT INTO `admin` (`username`, `password`) VALUES
@@ -43,7 +43,7 @@ INSERT INTO `admin` (`username`, `password`) VALUES
 ('kyrios', 'kyrios');
 
 --
--- Triggers `admin`
+-- Δείκτες `admin`
 --
 DELIMITER $$
 CREATE TRIGGER `after_delete_admin` AFTER DELETE ON `admin` FOR EACH ROW BEGIN
@@ -62,7 +62,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `announcements`
+-- Δομή πίνακα για τον πίνακα `announcements`
 --
 
 CREATE TABLE `announcements` (
@@ -75,7 +75,7 @@ CREATE TABLE `announcements` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `announcements`
+-- Άδειασμα δεδομένων του πίνακα `announcements`
 --
 
 INSERT INTO `announcements` (`id`, `title`, `body`, `date_written`, `status`, `admin`) VALUES
@@ -84,7 +84,7 @@ INSERT INTO `announcements` (`id`, `title`, `body`, `date_written`, `status`, `a
 -- --------------------------------------------------------
 
 --
--- Table structure for table `base_storage`
+-- Δομή πίνακα για τον πίνακα `base_storage`
 --
 
 CREATE TABLE `base_storage` (
@@ -95,7 +95,7 @@ CREATE TABLE `base_storage` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `base_storage`
+-- Άδειασμα δεδομένων του πίνακα `base_storage`
 --
 
 INSERT INTO `base_storage` (`id`, `category`, `item`, `quantity`) VALUES
@@ -192,7 +192,7 @@ INSERT INTO `base_storage` (`id`, `category`, `item`, `quantity`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `citizens`
+-- Δομή πίνακα για τον πίνακα `citizens`
 --
 
 CREATE TABLE `citizens` (
@@ -205,7 +205,7 @@ CREATE TABLE `citizens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `citizens`
+-- Άδειασμα δεδομένων του πίνακα `citizens`
 --
 
 INSERT INTO `citizens` (`full_name`, `username`, `password`, `phone`, `latitude`, `longitude`) VALUES
@@ -216,7 +216,7 @@ INSERT INTO `citizens` (`full_name`, `username`, `password`, `phone`, `latitude`
 ('xaxaxa', 'xaxa', '123', 123, 38.2674, 21.7529);
 
 --
--- Triggers `citizens`
+-- Δείκτες `citizens`
 --
 DELIMITER $$
 CREATE TRIGGER `after_delete_citizen` AFTER DELETE ON `citizens` FOR EACH ROW BEGIN
@@ -235,7 +235,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `citizen_offer`
+-- Δομή πίνακα για τον πίνακα `citizen_offer`
 --
 
 CREATE TABLE `citizen_offer` (
@@ -253,7 +253,7 @@ CREATE TABLE `citizen_offer` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `citizen_request`
+-- Δομή πίνακα για τον πίνακα `citizen_request`
 --
 
 CREATE TABLE `citizen_request` (
@@ -271,7 +271,7 @@ CREATE TABLE `citizen_request` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `combined_data`
+-- Δομή πίνακα για τον πίνακα `combined_data`
 --
 
 CREATE TABLE `combined_data` (
@@ -281,7 +281,7 @@ CREATE TABLE `combined_data` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `combined_data`
+-- Άδειασμα δεδομένων του πίνακα `combined_data`
 --
 
 INSERT INTO `combined_data` (`username`, `password`, `table_name`) VALUES
@@ -302,7 +302,7 @@ INSERT INTO `combined_data` (`username`, `password`, `table_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rescuers`
+-- Δομή πίνακα για τον πίνακα `rescuers`
 --
 
 CREATE TABLE `rescuers` (
@@ -314,7 +314,7 @@ CREATE TABLE `rescuers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `rescuers`
+-- Άδειασμα δεδομένων του πίνακα `rescuers`
 --
 
 INSERT INTO `rescuers` (`username`, `password`, `phone`, `latitude`, `longitude`) VALUES
@@ -324,7 +324,7 @@ INSERT INTO `rescuers` (`username`, `password`, `phone`, `latitude`, `longitude`
 ('resquer2', 'resquerpass', 2147483647, 38.2418, 21.7311);
 
 --
--- Triggers `rescuers`
+-- Δείκτες `rescuers`
 --
 DELIMITER $$
 CREATE TRIGGER `after_delete_rescuer` AFTER DELETE ON `rescuers` FOR EACH ROW BEGIN
@@ -350,7 +350,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rescuer_inventory`
+-- Δομή πίνακα για τον πίνακα `rescuer_inventory`
 --
 
 CREATE TABLE `rescuer_inventory` (
@@ -362,17 +362,20 @@ CREATE TABLE `rescuer_inventory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `rescuer_inventory`
+-- Άδειασμα δεδομένων του πίνακα `rescuer_inventory`
 --
 
 INSERT INTO `rescuer_inventory` (`id`, `username`, `category`, `item`, `quantity`) VALUES
+(1, 'resquer1', 'Food', 'Sardines', NULL),
+(2, 'rescuer3', 'Food', 'Sardines', NULL),
+(3, 'resquer1', 'Beverages', 'Water', NULL),
 (4, 'rescuer3', '', NULL, NULL),
 (7, 'rescuer4', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `storage_location`
+-- Δομή πίνακα για τον πίνακα `storage_location`
 --
 
 CREATE TABLE `storage_location` (
@@ -381,14 +384,14 @@ CREATE TABLE `storage_location` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `storage_location`
+-- Άδειασμα δεδομένων του πίνακα `storage_location`
 --
 
 INSERT INTO `storage_location` (`latitude`, `longitude`) VALUES
 (38.2463, 21.7351);
 
 --
--- Triggers `storage_location`
+-- Δείκτες `storage_location`
 --
 DELIMITER $$
 CREATE TRIGGER `before_insert_storage_location` BEFORE INSERT ON `storage_location` FOR EACH ROW BEGIN
@@ -408,37 +411,37 @@ $$
 DELIMITER ;
 
 --
--- Indexes for dumped tables
+-- Ευρετήρια για άχρηστους πίνακες
 --
 
 --
--- Indexes for table `admin`
+-- Ευρετήρια για πίνακα `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`username`);
 
 --
--- Indexes for table `announcements`
+-- Ευρετήρια για πίνακα `announcements`
 --
 ALTER TABLE `announcements`
   ADD PRIMARY KEY (`id`),
   ADD KEY `admin_anounce` (`admin`);
 
 --
--- Indexes for table `base_storage`
+-- Ευρετήρια για πίνακα `base_storage`
 --
 ALTER TABLE `base_storage`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `unique_category_item` (`category`,`item`);
 
 --
--- Indexes for table `citizens`
+-- Ευρετήρια για πίνακα `citizens`
 --
 ALTER TABLE `citizens`
   ADD PRIMARY KEY (`username`) USING HASH;
 
 --
--- Indexes for table `citizen_offer`
+-- Ευρετήρια για πίνακα `citizen_offer`
 --
 ALTER TABLE `citizen_offer`
   ADD PRIMARY KEY (`id`),
@@ -447,7 +450,7 @@ ALTER TABLE `citizen_offer`
   ADD KEY `fk_citizen_offer_rescuer` (`rescuer_username`);
 
 --
--- Indexes for table `citizen_request`
+-- Ευρετήρια για πίνακα `citizen_request`
 --
 ALTER TABLE `citizen_request`
   ADD PRIMARY KEY (`id`),
@@ -456,20 +459,20 @@ ALTER TABLE `citizen_request`
   ADD KEY `fk_citizen_request_rescuer` (`rescuer_username`);
 
 --
--- Indexes for table `combined_data`
+-- Ευρετήρια για πίνακα `combined_data`
 --
 ALTER TABLE `combined_data`
   ADD KEY `idx_combined_data` (`username`,`password`),
   ADD KEY `user_data` (`username`) USING HASH;
 
 --
--- Indexes for table `rescuers`
+-- Ευρετήρια για πίνακα `rescuers`
 --
 ALTER TABLE `rescuers`
   ADD PRIMARY KEY (`username`);
 
 --
--- Indexes for table `rescuer_inventory`
+-- Ευρετήρια για πίνακα `rescuer_inventory`
 --
 ALTER TABLE `rescuer_inventory`
   ADD PRIMARY KEY (`id`),
@@ -477,51 +480,51 @@ ALTER TABLE `rescuer_inventory`
   ADD KEY `rescuers_request_ibfk_2` (`category`,`item`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT για άχρηστους πίνακες
 --
 
 --
--- AUTO_INCREMENT for table `announcements`
+-- AUTO_INCREMENT για πίνακα `announcements`
 --
 ALTER TABLE `announcements`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `base_storage`
+-- AUTO_INCREMENT για πίνακα `base_storage`
 --
 ALTER TABLE `base_storage`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
--- AUTO_INCREMENT for table `citizen_offer`
+-- AUTO_INCREMENT για πίνακα `citizen_offer`
 --
 ALTER TABLE `citizen_offer`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `citizen_request`
+-- AUTO_INCREMENT για πίνακα `citizen_request`
 --
 ALTER TABLE `citizen_request`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `rescuer_inventory`
+-- AUTO_INCREMENT για πίνακα `rescuer_inventory`
 --
 ALTER TABLE `rescuer_inventory`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- Constraints for dumped tables
+-- Περιορισμοί για άχρηστους πίνακες
 --
 
 --
--- Constraints for table `announcements`
+-- Περιορισμοί για πίνακα `announcements`
 --
 ALTER TABLE `announcements`
   ADD CONSTRAINT `admin_anounce` FOREIGN KEY (`admin`) REFERENCES `admin` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `citizen_offer`
+-- Περιορισμοί για πίνακα `citizen_offer`
 --
 ALTER TABLE `citizen_offer`
   ADD CONSTRAINT `citizen_offer_ibfk_1` FOREIGN KEY (`username`) REFERENCES `citizens` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -529,7 +532,7 @@ ALTER TABLE `citizen_offer`
   ADD CONSTRAINT `fk_citizen_offer_rescuer` FOREIGN KEY (`rescuer_username`) REFERENCES `rescuers` (`username`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Constraints for table `citizen_request`
+-- Περιορισμοί για πίνακα `citizen_request`
 --
 ALTER TABLE `citizen_request`
   ADD CONSTRAINT `citizen_request_ibfk_1` FOREIGN KEY (`username`) REFERENCES `citizens` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -537,7 +540,7 @@ ALTER TABLE `citizen_request`
   ADD CONSTRAINT `fk_citizen_request_rescuer` FOREIGN KEY (`rescuer_username`) REFERENCES `rescuers` (`username`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Constraints for table `rescuer_inventory`
+-- Περιορισμοί για πίνακα `rescuer_inventory`
 --
 ALTER TABLE `rescuer_inventory`
   ADD CONSTRAINT `rescuers_request_ibfk_1` FOREIGN KEY (`username`) REFERENCES `rescuers` (`username`) ON DELETE CASCADE ON UPDATE CASCADE,
