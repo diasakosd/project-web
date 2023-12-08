@@ -38,16 +38,16 @@ $_SESSION['site'] = '../rescuer/rescuer.php';
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script>
-        $(document).ready(function(){
-            $.ajax({
-                url: 'get_rescuer_details.php', // PHP file to retrieve data
-                method: 'GET',
-                success: function(response){
-                    $('#loadedCargo').append(response); // Insert the loaded cargo into the specified container
-                }
+            $(document).ready(function(){
+                $.ajax({
+                    url: 'get_rescuer_details.php', // PHP file to retrieve data
+                    method: 'GET',
+                    success: function(response){
+                        $('#loadedCargo').append(response); // Insert the loaded cargo into the specified container
+                    }
+                });
             });
-        });
-    </script>
+        </script>
 
     </div>
 <br>

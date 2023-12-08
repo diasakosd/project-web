@@ -32,34 +32,19 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
         <a href="rescuer.php">Home</a>
     </div>   
     
-    <div class="container">
-        <div class="header">
-            
-        </div>
-        <br><br>
-        <div class="content">
-            <p>This is your rescuer page to see your loaded cargo. Add more content as needed.</p>
-            <div id="loadedCargo"></div>
-        </div>
-
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-        <script>
-            $(document).ready(function(){
-            $.ajax({
-                url: 'get_rescuer_details.php', // PHP file to retrieve data
-                method: 'GET',
-                success: function(response){
-                    $('#loadedCargo').html(response); // Display the loaded cargo in the specified container
-                    }
-                });
-            });
-        </script>
+    <div class="content">
+        <h3>This is your rescuer page to see your loaded cargo. Add more content as needed.</h3>
+        <table id="loadedCargoTable" border="1">
+            <tbody></tbody>
+        </table>
+    </div>
     </div>
 <br>
 <br>
 <br><br>
 
     <script src="rescuer-details-script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="cargo_table.js"></script>
 </body>
 </html>

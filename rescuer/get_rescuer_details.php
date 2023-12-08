@@ -19,21 +19,28 @@ if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
 $username = $_SESSION['username'];
 
 // Query to get the categories from the base_storage table 
-$seeContent = "SELECT * FROM rescuer_inventory WHERE username = '$username'";
+$seeContent = "SELECT category, item FROM rescuer_inventory WHERE username = '$username'";
 $result = mysqli_query($db, $seeContent);
 
 if ($result) {
-    if (mysqli_num_rows($result) == 0) {
-        echo "You do not have any cargo yet!";
-    } else {
-        while ($row = mysqli_fetch_assoc($result)) {
-            echo $row['category'] . "\t" . $row['item'] . "<br>"; // Output loaded cargo
-        }
+    $cargoData = array(); // Initialize an array to hold cargo data
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        // Append each cargo row to the cargoData array
+        $cargoData[] = $row;
     }
-    
+
+    if (empty($cargoData)) {
+        // Send a specific message in JSON format when there's no cargo
+        echo json_encode(array('message' => 'You do not have any cargo yet!'));
+    } else {
+        // Output cargo data in JSON format
+        echo json_encode($cargoData);
+    }
 } else {
-        echo "No loaded cargo found";
-    } 
+    echo json_encode(array('error' => 'No loaded cargo found'));
+}
+ 
 
 // Close the database connection
 mysqli_close($db);
