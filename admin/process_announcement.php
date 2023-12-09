@@ -1,37 +1,66 @@
 <?php
 // process_announcement.php
-session_start();
-if (isset($_POST['submit'])) {
-    // Get the form data
-    $title = $_POST['title'];
-    $body = $_POST['body'];
 
-    // Additional data (admin username)
-    $admin =  $_SESSION['username']; // Replace with the actual admin username
+// Check if the request is a POST request
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Get the raw POST data
+    $postData = file_get_contents('php://input');
 
-    // Connect to the database (adjust the connection details)
-    $db = mysqli_connect('localhost', 'root', '', 'web');
+    // Decode the JSON data
+    $formData = json_decode($postData, true);
 
-    if (!$db) {
-        die("Connection failed: " . mysqli_connect_error());
-    }
+    // Check if the required fields are present
+    if (isset($formData['title'], $formData['body'], $formData['selectedItems'])) {
+        // Get the form data
+        $title = $formData['title'];
+        $body = $formData['body'];
+        $selectedItems = $formData['selectedItems'];
 
-    // Escape the data to prevent SQL injection
-    $title = mysqli_real_escape_string($db, $title);
-    $body = mysqli_real_escape_string($db, $body);
-    $admin = mysqli_real_escape_string($db, $admin);
+        // Additional data (admin username) - replace 'your_admin_username' with the actual admin username retrieval logic
+        session_start();
+        $admin = isset($_SESSION['username']) ? $_SESSION['username'] : 'your_admin_username';
 
-    // Insert the data into the database
-    $query = "INSERT INTO announcements (title, body, admin) VALUES ('$title', '$body', '$admin')";
+        // Connect to the database (adjust the connection details)
+        $db = mysqli_connect('localhost', 'root', '', 'web');
 
-    if (mysqli_query($db, $query)) {
-        echo "Announcement added successfully!";
+        if (!$db) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+
+        // Escape the data to prevent SQL injection
+        $title = mysqli_real_escape_string($db, $title);
+        $body = mysqli_real_escape_string($db, $body);
+        $admin = mysqli_real_escape_string($db, $admin);
+
+        // Insert the announcement into the announcements table
+        $query = "INSERT INTO announcements (title, body, admin) VALUES ('$title', '$body', '$admin')";
+
+        if (mysqli_query($db, $query)) {
+            // Get the ID of the inserted announcement
+            $announcementId = mysqli_insert_id($db);
+
+            // Insert selected items into the announcement_items table
+            foreach ($selectedItems as $item) {
+                $item = mysqli_real_escape_string($db, $item);
+                $itemQuery = "INSERT INTO announcement_items (announcement_id, item) VALUES ('$announcementId', '$item')";
+                mysqli_query($db, $itemQuery);
+            }
+
+            // Send a success response
+            echo json_encode(array('success' => true));
+        } else {
+            // Send an error response
+            echo json_encode(array('success' => false, 'error' => mysqli_error($db)));
+        }
+
+        // Close the database connection
+        mysqli_close($db);
     } else {
-        echo "Error adding announcement: " . mysqli_error($db);
+        // Send an error response if required fields are missing
+        echo json_encode(array('success' => false, 'error' => 'Required fields are missing.'));
     }
-
-    mysqli_close($db);
 } else {
-    echo "Invalid request.";
+    // Send an error response for invalid request method
+    echo json_encode(array('success' => false, 'error' => 'Invalid request method.'));
 }
 ?>
