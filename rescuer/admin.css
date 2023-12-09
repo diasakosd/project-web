@@ -278,3 +278,30 @@ body {
 }
 
 /* rescuer content */
+
+/* Example CSS for customizing the table */
+#loadedCargoTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#loadedCargoTable th,
+#loadedCargoTable td {
+    padding: 8px;
+    text-align: center;
+}
+
+#loadedCargoTable thead {
+    background-color: #661a1a;
+    font-weight: bold;
+    color: white; /* Specify text color */
+}
+
+#loadedCargoTable tbody tr:nth-child(even) {
+    background-color: #6d1212;
+}
+
+#loadedCargoTable tbody tr:hover {
+    background-color: #8f1f1f;
+}

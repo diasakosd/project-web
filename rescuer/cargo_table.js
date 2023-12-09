@@ -3,8 +3,10 @@ $(document).ready(function(){
         url: 'get_rescuer_details.php', // PHP file to retrieve data
         method: 'GET',
         success: function(response){
+            console.log("Response received:", response); // Check the response
             try {
                 var cargoData = JSON.parse(response);
+        console.log("Parsed cargoData:", cargoData); // Check parsed cargoData
 
                 // Reference to the tbody of the table
                 var tableBody = $('#loadedCargoTable tbody');
