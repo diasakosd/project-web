@@ -28,7 +28,7 @@ $_SESSION['site'] = '../admin/admin.php';
         <div class="header">
             
         </div>
-        <br><br>
+        <br>
         <div class="content">
             <p>This is your admin page. Add more content as needed.</p>
         </div>

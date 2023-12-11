@@ -45,7 +45,6 @@ $_SESSION['site'] = '../admin/admin_storage_managment.php';
 
 
 
-
 <br>
 <button id="updateTableBtn">Update Table</button>
 <br><br>

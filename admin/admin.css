@@ -344,23 +344,30 @@ body {
 .table-container {
     display: flex;
     align-items: flex-start;
+    overflow: auto;
 }
 
 .table-content {
     flex-grow: 1; /* Allow the table to grow and take remaining space */
+    margin-right: 10px;
 }
 
 .category-container {
     margin-left: 20px; /* Adjust the margin between the table and the category menu */
+    width: 100px; 
 }
 
 .category-menu {
     white-space: nowrap; /* Prevent categories from wrapping to a new line */
+    margin-top: 10px;
 }
 
 .category-menu label {
     display: block;
     margin-bottom: 5px; /* Adjust the spacing between categories */
+}
+.category-checkbox {
+    margin-right: 5px; /* Adjust the margin between checkbox and label */
 }
 
 /* CSS for the form container */
@@ -411,3 +418,27 @@ button {
     margin-top: 10px;
 }
 
+.announcement-container {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.announcement h3 {
+    color: #333;
+}
+
+.announcement p {
+    color: #555;
+}
+
+.announcement ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.announcement li {
+    margin-bottom: 5px;
+}
