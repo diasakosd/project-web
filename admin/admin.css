@@ -363,3 +363,51 @@ body {
     margin-bottom: 5px; /* Adjust the spacing between categories */
 }
 
+/* CSS for the form container */
+.announcement-form-container {
+    width: 40%;
+    margin: 0 auto;
+}
+
+#announcementForm {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+input,
+select {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%; /* Full width for input and select */
+    box-sizing: border-box; /* Include padding and border in the width */
+}
+
+textarea {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%; /* Full width for textarea */
+    height: 150px; /* Set a specific height for textarea */
+    box-sizing: border-box; /* Include padding and border in the width */
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/* CSS for the success message */
+#successMessage {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4CAF50;
+    margin-top: 10px;
+}
+
