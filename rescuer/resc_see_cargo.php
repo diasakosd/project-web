@@ -38,6 +38,9 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
         <table id="loadedCargoTable" border="1">
                 <tbody></tbody>
         </table>
+        <br>
+        <button type="button" id="dischargeBtn">Discharge cargo.</button>
+        <button type="button" id="LoadBtn">Load cargo.</button>
     </div>
     
 <br>
