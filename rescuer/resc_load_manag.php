@@ -20,8 +20,7 @@ $_SESSION['site'] = '../rescuer/rescuer.php';
         <img class="logo" src="Screenshot_5.png" alt="Logo">
         <p><a class="logout-button" href="../logout.php">Logout</a></p>
         <a href="resc_see_cargo.php">See cargo</a>
-        <a href="resc_load_manag.php">Load cargo</a>
-        <a href="resc_discharge_cargo.php">Discharge cargo</a>
+        <a href="resc_load_manag.php">Cargo Management</a>
         <a href="rescuer.php">Home</a>
     </div>   
     
