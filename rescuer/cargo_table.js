@@ -6,34 +6,37 @@ $(document).ready(function(){
             console.log("Response received:", response); // Check the response
             try {
                 var cargoData = JSON.parse(response);
-        console.log("Parsed cargoData:", cargoData); // Check parsed cargoData
+                console.log("Parsed cargoData:", cargoData); // Check parsed cargoData
 
-                // Reference to the tbody of the table
                 var tableBody = $('#loadedCargoTable tbody');
 
-                // Clear the table body before populating it with new content
-                tableBody.empty();
+                tableBody.empty(); // Clear the table body before populating it with new content
 
                 if (cargoData.hasOwnProperty('message')) {
-                    // User has no cargo, display the message
                     tableBody.append('<tr><td colspan="2">' + cargoData.message + '</td></tr>');
                 } else if (cargoData.length > 0) {
-                    // Display headers for the first cargo item
                     var headerRow = $('<tr></tr>'); // Create a header row
+                    var selectAllCheckbox = $('<input type="checkbox">');
+                    var selectAllCell = $('<th>Select All</th>').append(selectAllCheckbox);
+                    headerRow.append(selectAllCell);
+                    
                     Object.keys(cargoData[0]).forEach(function(key){
                         headerRow.append('<th>' + key + '</th>'); // Display headers
                     });
                     $('#loadedCargoTable').append('<thead>' + headerRow.prop('outerHTML') + '</thead>');
 
-                    // Iterate through each cargo item and create a new row in the table
                     cargoData.forEach(function(cargo){
                         var row = $('<tr></tr>'); // Create a new row for each cargo item
+
+                        // Add a checkbox to each row
+                        var checkboxCell = $('<td><input type="checkbox"></td>');
+                        row.append(checkboxCell);
+
                         Object.keys(cargo).forEach(function(key){
                             row.append('<td>' + cargo[key] + '</td>'); // Display data
                         });
 
-                        // Append the row to the table body
-                        tableBody.append(row);
+                        tableBody.append(row); // Append the row to the table body
                     });
                 } // If cargoData is empty (no cargo), do nothing (no rows will be added)
             } catch (error) {
