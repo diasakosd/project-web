@@ -10,11 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $formData = json_decode($postData, true);
 
     // Check if the required fields are present
-    if (isset($formData['title'], $formData['body'], $formData['selectedItems'])) {
+    if (isset($formData['title'], $formData['body'], $formData['selectedItems'], $formData['itemCategories'])) {
         // Get the form data
         $title = $formData['title'];
         $body = $formData['body'];
         $selectedItems = $formData['selectedItems'];
+        $itemCategories = $formData['itemCategories'];
 
         // Additional data (admin username) - replace 'your_admin_username' with the actual admin username retrieval logic
         session_start();
@@ -39,17 +40,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Get the ID of the inserted announcement
             $announcementId = mysqli_insert_id($db);
 
-            // Insert selected items into the announcement_items table
-            foreach ($selectedItems as $item) {
+            // Insert selected items into the announcements_items table with categories
+            foreach ($selectedItems as $index => $item) {
                 $item = mysqli_real_escape_string($db, $item);
-                $itemQuery = "INSERT INTO announcement_items (announcement_id, item) VALUES ('$announcementId', '$item')";
-                mysqli_query($db, $itemQuery);
+                $category = mysqli_real_escape_string($db, $itemCategories[$index]);
+
+                // Insert into the announcements_items table
+                $itemQuery = "INSERT INTO announcements_items (announcement_id, category, item) VALUES ('$announcementId', '$category', '$item')";
+
+                if (!mysqli_query($db, $itemQuery)) {
+                    // Handle errors for announcements_items
+                    echo json_encode(array('success' => false, 'error' => mysqli_error($db)));
+                    mysqli_close($db);
+                    exit; // Stop further execution
+                }
             }
 
             // Send a success response
             echo json_encode(array('success' => true));
         } else {
-            // Send an error response
+            // Send an error response for announcements
             echo json_encode(array('success' => false, 'error' => mysqli_error($db)));
         }
 

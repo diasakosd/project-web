@@ -36,33 +36,34 @@ $_SESSION['site'] = '../admin/admin_announcements.php';
         </div>
     </div>
 
- <!-- New div for the form and success message -->
-<div class="announcement-form-container">
-    <form id="announcementForm">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required>
-        <br>
-        <label for="body">Body:</label>
-        <textarea id="body" name="body" required></textarea>
-        <br>
-        <label for="addItems">Select Items:</label><br>
-        <select id="selectedItems" name="selectedItems[]" multiple>
-            <!-- Populate the dropdown with items from the base_storage table -->
-        </select>
-        <br>
-        <button type="button" onclick="submitForm()">Submit</button>
-    </form>
+    <div class="announcement-form-container">
+        <form id="announcementForm">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+            <br>
+            <label for="body">Body:</label>
+            <textarea id="body" name="body" required></textarea>
+            <br>
+            <label for="selectedItems">Select Items:</label><br>
+            <select id="selectedItems" name="selectedItems[]" multiple>
+                <!-- Items will be populated dynamically using JavaScript -->
+            </select>
 
-    <!-- Display a message if the insertion was successful -->
-    <div id="successMessage"></div>
-</div>
+            <!-- Hidden field to store the category for each selected item -->
+            <input type="hidden" id="itemCategories" name="itemCategories" value="">
 
-    <br>
-    <br>
-    <br><br>
+            <br>
+            <button type="button" onclick="submitForm()">Submit</button>
+        </form>
 
-    <!-- Include the new JavaScript file -->
+        <!-- Display a message if the insertion was successful -->
+        <div id="successMessage"></div>
+        <!-- Display selected items and categories -->
+        <div id="selectedItemsMessage"></div>
+
+    <!-- Include the JavaScript file -->
     <script src="announcement_script.js"></script>
+
 
     <!-- Add your scripts here -->
     <script src="admin-details-script.js"></script>

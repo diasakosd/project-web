@@ -28,12 +28,26 @@ $_SESSION['site'] = '../citizen/announcement_citizen.php';
         </div>
         <!-- Include any additional HTML content here if needed -->
     </div>
+
     <div class="announcement-container">
         <div class="content" id="announcementsContainer"></div>
         <br><br>
     </div>
-    <!-- Add your scripts here -->
+
+    <div class="announcement-checkbox-container"></div>
+<div class="announcement-submit">
+    <form id="submitAnnouncementsForm"></form>
+    <div id="selectedAnnouncementsMessage"></div>
+    <button type="button" onclick="submitSelectedAnnouncements()">Submit Announcements</button>
+    <div class=successmessage></div>
+</div>
+
+    <br><br>
+<!-- Add your scripts here -->
+<script src="create_checkboxes.js"></script>
+<script src="announcements.js"></script>
+
     <script src="citizen-details-script.js"></script>
-    <script src="announcements.js"></script>
+
 </body>
 </html>

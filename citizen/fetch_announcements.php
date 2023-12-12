@@ -19,12 +19,16 @@ if ($result) {
         while ($row = mysqli_fetch_assoc($result)) {
             echo '<div class="announcement-container" style="background-color: #fff; border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; border-radius: 8px;">';
             echo '<div class="announcement">';
+            
+            // Display the ID
+            echo '<p style="color: #777;">ID: ' . $row['id'] . '</p>';
+            
             echo '<h3 style="color: #333;">' . $row['title'] . '</h3>';
             echo '<p style="color: #555;">' . $row['body'] . '</p>';
             
             // Fetch items related to the announcement
             $announcementId = $row['id'];
-            $itemQuery = "SELECT item FROM announcement_items WHERE announcement_id = $announcementId";
+            $itemQuery = "SELECT item FROM announcements_items WHERE announcement_id = $announcementId";
             $itemResult = mysqli_query($db, $itemQuery);
 
             if ($itemResult) {
@@ -47,7 +51,6 @@ if ($result) {
 } else {
     echo json_encode(array('error' => 'Query failed: ' . mysqli_error($db)));
 }
-
 
 // Close the database connection
 mysqli_close($db);
