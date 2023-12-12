@@ -16,7 +16,7 @@ $(document).ready(function(){
                     tableBody.append('<tr><td colspan="2">' + cargoData.message + '</td></tr>');
                 } else if (cargoData.length > 0) {
                     var headerRow = $('<tr></tr>'); // Create a header row
-                    var selectAllCheckbox = $('<input type="checkbox">');
+                    var selectAllCheckbox = $('<input type="checkbox" class="select_all_items">');
                     var selectAllCell = $('<th>Select All</th>').append(selectAllCheckbox);
                     headerRow.append(selectAllCell);
                     
@@ -25,8 +25,9 @@ $(document).ready(function(){
                     });
                     $('#loadedCargoTable').append('<thead>' + headerRow.prop('outerHTML') + '</thead>');
 
-                    cargoData.forEach(function(cargo){
-                        var row = $('<tr></tr>'); // Create a new row for each cargo item
+                    cargoData.forEach(function(cargo, index){
+                        var row = $('<tr class="item_id"></tr>'); // Create a new row for each cargo item
+                        var itemId = index + 1; // Generate item_id starting from 1
 
                         // Add a checkbox to each row
                         var checkboxCell = $('<td><input type="checkbox"></td>');
@@ -38,6 +39,20 @@ $(document).ready(function(){
 
                         tableBody.append(row); // Append the row to the table body
                     });
+
+                    function selectAllRows() {
+                        return $('.item_id');
+                    }
+                
+                    $('.select_all_items').on('change', function() {
+                        var isChecked = $(this).prop('checked');
+                        var rows = selectAllRows();
+                
+                        rows.each(function() {
+                            $(this).find('input[type="checkbox"]').prop('checked', isChecked);
+                        });
+                    });
+
                 } // If cargoData is empty (no cargo), do nothing (no rows will be added)
             } catch (error) {
                 console.error("Error parsing JSON: ", error);
