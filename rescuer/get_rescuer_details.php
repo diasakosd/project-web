@@ -19,7 +19,7 @@ if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
 $username = $_SESSION['username'];
 
 // Query to get the categories from the base_storage table 
-$seeContent = "SELECT category, item FROM rescuer_inventory WHERE username = '$username'";
+$seeContent = "SELECT category AS Category, item AS Item, quantity AS Quantity FROM rescuer_inventory WHERE username = '$username'";
 $result = mysqli_query($db, $seeContent);
 
 if ($result) {

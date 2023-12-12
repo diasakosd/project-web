@@ -281,7 +281,7 @@ body {
 
 /* Example CSS for customizing the table */
 #loadedCargoTable {
-    width: 100%;
+    width: 80%;
     border-collapse: collapse;
     margin-top: 20px;
 }
@@ -293,15 +293,17 @@ body {
 }
 
 #loadedCargoTable thead {
-    background-color: #661a1a;
+    background-color: #0029e2;
     font-weight: bold;
     color: white; /* Specify text color */
 }
 
-#loadedCargoTable tbody tr:nth-child(even) {
-    background-color: #6d1212;
+#loadedCargoTable tbody tr {
+    background-color: #e8ebec;
+    color: rgb(37, 35, 35); /* Specify text color */
 }
 
 #loadedCargoTable tbody tr:hover {
-    background-color: #8f1f1f;
+    background-color: #f16f5d;
+    color: white; /* Specify text color */
 }
