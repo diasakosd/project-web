@@ -234,8 +234,8 @@ body {
 .input-box i{
     position: absolute;
     right: -2%;
-    top: 55%;
-    transform: translateY(-50%);
+    top: 40%;
+    transform: translateY(50%);
     font-size: 20px;
 }
 
@@ -286,26 +286,32 @@ body {
     margin-top: 20px;
 }
 
-#loadedCargoTable th,
-#loadedCargoTable td {
+.tableResc th,
+.tableResc td {
     padding: 8px;
     text-align: center;
 }
 
-#loadedCargoTable thead {
+.tableResc thead {
     background-color: #0029e2;
     font-weight: bold;
     color: white; /* Specify text color */
 }
 
-#loadedCargoTable tbody tr {
+.tableResc tbody tr {
     background-color: #e8ebec;
     color: rgb(37, 35, 35); /* Specify text color */
 }
 
-#loadedCargoTable tbody tr:hover {
+.tableResc tbody tr:hover {
     background-color: #f16f5d;
     color: white; /* Specify text color */
+    cursor: pointer;
+}
+
+#loadedCargoTable tbody tr.item_id td input[type="checkbox"]:hover,
+.select_all_items:hover {
+    cursor: pointer;
 }
 
 #dischargeBtn{
@@ -324,6 +330,7 @@ body {
     color: rgb(219, 218, 130); /* Specify text color */
     border-radius: 40px;
     border: 1px solid rgb(65, 154, 226);
+    cursor: pointer;
 }
 
 #LoadBtn{
@@ -344,5 +351,9 @@ body {
     color: rgb(219, 218, 130); /* Specify text color */
     border-radius: 40px;
     border: 1px solid rgb(65, 154, 226);
-    
+    cursor: pointer;
+}
+
+.button{
+    cursor: pointer;
 }

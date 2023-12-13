@@ -38,6 +38,17 @@ $(document).ready(function(){
                         });
 
                         tableBody.append(row); // Append the row to the table body
+
+                        // Handle row click to toggle the checkbox state
+                        row.on('click', function() {
+                            var checkbox = $(this).find('input[type="checkbox"]');
+                            checkbox.prop('checked', !checkbox.prop('checked'));
+                        });
+
+                        // Handle checkbox click to stop propagation -- Actually disabling the checkbox. Act as a row click (see above)
+                        checkboxCell.find('input[type="checkbox"]').on('click', function(event) {
+                            event.stopPropagation();
+                        });
                     });
 
                     function selectAllRows() {
@@ -63,3 +74,4 @@ $(document).ready(function(){
         }
     });
 });
+

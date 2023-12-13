@@ -35,12 +35,27 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
     <div class="content">
         <h3>This is your rescuer page to see your loaded cargo. Add more content as needed.</h3>
         
-        <table id="loadedCargoTable" border="1">
+        <table class="tableResc" id="loadedCargoTable" border="1">
                 <tbody></tbody>
         </table>
         <br>
         <button type="button" id="dischargeBtn">Discharge cargo.</button>
         <button type="button" id="LoadBtn">Load cargo.</button>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div class="table-container">
+            <div class="table-content">
+                <div class="table_base" id="tableBase"></div>
+            </div>
+            <div class="category-container">
+                <div class="category-menu" id="categoryMenu"></div>
+            </div>
+        </div>
     </div>
     
 <br>
@@ -50,5 +65,6 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
     <script src="rescuer-details-script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="cargo_table.js"></script>
+    <script src="base_table.js"></script>
 </body>
 </html>
