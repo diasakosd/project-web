@@ -18,11 +18,10 @@ if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
 // Get the rescuer name based on the session username
 $username = $_SESSION['username'];
 
-// Query to get the categories from the base_storage table 
-$seeContent = "SELECT category AS Category, item AS Item, quantity AS Quantity FROM rescuer_inventory WHERE username = '$username'";
-$result = mysqli_query($db, $seeContent);
+$baseContent = "SELECT category AS Category, item AS Item, quantity AS Quantity FROM `base_storage` GROUP BY item ORDER BY category";
+$result = mysqli_query($db, $baseContent);
 
-if ($result) {
+if($result){
     $cargoData = array(); // Initialize an array to hold cargo data
 
     while ($row = mysqli_fetch_assoc($result)) {
@@ -30,17 +29,8 @@ if ($result) {
         $cargoData[] = $row;
     }
 
-    if (empty($cargoData)) {
-        // Send a specific message in JSON format when there's no cargo
-        echo json_encode(array('message' => 'You do not have any cargo yet!'));
-    } else {
-        // Output cargo data in JSON format
-        echo json_encode($cargoData);
-    }
-} else {
-    echo json_encode(array('error' => 'No loaded cargo found'));
+    echo json_encode($cargoData);
 }
-
 
 // Close the database connection
 mysqli_close($db);

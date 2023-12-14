@@ -47,14 +47,9 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
         <br>
         <br>
 
-        <div class="table-container">
-            <div class="table-content">
-                <div class="table_base" id="tableBase"></div>
-            </div>
-            <div class="category-container">
-                <div class="category-menu" id="categoryMenu"></div>
-            </div>
-        </div>
+        <table class="tableResc" id="baseCargoTable" border="1">
+                <tbody></tbody>
+        </table>
         <br>
         <button type="button" id="LoadBtn">Load cargo.</button>
     </div>
@@ -66,6 +61,7 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
     <script src="rescuer-details-script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="cargo_table.js"></script>
-    <script src="base_table.js"></script>
+    <script src="base_table-resc.js"></script>
+    <script src="extras.js"></script>
 </body>
 </html>

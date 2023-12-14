@@ -355,3 +355,9 @@ body {
 .button{
     cursor: pointer;
 }
+
+#baseCargoTable{
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 20px
+}
