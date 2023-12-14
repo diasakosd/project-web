@@ -40,7 +40,6 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
         </table>
         <br>
         <button type="button" id="dischargeBtn">Discharge cargo.</button>
-        <button type="button" id="LoadBtn">Load cargo.</button>
         <br>
         <br>
         <br>
@@ -56,6 +55,8 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
                 <div class="category-menu" id="categoryMenu"></div>
             </div>
         </div>
+        <br>
+        <button type="button" id="LoadBtn">Load cargo.</button>
     </div>
     
 <br>
