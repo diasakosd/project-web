@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $.ajax({
-        url: 'get_rescuer_details.php', // PHP file to retrieve data
+        url: 'cargo_table.php', // PHP file to retrieve data
         method: 'GET',
         success: function(response){
             console.log("Response received:", response); // Check the response

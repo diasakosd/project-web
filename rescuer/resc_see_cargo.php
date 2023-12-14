@@ -47,21 +47,14 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
         <br>
         <br>
 
-        <table class="tableResc" id="baseCargoTable" border="1">
-                <tbody></tbody>
-        </table>
-        <br>
-        <button type="button" id="LoadBtn">Load cargo.</button>
     </div>
     
 <br>
 <br>
 <br><br>
 
-    <script src="rescuer-details-script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="cargo_table.js"></script>
-    <script src="base_table-resc.js"></script>
     <script src="extras.js"></script>
 </body>
 </html>

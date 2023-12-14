@@ -1,6 +1,13 @@
 <?php
 include 'session_rescuer.php';
 $_SESSION['site'] = '../rescuer/rescuer.php';
+
+$db = "localhost";
+$dbUsername = "root";
+$dbPassword = "";
+$dbName = "web";
+
+$conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,35 +31,21 @@ $_SESSION['site'] = '../rescuer/rescuer.php';
         <a href="rescuer.php">Home</a>
     </div>   
     
-    <div class="container">
-        <div class="header">
-            
-        </div>
-        <br><br>
         <div class="content">
             <p>This is your rescuer page for cargo management. Add more content as needed.</p>
-            <div id="loadedCargo"></div>
-        </div>
+            <br>
+            
+            <table class="tableResc" id="baseCargoTable" border="1">
+                <tbody></tbody>
+            </table>
+            <br>
+            <button type="button" id="LoadBtn">Load cargo.</button>
+            <br>
+            <br>
+            <br>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-        <script>
-            $(document).ready(function(){
-                $.ajax({
-                    url: 'get_rescuer_details.php', // PHP file to retrieve data
-                    method: 'GET',
-                    success: function(response){
-                        $('#loadedCargo').append(response); // Insert the loaded cargo into the specified container
-                    }
-                });
-            });
-        </script>
-
-    </div>
-<br>
-<br>
-<br><br>
-
-    <script src="rescuer-details-script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="base_table-resc.js"></script>
+    <script src="extras.js"></script>
 </body>
 </html>
