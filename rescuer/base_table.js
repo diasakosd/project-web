@@ -47,3 +47,27 @@ document.addEventListener('DOMContentLoaded', function () {
     // Fetch categories and create checkboxes
     fetchCategories();
 });
+
+document.addEventListener('DOMContentLoaded', function(){
+    var dischargeButton = document.getElementById('dischargeBtn');
+
+    dischargeButton.addEventListener('click', function(){
+        var errorOccurred = true;
+
+        if(errorOccurred){
+            alert('Error: Unable to discharge cargo. You need to be at most 100m away from the base.');
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function(){
+    var LoadButton = document.getElementById('LoadBtn');
+
+    LoadButton.addEventListener('click', function(){
+        var errorOccurred = true;
+
+        if(errorOccurred){
+            alert('Error: Unable to load cargo. You need to be at most 100m away from the base.');
+        }
+    });
+});
