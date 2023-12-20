@@ -31,7 +31,7 @@ if ($resultBaseLocation && mysqli_num_rows($resultBaseLocation) > 0) {
 $query0 = "SELECT r.username, r.latitude, r.longitude, 
     GROUP_CONCAT(CONCAT('<li>', ri.category, ': ', ri.item, ' (', ri.quantity, ')','</li>') SEPARATOR '') AS items
     FROM rescuers r
-    JOIN rescuer_inventory ri ON r.username = ri.username
+    LEFT JOIN rescuer_inventory ri ON r.username = ri.username
     LEFT JOIN citizen_offer co ON r.username = co.rescuer_username
     LEFT JOIN citizen_request cr ON r.username = cr.rescuer_username
     WHERE co.rescuer_username IS NULL AND cr.rescuer_username IS NULL
@@ -55,18 +55,17 @@ while ($row = $result0->fetch_assoc()) {
 }
 
 $query1 = "SELECT 
-    r.username, 
-    r.latitude, 
-    r.longitude, 
-    GROUP_CONCAT(DISTINCT CONCAT('<li>', ri.category, ': ', ri.item, ' (', ri.quantity, ')', '</li>') SEPARATOR '') AS items,
-    GROUP_CONCAT(DISTINCT CONCAT('Request from: ', cr.username) SEPARATOR ', ') AS request_status,
-    GROUP_CONCAT(DISTINCT CONCAT('Offer from: ', co.username) SEPARATOR ', ') AS offer_status
+r.username, 
+r.latitude, 
+r.longitude, 
+GROUP_CONCAT(DISTINCT CONCAT('<li>', ri.category, ': ', ri.item, ' (', ri.quantity, ')', '</li>') SEPARATOR '') AS items,
+GROUP_CONCAT(DISTINCT CONCAT('Request from: ', COALESCE(cr.username, '')) SEPARATOR ', ') AS request_status,
+GROUP_CONCAT(DISTINCT CONCAT('Offer from: ', COALESCE(co.username, '')) SEPARATOR ', ') AS offer_status
 FROM rescuers r
-JOIN rescuer_inventory ri ON r.username = ri.username
-LEFT JOIN citizen_request cr ON r.username = cr.rescuer_username
-LEFT JOIN citizen_offer co ON r.username = co.rescuer_username
+LEFT JOIN rescuer_inventory ri ON r.username = ri.username
+LEFT JOIN citizen_request cr ON r.username = cr.rescuer_username AND cr.accepted != 'DONE'
+LEFT JOIN citizen_offer co ON r.username = co.rescuer_username AND co.accepted != 'DONE'
 WHERE cr.username IS NOT NULL OR co.username IS NOT NULL
-  AND cr.accepted != 'DONE' OR co.accepted != 'DONE' -- Exclude rescuers with accepted = 'DONE'
 GROUP BY r.username";
 
 
@@ -231,11 +230,10 @@ while ($row = $result6->fetch_assoc()) {
 }
 
 $query7 = "SELECT r.username AS rescuer_username, r.latitude AS rescuer_lat, r.longitude AS rescuer_lng, c.latitude AS citizen_lat, c.longitude AS citizen_lng
-FROM rescuers r
-JOIN citizen_offer co ON r.username = co.rescuer_username
-JOIN citizens c ON co.username = c.username
-WHERE co.accepted = 'YES'
-GROUP BY r.username, c.username"; // Grouping by both rescuer and citizen
+    FROM rescuers r
+    INNER JOIN citizen_offer co ON r.username = co.rescuer_username
+    INNER JOIN citizens c ON co.username = c.username
+    WHERE co.accepted = 'YES'";
 
 $result7 = mysqli_query($db, $query7);
 
@@ -244,6 +242,7 @@ $lines_offer_yes = array();
 
 // Loop through the results and add line coordinates to the array
 while ($row = $result7->fetch_assoc()) {
+    $rescuer_username = $row['rescuer_username'];
     $rescuer_lat = $row['rescuer_lat'];
     $rescuer_lng = $row['rescuer_lng'];
     $citizen_lat = $row['citizen_lat'];
@@ -253,6 +252,7 @@ while ($row = $result7->fetch_assoc()) {
     $line_offer_yes = "[$rescuer_lat, $rescuer_lng], [$citizen_lat, $citizen_lng]";
     $lines_offer_yes[] = $line_offer_yes;
 }
+
 
 // Close the database connection
 mysqli_close($db);
