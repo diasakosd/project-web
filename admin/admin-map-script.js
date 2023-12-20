@@ -92,19 +92,23 @@ xhr.onreadystatechange = function () {
         for (var i = 0; i < lines_request_yes_Data.length; i++) {
             var line_request_yes = eval(lines_request_yes_Data[i]);
             lines_request_yes.push(line_request_yes);
-        }        
+        }
         
-        var lines_request = L.polyline(lines_request_yes, { color: 'red' });
+        // Create a layer group for all the polylines and add it to the map
+        var lines_request_group = L.layerGroup(lines_request_yes);
 
 
 
-        var lines_offer_yes = [];
-        for (var i = 0; i < lines_offer_yes_Data.length; i++) {
-            var line_offer_yes = eval(lines_offer_yes_Data[i]);
-            lines_offer_yes.push(line_offer_yes);
-        }        
-        
-        var lines_offer = L.polyline(lines_offer_yes, { color: 'red' });
+            var lines_offer_yes = [];
+            for (var i = 0; i < lines_offer_yes_Data.length; i++) {
+                var line_offer_yes = eval(lines_offer_yes_Data[i]);
+                lines_offer_yes.push(line_offer_yes);
+            }
+            
+            // Create a layer group for all the polylines and add it to the map
+            var lines_offer_group = L.layerGroup(lines_offer_yes);
+
+            
         
         
         var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -195,8 +199,8 @@ var baseIcon = L.icon({
      
        // Create an overlay map for the line
 
-       layerControl.addOverlay(lines_offer, "Lines - Offers");
-       layerControl.addOverlay(lines_request, "Lines - Request");
+       layerControl.addOverlay(lines_offer_group, "Lines - Offers");
+       layerControl.addOverlay(lines_request_group, "Lines - Requests");
 
         var openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,

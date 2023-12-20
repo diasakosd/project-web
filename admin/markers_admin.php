@@ -226,7 +226,7 @@ while ($row = $result6->fetch_assoc()) {
 
     // Create a line coordinate entry in the correct format
     $line_request_yes = "[$rescuer_lat, $rescuer_lng], [$citizen_lat, $citizen_lng]";
-    $lines_request_yes[] = $line_request_yes;
+    $lines_request_yes[] = "L.polyline([$line_request_yes], { color: 'red' })";
 }
 
 $query7 = "SELECT r.username AS rescuer_username, r.latitude AS rescuer_lat, r.longitude AS rescuer_lng, c.latitude AS citizen_lat, c.longitude AS citizen_lng
@@ -250,8 +250,11 @@ while ($row = $result7->fetch_assoc()) {
 
     // Create a line coordinate entry in the correct format
     $line_offer_yes = "[$rescuer_lat, $rescuer_lng], [$citizen_lat, $citizen_lng]";
-    $lines_offer_yes[] = $line_offer_yes;
+
+    // Create a new polyline for each pair and add it to the array
+    $lines_offer_yes[] = "L.polyline([$line_offer_yes], { color: 'red' })";
 }
+
 
 
 // Close the database connection
@@ -273,4 +276,5 @@ echo "var markers_citizen_offer_Data_yes = [", implode(',', $markers_citizen_off
 // Output the line coordinates as JavaScript arrays
 echo "var lines_request_yes_Data = [", implode(',', $lines_request_yes), "];";
 echo "var lines_offer_yes_Data = [", implode(',', $lines_offer_yes), "];";
+
 ?>
