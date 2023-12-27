@@ -16,7 +16,7 @@ $_SESSION['site'] = '../citizen/previous_offers.php';
         <img class="logo" src="Screenshot_5.png" alt="Logo">
         <p><a class="logout-button" href="../logout.php">Logout</a></p>
         <a href="previous_offers.php">Previous Offers</a>
-        <a href="cuurent_offers.php">Current Offers</a>
+        <a href="current_offers.php">Current Offers</a>
         <a href="announcement_citizen.php">Announcements</a>
         <a href="citizen.php">Home</a>
     </div>

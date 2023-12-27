@@ -22,6 +22,8 @@ if ($result) {
             echo '<div class="offer">';
             
             // Display offer details
+            // Display the ID
+            echo '<p style="color: #777;">ID: ' . $row['id'] . '</p>';
             echo '<p style="color: #777;">Time Created: ' . $row['time_created'] . '</p>';
             echo '<p style="color: #777;">Accepted: ' . $row['accepted'] . '</p>';
             echo '<p style="color: #777;">Time Accepted: ' . ($row['accepted'] === 'YES' ? $row['time_accepted'] : '-') . '</p>';

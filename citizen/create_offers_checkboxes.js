@@ -41,16 +41,18 @@ function submitSelectedAnnouncements() {
                 if (xhr.readyState === 4) {
                     console.log('Response:', xhr.responseText); // Log the response for debugging
                     if (xhr.status === 200) {
-                        // Handle the response
-                        const response = JSON.parse(xhr.responseText);
-                        if (response.success) {
-                            // Fetch checkboxes to update the display
-                            fetchCheckboxes();
-                        } else {
-                            console.error('Error submitting announcements: ' + response.error);
-                        }
+                        // Remove selected announcements from the DOM
+                        selectedAnnouncements.forEach(input => {
+                            const announcementContainer = input.closest('.offer-container');
+                            if (announcementContainer) {
+                                announcementContainer.remove();
+                            }
+                        });
+
+                        // Trigger asynchronous update after successful submission
+                        updateAnnouncements();
                     } else {
-                        console.error('Error: ' + xhr.statusText);
+                        console.error('Error submitting announcements: ' + xhr.statusText);
                     }
                 }
             };
@@ -65,3 +67,11 @@ function submitSelectedAnnouncements() {
         console.error('Form or form element with name "selectedAnnouncements[]" not found.');
     }
 }
+
+// Function to trigger asynchronous update of announcements
+function updateAnnouncements() {
+    // Fetch and update announcements asynchronously
+    fetchAnnouncements();
+    fetchCheckboxes();
+}
+
