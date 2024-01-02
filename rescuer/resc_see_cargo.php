@@ -38,6 +38,25 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
         <label for="check" class="chBtn">
             <i class='bx bx-menu'></i>
         </label>
+        <div id="sidebar" class="sidebar">
+            <label for="check" class="chBtn2">
+                <i class='bx bx-menu'></i>
+            </label><br>
+            <table id="side-table">
+                <tr>
+                    <td><a href="resc_see_cargo.php">See cargo</a></td>
+                </tr>
+                <tr>
+                    <td><a href="resc_load_manag.php">Cargo Management</a></td>
+                </tr>
+                <tr>
+                    <td><a href="rescuer.php">Home</a></td>
+                </tr>
+                <tr>
+                    <td><br><a class="logout-button" href="../logout.php">Logout</a></td>
+                </tr>
+            </table>
+        </div>
         
         <table class="tableResc" id="loadedCargoTable" border="1">
                 <tbody></tbody>
