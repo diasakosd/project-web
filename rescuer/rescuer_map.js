@@ -17,3 +17,16 @@ L.marker([38.2468, 21.7352],{
     icon: baseIcon
 }).bindPopup('<h2>Base</h2><p>This is our Base.<br>Location: 38.2468, 21.7352</p>')
 .addTo(map);
+
+    // AJAX call to fetch marker data from the server
+    fetch('location_resc.php')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(location => {
+                L.marker([location.latitude, location.longitude]).addTo(map)
+                    .bindPopup(`<p>Location: ${location.latitude}, ${location.longitude}</p>`);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching marker data:', error);
+        });
