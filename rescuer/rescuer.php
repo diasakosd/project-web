@@ -8,7 +8,9 @@ $_SESSION['site'] = '../rescuer/rescuer.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link rel="stylesheet" href="rescuer.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
@@ -25,6 +27,7 @@ $_SESSION['site'] = '../rescuer/rescuer.php';
             <label for="check" class="chBtn">
                 <i class='bx bx-menu'></i>
             </label>
+            <!-- SIDEBAR CODE -->
             <div id="sidebar" class="sidebar">
                 <label for="check" class="chBtn2">
                     <i class='bx bx-menu'></i>
@@ -43,9 +46,16 @@ $_SESSION['site'] = '../rescuer/rescuer.php';
                         <td><br><a class="logout-button" href="../logout.php">Logout</a></td>
                     </tr>
                 </table>
-            </div>
+            </div><br><br>
+
+
+            <!-- MAP CODE -->
+            <div id="rescuer_map"></div>
+
+
     </div>
     <!-- Add your scripts here -->
     <script src="extras.js"></script>
+    <script src="rescuer_map.js"></script>
 </body>
 </html>
