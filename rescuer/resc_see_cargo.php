@@ -17,9 +17,10 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
     <title>Welcome</title>
     
     <!-- Adjust the paths to your CSS file and Leaflet map script -->
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="rescuer.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
 
@@ -30,28 +31,41 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
         <a href="resc_see_cargo.php">See cargo</a>
         <a href="resc_load_manag.php">Cargo Management</a>
         <a href="rescuer.php">Home</a>
-    </div>   
+    </div>  
     
     <div class="content">
-        <h3>This is your rescuer page to see your loaded cargo. Add more content as needed.</h3>
+        <input type="checkbox" id="check">
+        <label for="check" class="chBtn">
+            <i class='bx bx-menu'></i>
+        </label>
+        <div id="sidebar" class="sidebar">
+            <label for="check" class="chBtn2">
+                <i class='bx bx-menu'></i>
+            </label><br>
+            <table id="side-table">
+                <tr>
+                    <td><a href="resc_see_cargo.php">See cargo</a></td>
+                </tr>
+                <tr>
+                    <td><a href="resc_load_manag.php">Cargo Management</a></td>
+                </tr>
+                <tr>
+                    <td><a href="rescuer.php">Home</a></td>
+                </tr>
+                <tr>
+                    <td><br><a class="logout-button" href="../logout.php">Logout</a></td>
+                </tr>
+            </table>
+        </div>
         
         <table class="tableResc" id="loadedCargoTable" border="1">
                 <tbody></tbody>
         </table>
         <br>
         <button type="button" id="dischargeBtn">Discharge cargo.</button>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-
     </div>
+
     
-<br>
-<br>
-<br><br>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="cargo_table.js"></script>

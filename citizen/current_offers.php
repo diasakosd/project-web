@@ -1,6 +1,6 @@
 <?php
 include 'session_citizen.php';
-$_SESSION['site'] = '../citizen/cuurent_offers.php';
+$_SESSION['site'] = '../citizen/current_offers.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +16,7 @@ $_SESSION['site'] = '../citizen/cuurent_offers.php';
         <img class="logo" src="Screenshot_5.png" alt="Logo">
         <p><a class="logout-button" href="../logout.php">Logout</a></p>
         <a href="previous_offers.php">Previous Offers</a>
-        <a href="cuurent_offers.php">Current Offers</a>
+        <a href="current_offers.php">Current Offers</a>
         <a href="announcement_citizen.php">Announcements</a>
         <a href="citizen.php">Home</a>
     </div>
@@ -33,13 +33,22 @@ $_SESSION['site'] = '../citizen/cuurent_offers.php';
     </div>
 
     <div class="announcement-container">
-        <div class="content" id="announcementsContainer"></div>
-        <br><br>
-    </div>
- 
-    <!-- Add your scripts here -->
-    <script src="citizen-details-script.js"></script>
-    <script src="current_offers.js"></script>
-    <script src="create_offers_checkboxes.js"></script>
+    <div class="content" id="announcementsContainer"></div>
+    <br><br>
+</div>
+
+<div class="announcement-checkbox-container"></div>
+<div class="announcement-submit">
+    <form id="submitAnnouncementsForm"></form>
+    <div id="selectedAnnouncementsMessage"></div>
+    <!-- Corrected function name in the onclick attribute -->
+    <button type="button" onclick="submitSelectedAnnouncements()">Submit Announcements</button>
+    <div class="successmessage"></div>
+</div>
+
+<!-- Include your scripts here -->
+<script src="citizen-details-script.js"></script>
+<script src="current_offers.js"></script>
+<script src="create_offers_checkboxes.js"></script>
 </body>
 </html>

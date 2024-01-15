@@ -1,0 +1,303 @@
+/* rescuer content */
+
+/* Example CSS for customizing the table */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(251, 255, 223);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%; /* Set height to 100% for body to cover the viewport */
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: #333;
+    font-family: Arial;
+    width: 100%; /* Change to 100% for responsiveness */
+    height: 8vh;
+}
+
+/* Links inside the navbar */
+.navbar a {
+    float: right;
+    font-size: 2vh;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 1vh;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+/* Add this style to differentiate the Logout button */
+.logout-button {
+    background-color: #b94a22;
+    color: white;
+    padding: 5px;
+    text-decoration: none;
+    border: 1px solid #b94a22;
+    border-radius: 3px;
+}
+
+.logout-button:hover {
+    background-color: #cc3700;
+    border: 1px solid #cc3700;
+}
+
+/* The dropdown container */
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 0.7% 3%;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+/* Add a red background color to navbar links on hover */
+.navbar a:hover, .dropdown:hover .dropbtn {
+    background-color: red;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+.logo {
+    float: left;
+    height: 8.5vh;
+    /* Optional: Add margin to separate the logo from the navbar */
+}
+
+.header {
+    text-align: center;
+}
+
+#loadedCargoTable {
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.tableResc th,
+.tableResc td {
+    padding: 8px;
+    text-align: center;
+}
+
+.tableResc thead {
+    background-color: #0029e2;
+    font-weight: bold;
+    color: white; /* Specify text color */
+}
+
+.tableResc tbody tr {
+    background-color: #e8ebec;
+    color: rgb(37, 35, 35); /* Specify text color */
+}
+
+.tableResc tbody tr:hover {
+    background-color: #f16f5d;
+    color: white; /* Specify text color */
+    cursor: pointer;
+}
+
+#loadedCargoTable tbody tr.item_id td input[type="checkbox"]:hover,
+.select_all_items:hover {
+    cursor: pointer;
+}
+
+#dischargeBtn{
+    background-color: #b94a22;
+    color: white; /* Specify text color */
+    font-size:large;
+    border-radius: 40px;
+    border: 1px solid #b94a22;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#dischargeBtn:hover{
+    background-color: rgb(65, 154, 226);
+    color: rgb(219, 218, 130); /* Specify text color */
+    border-radius: 40px;
+    border: 1px solid rgb(65, 154, 226);
+    cursor: pointer;
+}
+
+#LoadBtn{
+    background-color: #1cbe32;
+    color: white; /* Specify text color */
+    font-size:large;
+    border-radius: 40px;
+    border: 1px solid #1cbe32;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#LoadBtn:hover{
+    background-color: rgb(65, 154, 226);
+    color: rgb(219, 218, 130); /* Specify text color */
+    border-radius: 40px;
+    border: 1px solid rgb(65, 154, 226);
+    cursor: pointer;
+}
+
+.button{
+    cursor: pointer;
+}
+
+#baseCargoTable{
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 20px
+}
+
+#baseCargoTable tbody tr.item_id td input[type="checkbox"]:hover{
+    cursor: pointer
+}
+
+.chBtn{
+    display: none;
+}
+#check{
+    display: none;
+}
+
+.sidebar{
+    display: none;
+    background-color: #333;
+    z-index: 1000;
+}
+.sidebar a {
+    text-decoration: none;
+}
+.sidebar a:hover {
+    background-color: red;
+}
+.chBtn2{
+    display: none;
+}
+
+#side-table {
+    width: 100%;
+    border-color: #333;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+#side-table td {
+    padding: 2px; /* Adjust padding for space around the text */
+}
+#side-table a{
+    color: white;
+}
+#side-table a:hover{
+    background-color: red;
+    border: 1px solid transparent;
+    border-radius: 3px;
+}
+
+#rescuer_map{
+    width: 300px;
+    height: 300px;
+}
+
+@media only screen and (max-width: 600px) {
+    .logo,  .navbar{
+        display: none;
+    }
+
+    .chBtn{
+        position: relative;
+        display: block;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .chBtn i.bx.bx-menu{
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: black;
+        font-size: 40px;
+        display: block;
+    }
+
+    /* Your existing CSS styles */
+    .sidebar {
+        /* Define initial sidebar styles */
+        width: 0;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        overflow-x: hidden;
+        transition: width 0.3s ease;
+        display: block;
+    }
+
+    .sidebar.active {
+        /* Define styles when sidebar is active or shown */
+        width: 250px;
+        display: block;
+        
+    }
+    .chBtn2 {
+        position: absolute;
+        top: 10px; /* Adjust as needed for spacing from the top */
+        right: 10px; /* Adjust as needed for spacing from the right */
+        font-size: 24px;
+        cursor: pointer;
+        display: block;
+        width: 40px;
+        height: 40px;
+    }
+
+    .chBtn2 i.bx.bx-menu{
+        color: white;
+        font-size: 40px;
+        display: block;
+    }
+
+}
