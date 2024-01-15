@@ -11,7 +11,7 @@ $(document).ready(function(){
 
     // Define a custom icon for the rescuer
     const rescuerIcon = L.icon({
-        iconUrl: 'icons8-marker-r-50-1.png', // Change this to the path of your rescuer icon
+        iconUrl: 'rescuer_icon.svg', // Change this to the path of your rescuer icon
         iconSize: [60, 60]
     });
 
@@ -41,6 +41,31 @@ $(document).ready(function(){
                     }).bindPopup("<h2>You</h2><p>Location: " + lat + ', ' + lon + "</p>")
                     .addTo(map);
                 }
+                //test markers for requests
+                var marker = L.marker([38.2466, 21.7346]).bindPopup("<h3>Request waiting demo</h3>").addTo(map);
+                marker.setIcon(L.icon({
+                    iconUrl: 'request_waiting.svg',
+                    iconSize: [60, 60],
+                }));
+
+                var marker = L.marker([38.2461, 21.73525]).bindPopup("<h3>Request taken demo</h3>").addTo(map);
+                marker.setIcon(L.icon({
+                    iconUrl: 'request_taken.svg',
+                    iconSize: [60, 60]
+                }));
+
+                //test markers for offers
+                var marker = L.marker([38.24614, 21.73615]).bindPopup("<h3>Offer waiting demo</h3>").addTo(map);
+                marker.setIcon(L.icon({
+                    iconUrl: 'offer_waiting.svg',
+                    iconSize: [60, 60]
+                }));
+
+                var marker = L.marker([38.24655, 21.73582]).bindPopup("<h3>Offer taken demo</h3>").addTo(map);
+                marker.setIcon(L.icon({
+                    iconUrl: 'offer_taken.svg',
+                    iconSize: [60, 60]
+                }));
             } catch (error) {
                 console.error("Error parsing JSON: ", error);
             }
