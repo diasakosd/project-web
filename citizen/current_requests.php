@@ -1,16 +1,6 @@
 <?php
-session_start();
-include 'db_connect.php';
-
-// Assuming you have a session variable for the citizen ID
-$citizenId = $_SESSION['citizen_id'];
-
-$db = connectToDatabase();
-
-// Query for requests with status 'NO' (not accepted) for the current citizen
-$stmt = $db->prepare("SELECT * FROM citizen_request WHERE username = ? AND accepted = 'NO'");
-$stmt->execute([$citizenId]);
-$currentRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+include 'session_citizen.php';
+$_SESSION['site'] = '../citizen/current_requests.php';
 ?>
 
 <!DOCTYPE html>
@@ -26,12 +16,12 @@ $currentRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="navbar">
         <img class="logo" src="Screenshot_5.png" alt="Logo">
         <p><a class="logout-button" href="../logout.php">Logout</a></p>
-        <a href="previous_requests.php">Previous Requests</a>
-        <a href="current_requests.php">Current Requests</a>
+        <a href="announcement_citizen.php">Announcements</a>
         <a href="previous_offers.php">Previous Offers</a>
         <a href="current_offers.php">Current Offers</a>
-        <a href="announcement_citizen.php">Announcements</a>
-        
+        <a href="previous_requests.php">Previous Requests</a>
+        <a href="current_requests.php">Current Requests</a>
+        <a href="citizen.php">Home</a>
     </div>
     <div class="container">
         <div class="header">
@@ -52,6 +42,7 @@ $currentRequests = $stmt->fetchAll(PDO::FETCH_ASSOC);
  
     <!-- Add your scripts here -->
     <script src="citizen-details-script.js"></script>
+    <script src="current_requests.js"></script>
    
 </body>
 </html>
