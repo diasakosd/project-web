@@ -1,56 +1,41 @@
 <?php
-session_start();
-include 'session_rescuer.php';
-$_SESSION['site'] = '../rescuer/rescuer.php';
+// Connect to the database
+$db = mysqli_connect('localhost', 'root', '', 'web');
 
-$db = "localhost";
-$dbUsername = "root";
-$dbPassword = "";
-$dbName = "web";
+// Check connection
+if (!$db) {
+    echo json_encode(array('error' => 'Connection failed: ' . mysqli_connect_error()));
+    exit();
+}
 
 // Check if the user is logged in
+session_start();
 if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
-    http_response_code(403); // Forbidden
-    echo json_encode(array("error" => "You can't access this file"));
-    die(); // Ensure no further output
+    echo json_encode(array('error' => 'User not logged in'));
+    exit();
 }
 
-// Get the admin name based on the session username
+// Get the rescuer name based on the session username
 $username = $_SESSION['username'];
 
+// Query to get the categories from the base_storage table 
+$query = "SELECT latitude, longitude FROM rescuers WHERE username = '$username'";
+$result = mysqli_query($db, $query);
 
+if ($result) {
+    $cargoData = array(); // Initialize an array to hold cargo data
 
-// Fetch marker data from the database
-$conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
-$sql = "SELECT latitude, longitude FROM rescuers WHERE username = '$username'";
-$result = $conn->query($sql);
+    while ($row = mysqli_fetch_assoc($result)) {
+        // Append each cargo row to the cargoData array
+        $cargoData[] = $row;
+    }
 
-// Check for errors in the query
-if (!$result) {
-    http_response_code(500); // Internal Server Error
-    echo json_encode(array("error" => "Database query error"));
-    die(); // Ensure no further output
-}
-
-$data = array();
-while ($row = $result->fetch_assoc()) {
-    $data[] = array(
-        'latitude' => $row['latitude'],
-        'longitude' => $row['longitude'],
-    );
-}
-
-// Return data as JSON
-header('Content-Type: application/json');
-
-// Check if there is any data to encode
-if (!empty($data)) {
-    echo json_encode($data);
+    echo json_encode($cargoData);
 } else {
-    http_response_code(204); // No Content
-    echo json_encode(array("error" => "No data available"));
+    echo json_encode(array('error' => 'No loaded cargo found'));
 }
 
-// Ensure no further output
-die();
+
+// Close the database connection
+mysqli_close($db);
 ?>
