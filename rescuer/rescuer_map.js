@@ -38,7 +38,8 @@ $(document).ready(function(){
                     L.marker([lat, lon], {
                         title: 'Rescuer',
                         icon: rescuerIcon
-                    }).addTo(map);
+                    }).bindPopup("<h2>You</h2><p>Location: " + lat + ', ' + lon + "</p>")
+                    .addTo(map);
                 }
             } catch (error) {
                 console.error("Error parsing JSON: ", error);
@@ -67,7 +68,8 @@ $(document).ready(function(){
                     L.marker([lat, lon], {
                         title: 'Base',
                         icon: baseIcon
-                    }).addTo(map);
+                    }).bindPopup("<h2>Base</h2><p>Location: " + lat + ', ' + lon + "</p>")
+                    .addTo(map);
                 }
             } catch (error) {
                 console.error("Error parsing JSON: ", error);
