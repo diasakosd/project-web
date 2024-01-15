@@ -58,5 +58,6 @@ $_SESSION['site'] = '../rescuer/rescuer.php';
     <!-- Add your scripts here -->
     <script src="extras.js"></script>
     <script src="rescuer_map.js"></script>
+    <script src="base_map.js"></script>
 </body>
 </html>

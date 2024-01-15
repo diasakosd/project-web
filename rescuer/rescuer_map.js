@@ -23,31 +23,59 @@ $(document).ready(function(){
     $.ajax({
         url: 'location_resc.php',
         method: 'GET',
-        success: function(response){
-            console.log("Response received", response);
+        success: function(response) {
+            console.log("Rescuer response received", response);
             try {
                 var cargoData = JSON.parse(response);
-                console.log("Parsed cargoData:", cargoData); // Check parsed cargoData
-
-                // Loop through the data and create markers
+                console.log("Parsed rescuer data:", cargoData);
+    
+                // Loop through the data and create markers for rescuers
                 for (let key in cargoData) {
                     const rescuer = cargoData[key];
-
                     const lat = parseFloat(rescuer.latitude);
                     const lon = parseFloat(rescuer.longitude);
-
+    
                     L.marker([lat, lon], {
-                        title: 'rescuer.title',
+                        title: 'Rescuer',
                         icon: rescuerIcon
-                    })
-                    .addTo(map);
+                    }).addTo(map);
                 }
             } catch (error) {
                 console.error("Error parsing JSON: ", error);
             }
         },
         error: function(xhr, status, error) {
-            console.error("AJAX request error: ", status, error);
+            console.error("AJAX request error (rescuers): ", status, error);
         }
     });
+    
+    $.ajax({
+        url: 'base_map.php',
+        method: 'GET',
+        success: function(response2) {
+            console.log("Base response received", response2);
+            try {
+                var cargoData2 = JSON.parse(response2);
+                console.log("Parsed base coordinates data:", cargoData2);
+    
+                // Loop through the data and create markers for base coordinates
+                for (let key in cargoData2) {
+                    const base = cargoData2[key];
+                    const lat = parseFloat(base.latitude);
+                    const lon = parseFloat(base.longitude);
+    
+                    L.marker([lat, lon], {
+                        title: 'Base',
+                        icon: baseIcon
+                    }).addTo(map);
+                }
+            } catch (error) {
+                console.error("Error parsing JSON: ", error);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX request error (base coordinates): ", status, error);
+        }
+    });
+
 });
