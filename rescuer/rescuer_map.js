@@ -7,26 +7,61 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 map.zoomControl.setPosition('topright');map.attributionControl.setPrefix('');
 
+
+// Define a custom icon for the rescuer
+const rescuerIcon = L.icon({
+    iconUrl: 'icons8-marker-r-50-1.png', // Change this to the path of your rescuer icon
+    iconSize: [60, 60]
+});
+
 const baseIcon = L.icon({
     iconUrl: 'house.png',
     iconSize: [60,60]
 });
 
-L.marker([38.2468, 21.7352],{
-    title: "Base",
-    icon: baseIcon
-}).bindPopup('<h2>Base</h2><p>This is our Base.<br>Location: 38.2468, 21.7352</p>')
-.addTo(map);
 
-    // AJAX call to fetch marker data from the server
-    fetch('location_resc.php')
-        .then(response => response.json())
-        .then(data => {
-            data.forEach(location => {
-                L.marker([location.latitude, location.longitude]).addTo(map)
-                    .bindPopup(`<p>Location: ${location.latitude}, ${location.longitude}</p>`);
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching marker data:', error);
-        });
+const data = {
+    base: {
+        coords: [38.2468, 21.7352],
+        title: "Base",
+        icon: baseIcon,
+        bindPopup: "<h2>Base</h2><p>This is our Base.<br>Location: 38.2468, 21.7352</p>"
+    },
+    resquer1: {
+        coords: [38.2631, 21.7442],
+        title: "resquer1",
+        icon: rescuerIcon,
+        bindPopup: "<h2>resquer1</h2><p>Location: 38.2631, 21.7442</p>"
+    },
+    resquer2: {
+        coords: [38.2418, 21.7311],
+        title: "resquer2",
+        icon: rescuerIcon,
+        bindPopup: "<h2>resquer2</h2><p>Location: 38.2418, 21.7311</p>"
+    },
+    rescuer3: {
+        coords: [38.2568, 21.7417],
+        title: "rescuer3",
+        icon: rescuerIcon,
+        bindPopup: "<h2>rescuer3</h2><p>Location: 38.2568, 21.7417</p>"
+    },
+    rescuer4: {
+        coords: [38.2479, 21.7406],
+        title: "rescuer4",
+        icon: rescuerIcon,
+        bindPopup: "<h2>rescuer4</h2><p>Location: 38.2479, 21.7406</p>"
+    } 
+}
+
+for (let key in data){
+    const rescuer = data[key];
+    
+    L.marker(rescuer.coords,{
+        title: rescuer.title,
+        icon: rescuer.icon
+    }).bindPopup(rescuer.bindPopup)
+    .addTo(map);
+}
+
+
+
