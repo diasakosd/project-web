@@ -1,5 +1,4 @@
 <?php
-session_start();
 include 'session_citizen.php';
 $_SESSION['site'] = '../citizen/previous_requests.php';
 ?>
@@ -17,12 +16,12 @@ $_SESSION['site'] = '../citizen/previous_requests.php';
 <div class="navbar">
         <img class="logo" src="Screenshot_5.png" alt="Logo">
         <p><a class="logout-button" href="../logout.php">Logout</a></p>
-        <a href="previous_requests.php">Previous Requests</a>
-        <a href="current_requests.php">Current Requests</a>
+        <a href="announcement_citizen.php">Announcements</a>
         <a href="previous_offers.php">Previous Offers</a>
         <a href="current_offers.php">Current Offers</a>
-        <a href="announcement_citizen.php">Announcements</a>
-        
+        <a href="previous_requests.php">Previous Requests</a>
+        <a href="current_requests.php">Current Requests</a>
+        <a href="citizen.php">Home</a>
     </div>
     <div class="container">
         <div class="header">
@@ -43,6 +42,7 @@ $_SESSION['site'] = '../citizen/previous_requests.php';
  
     <!-- Add your scripts here -->
     <script src="citizen-details-script.js"></script>
+    <script src="current_offers.js"></script>
    
 </body>
 </html>
