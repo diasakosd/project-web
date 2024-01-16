@@ -20,6 +20,16 @@ $(document).ready(function(){
         iconSize: [60, 60]
     });
 
+    const offerYesIcon = L.icon({
+        iconUrl: 'offer_taken.svg',
+        iconSize: [60, 60]
+    });
+
+    const offerNoIcon = L.icon({
+        iconUrl: 'offer_waiting.svg',
+        iconSize: [60, 60]
+    });
+
     $.ajax({
         url: 'location_resc.php',
         method: 'GET',
@@ -104,5 +114,61 @@ $(document).ready(function(){
             console.error("AJAX request error (base coordinates): ", status, error);
         }
     });
+
+// AJAX for Offers(yes) and Offers(no)
+$.ajax({
+    url: 'offers_and_requests.php',
+    method: 'GET',
+    success: function(response) {
+        console.log("Offers response received", response);
+        try {
+            var combinedData = JSON.parse(response);
+
+            console.log("Parsed combined data:", combinedData);
+
+            // Function to add a marker to the map if it doesn't already exist
+            function addMarkerIfNotExists(lat, lon, icon, coordinatesSet) {
+                const coordinates = lat + ',' + lon;
+                if (!coordinatesSet.has(coordinates)) {
+                    coordinatesSet.add(coordinates);
+                    L.marker([lat, lon], {
+                        title: 'Offer',
+                        icon: icon
+                    }).bindPopup("<h2>Offer</h2><p>Location: " + lat + ', ' + lon + "</p>")
+                    .addTo(map);
+                }
+            }
+
+            // Sets for unique coordinates
+            const uniqueCoordinatesYes = new Set();
+            const uniqueCoordinatesNo = new Set();
+
+            // Loop through the data and create markers for Offers(yes)
+            for (let key in combinedData.offersYes) {
+                const offers_y = combinedData.offersYes[key];
+                const lat = parseFloat(offers_y.latitude);
+                const lon = parseFloat(offers_y.longitude);
+
+                addMarkerIfNotExists(lat, lon, offerYesIcon, uniqueCoordinatesYes);
+            }
+
+            // Loop through the data and create markers for Offers(no)
+            for (let key in combinedData.offersNo) {
+                const offers_n = combinedData.offersNo[key];
+                const lat = parseFloat(offers_n.latitude);
+                const lon = parseFloat(offers_n.longitude);
+
+                addMarkerIfNotExists(lat, lon, offerNoIcon, uniqueCoordinatesNo);
+            }
+
+        } catch (error) {
+            console.error("Error parsing JSON: ", error);
+        }
+    },
+    error: function(xhr, status, error) {
+        console.error("AJAX request error (Offers): ", status, error);
+    }
+});
+
 
 });
