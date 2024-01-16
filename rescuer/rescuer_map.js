@@ -40,6 +40,8 @@ $(document).ready(function(){
         iconSize: [60, 60]
     });
 
+    let rescuerCoordinates = [];
+
     $.ajax({
         url: 'location_resc.php',
         method: 'GET',
@@ -54,6 +56,7 @@ $(document).ready(function(){
                     const rescuer = cargoData[key];
                     const lat = parseFloat(rescuer.latitude);
                     const lon = parseFloat(rescuer.longitude);
+                    rescuerCoordinates.push([lat, lon]);
     
                     L.marker([lat, lon], {
                         title: 'Rescuer',
@@ -161,6 +164,9 @@ $.ajax({
                         title: title,
                         icon: icon
                     }).bindPopup(popupContent).addTo(map);
+
+                    
+
                 }
             }
 
@@ -177,6 +183,11 @@ $.ajax({
                 const lon = parseFloat(offers_y.longitude);
 
                 addMarkerIfNotExists(lat, lon, offerYesIcon, uniqueoffYes, 'offerYes');
+
+                // Draw a line between each rescuer and the offer
+                rescuerCoordinates.forEach(rescuerCoord => {
+                    const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(map);
+                });
             }
 
             // Loop through the data and create markers for Offers(no)
@@ -195,6 +206,12 @@ $.ajax({
                 const lon = parseFloat(requests_y.longitude);
 
                 addMarkerIfNotExists(lat, lon, requestsYesIcon, uniqueReYes, 'requestYes');
+
+                // Draw a line between each rescuer and the offer
+                rescuerCoordinates.forEach(rescuerCoord => {
+                    const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(map);
+                });
+
             }
 
             // Loop through the data and create markers for Requests(no)
