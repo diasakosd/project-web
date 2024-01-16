@@ -30,6 +30,16 @@ $(document).ready(function(){
         iconSize: [60, 60]
     });
 
+    const requestsYesIcon = L.icon({
+        iconUrl: 'request_taken.svg',
+        iconSize: [60, 60]
+    });
+
+    const requestsNoIcon = L.icon({
+        iconUrl: 'request_waiting.svg',
+        iconSize: [60, 60]
+    });
+
     $.ajax({
         url: 'location_resc.php',
         method: 'GET',
@@ -127,21 +137,38 @@ $.ajax({
             console.log("Parsed combined data:", combinedData);
 
             // Function to add a marker to the map if it doesn't already exist
-            function addMarkerIfNotExists(lat, lon, icon, coordinatesSet) {
+            function addMarkerIfNotExists(lat, lon, icon, coordinatesSet, type) {
                 const coordinates = lat + ',' + lon;
                 if (!coordinatesSet.has(coordinates)) {
                     coordinatesSet.add(coordinates);
+
+                    let title, popupContent;
+                    if (type === 'offerYes') {
+                        title = 'Offer Taken';
+                        popupContent = "<h2>Offer taken</h2><p>Location: " + lat + ', ' + lon + "</p>";
+                    } else if (type === 'offerNo') {
+                        title = 'Offer Waiting';
+                        popupContent = "<h2>Offer waiting</h2><p>Location: " + lat + ', ' + lon + "</p>";
+                    } else if (type === 'requestYes') {
+                        title = 'Request Taken';
+                        popupContent = "<h2>Request taken</h2><p>Location: " + lat + ', ' + lon + "</p>";
+                    } else if (type === 'requestNo') {
+                        title = 'Request Waiting';
+                        popupContent = "<h2>Request waiting</h2><p>Location: " + lat + ', ' + lon + "</p>";
+                    }
+
                     L.marker([lat, lon], {
-                        title: 'Offer',
+                        title: title,
                         icon: icon
-                    }).bindPopup("<h2>Offer</h2><p>Location: " + lat + ', ' + lon + "</p>")
-                    .addTo(map);
+                    }).bindPopup(popupContent).addTo(map);
                 }
             }
 
             // Sets for unique coordinates
-            const uniqueCoordinatesYes = new Set();
-            const uniqueCoordinatesNo = new Set();
+            const uniqueoffYes = new Set();
+            const uniqueoffNo = new Set();
+            const uniqueReYes = new Set();
+            const uniqueReNo = new Set();
 
             // Loop through the data and create markers for Offers(yes)
             for (let key in combinedData.offersYes) {
@@ -149,7 +176,7 @@ $.ajax({
                 const lat = parseFloat(offers_y.latitude);
                 const lon = parseFloat(offers_y.longitude);
 
-                addMarkerIfNotExists(lat, lon, offerYesIcon, uniqueCoordinatesYes);
+                addMarkerIfNotExists(lat, lon, offerYesIcon, uniqueoffYes, 'offerYes');
             }
 
             // Loop through the data and create markers for Offers(no)
@@ -158,8 +185,27 @@ $.ajax({
                 const lat = parseFloat(offers_n.latitude);
                 const lon = parseFloat(offers_n.longitude);
 
-                addMarkerIfNotExists(lat, lon, offerNoIcon, uniqueCoordinatesNo);
+                addMarkerIfNotExists(lat, lon, offerNoIcon, uniqueoffNo, 'offerNo');
             }
+
+            // Loop through the data and create markers for Requests(yes)
+            for (let key in combinedData.requestsYes) {
+                const requests_y = combinedData.requestsYes[key];
+                const lat = parseFloat(requests_y.latitude);
+                const lon = parseFloat(requests_y.longitude);
+
+                addMarkerIfNotExists(lat, lon, requestsYesIcon, uniqueReYes, 'requestYes');
+            }
+
+            // Loop through the data and create markers for Requests(no)
+            for (let key in combinedData.requestsNo) {
+                const requests_n = combinedData.requestsNo[key];
+                const lat = parseFloat(requests_n.latitude);
+                const lon = parseFloat(requests_n.longitude);
+
+                addMarkerIfNotExists(lat, lon, requestsNoIcon, uniqueReNo, 'requestNo');
+            }
+
 
         } catch (error) {
             console.error("Error parsing JSON: ", error);

@@ -53,10 +53,48 @@ if ($result2) {
     exit();
 }
 
+// Query Requests taken
+$queryRequestYes = "SELECT citizens.latitude, citizens.longitude FROM citizens
+INNER JOIN citizen_request ON citizens.username = citizen_request.username 
+INNER JOIN rescuers ON citizen_request.rescuer_username = rescuers.username WHERE citizen_request.accepted LIKE 'YES' AND rescuers.username = '$username'";
+$result3 = mysqli_query($db, $queryRequestYes);
+
+if ($result3) {
+    $cargoData3 = array(); // Initialize an array to hold base coordinates data
+
+    while ($row3 = mysqli_fetch_assoc($result3)) {
+        // Append each base coordinates row to the cargoData array
+        $cargoData3[] = $row3;
+    }
+} else {
+    echo json_encode(array('error' => 'No base coordinates found'));
+    exit();
+}
+
+// Query Requests waiting
+$queryRequestNo = "SELECT citizens.latitude, citizens.longitude FROM citizens
+INNER JOIN citizen_request ON citizens.username = citizen_request.username 
+WHERE citizen_request.accepted LIKE 'NO'";
+$result4 = mysqli_query($db, $queryRequestNo);
+
+if ($result4) {
+    $cargoData4 = array(); 
+
+    while ($row4 = mysqli_fetch_assoc($result4)) {
+        $cargoData4[] = $row4;
+    }
+} else {
+    echo json_encode(array('error' => 'No base coordinates found for Requests(no)'));
+    exit();
+}
+
+
 // Combine both results
 $combinedData = array(
     'offersYes' => $cargoData,
-    'offersNo' => $cargoData2
+    'offersNo' => $cargoData2,
+    'requestsYes' => $cargoData3,
+    'requestsNo' => $cargoData4
 );
 
 echo json_encode($combinedData);
