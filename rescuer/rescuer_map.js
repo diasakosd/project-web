@@ -55,6 +55,7 @@ $(document).ready(function(){
     });
 
     let rescuerCoordinates = [];
+    let rescuerMarker;
 
     $.ajax({
         url: 'location_resc.php',
@@ -72,9 +73,10 @@ $(document).ready(function(){
                     const lon = parseFloat(rescuer.longitude);
                     rescuerCoordinates.push([lat, lon]);
     
-                    L.marker([lat, lon], {
+                    rescuerMarker = L.marker([lat, lon], {
                         title: 'Rescuer',
-                        icon: rescuerIcon
+                        icon: rescuerIcon,
+                        draggable: true
                     }).bindPopup("<h2>You</h2><p>Location: " + lat + ', ' + lon + "</p>")
                     .addTo(map);
                 }
@@ -90,6 +92,32 @@ $(document).ready(function(){
                         icon: otherRescuerIcon
                     }).bindPopup("<h2>Other</h2><p>Location: " + lat + ', ' + lon + "</p>")
                     .addTo(map);
+                }
+
+                // Bind the dragend event to update the rescuer's position
+                rescuerMarker.on('dragend', function (event) {
+                    const newLatLng = event.target.getLatLng();
+                    const newLat = newLatLng.lat;
+                    const newLng = newLatLng.lng;
+
+                    // Update rescuer's position in the database using AJAX
+                    updateRescuerPosition(newLat, newLng);
+                });
+
+                // Function to update rescuer's position in the database
+                function updateRescuerPosition(lat, lon) {
+                    // Send the new position to the server using AJAX
+                    $.ajax({
+                        url: 'upd_resc_pos.php', 
+                        method: 'POST',
+                        data: { latitude: lat, longitude: lon },
+                        success: function(response) {
+                            console.log('Rescuer position updated successfully:', response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('AJAX request error (updateRescuerPosition):', status, error);
+                        }
+                    });
                 }
 
                 //test markers for requests
