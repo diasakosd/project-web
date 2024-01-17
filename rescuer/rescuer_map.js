@@ -1,3 +1,12 @@
+// Define a function to handle the button click
+function handleOfferButton() {
+    alert('Offer received!');
+}
+
+function handleRequestButton() {
+    alert('Request taken!');
+}
+
 $(document).ready(function(){
     const map = L.map('rescuer_map');
     map.setView([38.2468, 21.7352], 12);
@@ -217,11 +226,7 @@ $.ajax({
     }
 });
 
-// Define a function to handle the button click
-function handleButton() {
-    // Perform actions when the button is clicked
-    alert('Button clicked!');
-}
+
 
             // Function to add a marker to the map if it doesn't already exist
             function addMarkerIfNotExists(lat, lon, icon, coordinatesSet, type) {
@@ -244,12 +249,13 @@ function handleButton() {
                     } else if (type === 'offerNo') {
                         const details = ballonDetailsOffW.shift(); // Take the first element
                         title = 'Offer Waiting';
-                        popupContent = "<h2><b>Offer waiting</b></h2><p><b>Citizen name:</b> " + details[0] + "</p>" +
-                            "<p><b>Citizen phone:</b> " + details[1] + "</p>" +
-                            "<p><b>Time created:</b> " + details[2] + "</p>" +
-                            "<p><b>Item:</b> " + details[3] + "</p>" +
-                            "<p><b>Quantity:</b> " + details[4] + "</p>"+
-                            "<button onclick='handleButton()'>Receive offer</button>";
+                        popupContent = "<h2><b>Offer waiting</b></h2><p id='citizenName'><b>Citizen name:</b> " + details[0] + "</p>" +
+                        "<p id='citizenPhone'><b>Citizen phone:</b> " + details[1] + "</p>" +
+                        "<p id='timeCreated'><b>Time created:</b> " + details[2] + "</p>" +
+                        "<p id='item'><b>Item:</b> " + details[3] + "</p>" +
+                        "<p id='quantity'><b>Quantity:</b> " + details[4] + "</p>" +
+                        "<button onclick='handleOfferButton()'>Receive offer</button>";
+
                     
                     } else if (type === 'requestYes') {
                         const details = ballonDetailsRegT.shift(); // Take the first element
@@ -270,7 +276,7 @@ function handleButton() {
                             "<p><b>Time created:</b> " + details[2] + "</p>" +
                             "<p><b>Item:</b> " + details[3] + "</p>" +
                             "<p><b>Quantity:</b> " + details[4] + "</p>"+
-                            "<button onclick='handleButton()'>Take Request</button>";
+                            "<button onclick='handleRequestButton()'>Take Request</button>";
                     }
                     
 
