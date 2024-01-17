@@ -1,6 +1,6 @@
 $(document).ready(function(){
     const map = L.map('rescuer_map');
-    map.setView([38.2468, 21.7352], 16);
+    map.setView([38.2468, 21.7352], 12);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 39,
@@ -147,16 +147,81 @@ $(document).ready(function(){
         }
     });
 
-// AJAX for Offers(yes) and Offers(no)
+let ballonDetailsRegT = [];
+let ballonDetailsRegW = [];
+let ballonDetailsOffT = [];
+let ballonDetailsOffW = [];
+
+//AJAX for Offers/Requests(yes) and Offers/Requests(no) details
 $.ajax({
-    url: 'offers_and_requests.php',
+    url: 'PopupBalloons.php',
     method: 'GET',
     success: function(response) {
-        console.log("Offers response received", response);
-        try {
-            var combinedData = JSON.parse(response);
+        console.log("Details response received", response);
+        try{
+            var Details = JSON.parse(response);
+            console.log("Parsed details:", Details);
 
-            console.log("Parsed combined data:", combinedData);
+            //req
+            for (let key in Details.reqT) {
+                const details = Details.reqT[key];
+                const fullname = details.full_name;
+                const phone = parseFloat(details.phone);
+                const Tcreated = details.formatted_time_created;
+                const item = details.item;
+                const quantity = parseFloat(details.quantity);
+                const Taccepted = details.formatted_time_accepted;
+                const Rusername = details.rescuer_username;
+                ballonDetailsRegT.push([fullname, phone, Tcreated, item, quantity, Taccepted, Rusername]);
+            }
+
+            for (let key in Details.reqW) {
+                const details = Details.reqW[key];
+                const fullname = details.full_name;
+                const phone = parseFloat(details.phone);
+                const Tcreated = details.formatted_time_created;
+                const item = details.item;
+                const quantity = parseFloat(details.quantity);
+                ballonDetailsRegW.push([fullname, phone, Tcreated, item, quantity]);
+            }
+
+            //offers
+            for (let key in Details.offT) {
+                const details = Details.offT[key];
+                const fullname = details.full_name;
+                const phone = parseFloat(details.phone);
+                const Tcreated = details.formatted_time_created;
+                const item = details.item;
+                const quantity = parseFloat(details.quantity);
+                const Taccepted = details.formatted_time_accepted;
+                const Rusername = details.rescuer_username;
+                ballonDetailsOffT.push([fullname, phone, Tcreated, item, quantity, Taccepted, Rusername]);
+            }
+
+            for (let key in Details.offW) {
+                const details = Details.offW[key];
+                const fullname = details.full_name;
+                const phone = parseFloat(details.phone);
+                const Tcreated = details.formatted_time_created;
+                const item = details.item;
+                const quantity = parseFloat(details.quantity);
+                ballonDetailsOffW.push([fullname, phone, Tcreated, item, quantity]);
+            }
+
+        } catch (error) {
+            console.error("Error parsing JSON: ", error);
+        }
+    },
+    error: function(xhr, status, error) {
+        console.error("AJAX request error (Offers): ", status, error);
+    }
+});
+
+// Define a function to handle the button click
+function handleButton() {
+    // Perform actions when the button is clicked
+    alert('Button clicked!');
+}
 
             // Function to add a marker to the map if it doesn't already exist
             function addMarkerIfNotExists(lat, lon, icon, coordinatesSet, type) {
@@ -166,18 +231,48 @@ $.ajax({
 
                     let title, popupContent;
                     if (type === 'offerYes') {
+                        const details = ballonDetailsOffT.shift(); // Take the first element
                         title = 'Offer Taken';
-                        popupContent = "<h2>Offer taken</h2><p>Location: " + lat + ', ' + lon + "</p>";
+                        popupContent = "<h2><b>Offer taken</b></h2><p><b>Citizen name:</b> " + details[0] + "</p>" +
+                            "<p><b>Citizen phone:</b> " + details[1] + "</p>" +
+                            "<p><b>Time created:</b> " + details[2] + "</p>" +
+                            "<p><b>Item:</b> " + details[3] + "</p>" +
+                            "<p><b>Quantity:</b> " + details[4] + "</p>" +
+                            "<p><b>Time accepted:</b> " + details[5] + "</p>" +
+                            "<p><b>Rescuer's username:</b> " + details[6] + "</p>";
+                    
                     } else if (type === 'offerNo') {
+                        const details = ballonDetailsOffW.shift(); // Take the first element
                         title = 'Offer Waiting';
-                        popupContent = "<h2>Offer waiting</h2><p>Location: " + lat + ', ' + lon + "</p>";
+                        popupContent = "<h2><b>Offer waiting</b></h2><p><b>Citizen name:</b> " + details[0] + "</p>" +
+                            "<p><b>Citizen phone:</b> " + details[1] + "</p>" +
+                            "<p><b>Time created:</b> " + details[2] + "</p>" +
+                            "<p><b>Item:</b> " + details[3] + "</p>" +
+                            "<p><b>Quantity:</b> " + details[4] + "</p>"+
+                            "<button onclick='handleButton()'>Receive offer</button>";
+                    
                     } else if (type === 'requestYes') {
+                        const details = ballonDetailsRegT.shift(); // Take the first element
                         title = 'Request Taken';
-                        popupContent = "<h2>Request taken</h2><p>Location: " + lat + ', ' + lon + "</p>";
+                        popupContent = "<h2><b>Request taken</b></h2><p><b>Citizen name:</b> " + details[0] + "</p>" +
+                            "<p><b>Citizen phone:</b> " + details[1] + "</p>" +
+                            "<p><b>Time created:</b> " + details[2] + "</p>" +
+                            "<p><b>Item:</b> " + details[3] + "</p>" +
+                            "<p><b>Quantity:</b> " + details[4] + "</p>" +
+                            "<p><b>Time accepted:</b> " + details[5] + "</p>" +
+                            "<p><b>Rescuer's username:</b> " + details[6] + "</p>";
+                    
                     } else if (type === 'requestNo') {
+                        const details = ballonDetailsRegW.shift(); // Take the first element
                         title = 'Request Waiting';
-                        popupContent = "<h2>Request waiting</h2><p>Location: " + lat + ', ' + lon + "</p>";
+                        popupContent = "<h2><b>Request waiting</b></h2><p><b>Citizen name:</b> " + details[0] + "</p>" +
+                            "<p><b>Citizen phone:</b> " + details[1] + "</p>" +
+                            "<p><b>Time created:</b> " + details[2] + "</p>" +
+                            "<p><b>Item:</b> " + details[3] + "</p>" +
+                            "<p><b>Quantity:</b> " + details[4] + "</p>"+
+                            "<button onclick='handleButton()'>Take Request</button>";
                     }
+                    
 
                     L.marker([lat, lon], {
                         title: title,
@@ -189,11 +284,31 @@ $.ajax({
                 }
             }
 
+
+
             // Sets for unique coordinates
             const uniqueoffYes = new Set();
             const uniqueoffNo = new Set();
             const uniqueReYes = new Set();
             const uniqueReNo = new Set();
+
+
+
+
+            
+
+// AJAX for Offers/Requests(yes) and Offers/Requests(no)
+$.ajax({
+    url: 'offers_and_requests.php',
+    method: 'GET',
+    success: function(response) {
+        console.log("Offers response received", response);
+        try {
+            var combinedData = JSON.parse(response);
+
+            console.log("Parsed combined data:", combinedData);
+
+
 
             // Loop through the data and create markers for Offers(yes)
             for (let key in combinedData.offersYes) {
@@ -251,6 +366,5 @@ $.ajax({
         console.error("AJAX request error (Offers): ", status, error);
     }
 });
-
 
 });
