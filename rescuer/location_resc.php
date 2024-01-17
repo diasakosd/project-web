@@ -29,11 +29,32 @@ if ($result) {
         // Append each rescuer row to the cargoData array
         $cargoData[] = $row;
     }
-
-    echo json_encode($cargoData);
 } else {
     echo json_encode(array('error' => 'No rescuer coordinates found'));
 }
+
+// Query to get the other rescuers' coordinates
+$query2 = "SELECT latitude, longitude FROM rescuers WHERE username != '$username'";
+$result2 = mysqli_query($db, $query2);
+
+if ($result2) {
+    $cargoData2 = array(); // Initialize an array to hold rescuer data
+
+    while ($row2 = mysqli_fetch_assoc($result2)) {
+        // Append each rescuer row to the cargoData array
+        $cargoData2[] = $row2;
+    }
+} else {
+    echo json_encode(array('error' => 'No rescuer coordinates found'));
+}
+
+// Combine both results
+$combinedRescuers = array(
+    'currResc' => $cargoData,
+    'otherResc' => $cargoData2
+);
+
+echo json_encode($combinedRescuers);
 
 // Close the database connection
 mysqli_close($db);

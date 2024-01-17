@@ -15,6 +15,11 @@ $(document).ready(function(){
         iconSize: [60, 60]
     });
 
+    const otherRescuerIcon = L.icon({
+        iconUrl: 'rescuer_icon-green.svg', // Change this to the path of your rescuer icon
+        iconSize: [60, 60]
+    });
+
     const baseIcon = L.icon({
         iconUrl: 'house.png',
         iconSize: [60, 60]
@@ -40,20 +45,23 @@ $(document).ready(function(){
         iconSize: [60, 60]
     });
 
+    let rescuerCoordinates = [];
+
     $.ajax({
         url: 'location_resc.php',
         method: 'GET',
         success: function(response) {
             console.log("Rescuer response received", response);
             try {
-                var cargoData = JSON.parse(response);
-                console.log("Parsed rescuer data:", cargoData);
+                var combinedRescuers = JSON.parse(response);
+                console.log("Parsed rescuer data:", combinedRescuers);
     
                 // Loop through the data and create markers for rescuers
-                for (let key in cargoData) {
-                    const rescuer = cargoData[key];
+                for (let key in combinedRescuers.currResc) {
+                    const rescuer = combinedRescuers.currResc[key];
                     const lat = parseFloat(rescuer.latitude);
                     const lon = parseFloat(rescuer.longitude);
+                    rescuerCoordinates.push([lat, lon]);
     
                     L.marker([lat, lon], {
                         title: 'Rescuer',
@@ -61,6 +69,20 @@ $(document).ready(function(){
                     }).bindPopup("<h2>You</h2><p>Location: " + lat + ', ' + lon + "</p>")
                     .addTo(map);
                 }
+
+                // Loop through the data and create markers for other rescuers
+                for (let key in combinedRescuers.otherResc) {
+                    const rescuer2 = combinedRescuers.otherResc[key];
+                    const lat = parseFloat(rescuer2.latitude);
+                    const lon = parseFloat(rescuer2.longitude);
+    
+                    L.marker([lat, lon], {
+                        title: 'Rescuer',
+                        icon: otherRescuerIcon
+                    }).bindPopup("<h2>Other</h2><p>Location: " + lat + ', ' + lon + "</p>")
+                    .addTo(map);
+                }
+
                 //test markers for requests
                 var marker = L.marker([38.2466, 21.7346]).bindPopup("<h3>Request waiting demo</h3>").addTo(map);
                 marker.setIcon(L.icon({
@@ -161,6 +183,9 @@ $.ajax({
                         title: title,
                         icon: icon
                     }).bindPopup(popupContent).addTo(map);
+
+                    
+
                 }
             }
 
@@ -177,6 +202,11 @@ $.ajax({
                 const lon = parseFloat(offers_y.longitude);
 
                 addMarkerIfNotExists(lat, lon, offerYesIcon, uniqueoffYes, 'offerYes');
+
+                // Draw a line between each rescuer and the offer
+                rescuerCoordinates.forEach(rescuerCoord => {
+                    const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(map);
+                });
             }
 
             // Loop through the data and create markers for Offers(no)
@@ -195,6 +225,12 @@ $.ajax({
                 const lon = parseFloat(requests_y.longitude);
 
                 addMarkerIfNotExists(lat, lon, requestsYesIcon, uniqueReYes, 'requestYes');
+
+                // Draw a line between each rescuer and the offer
+                rescuerCoordinates.forEach(rescuerCoord => {
+                    const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(map);
+                });
+
             }
 
             // Loop through the data and create markers for Requests(no)
