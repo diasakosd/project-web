@@ -1,13 +1,45 @@
+// Define a function to handle the button click
+function handleOfferButton() {
+    alert('Offer received!');
+}
+
+function handleRequestButton() {
+    alert('Request taken!');
+}
+
 $(document).ready(function(){
     const map = L.map('rescuer_map');
-    map.setView([38.2468, 21.7352], 16);
+    map.setView([38.2468, 21.7352], 12);
 
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 39,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        attribution: '© OpenStreetMap'
     }).addTo(map);
     map.zoomControl.setPosition('topright');
     map.attributionControl.setPrefix('');
+
+    var baseMaps = {
+        "OpenStreetMap": osm
+    };
+
+
+// Create layer groups for OfferYes, OfferNo, RequestYes, and RequestNo
+const rescuers_active = L.layerGroup().addTo(map);
+const rescuers_non_active = L.layerGroup().addTo(map);
+const offerYesGroup = L.layerGroup().addTo(map);
+const offerNoGroup = L.layerGroup().addTo(map);
+const requestYesGroup = L.layerGroup().addTo(map);
+const requestNoGroup = L.layerGroup().addTo(map);
+    // Add Layers Control to the map
+var layerControl = L.control.layers(baseMaps).addTo(map);
+
+// Add layers to the Layers Control
+layerControl.addOverlay(rescuers_active, "Active Rescuers");
+layerControl.addOverlay(rescuers_non_active, "Non-Active Rescuers");
+layerControl.addOverlay(offerYesGroup, "Offer Yes");
+layerControl.addOverlay(offerNoGroup, "Offer No");
+layerControl.addOverlay(requestYesGroup, "Request Yes");
+layerControl.addOverlay(requestNoGroup, "Request No");
 
     // Define a custom icon for the rescuer
     const rescuerIcon = L.icon({
@@ -15,8 +47,13 @@ $(document).ready(function(){
         iconSize: [60, 60]
     });
 
-    const otherRescuerIcon = L.icon({
-        iconUrl: 'rescuer_icon-green.svg', // Change this to the path of your rescuer icon
+    const activeRescuerIcon = L.icon({
+        iconUrl: 'rescuer_icon-green.svg', 
+        iconSize: [60, 60]
+    });
+
+    const inactiveRescuerIcon = L.icon({
+        iconUrl: 'rescuer_icon-red.svg', 
         iconSize: [60, 60]
     });
 
@@ -46,6 +83,7 @@ $(document).ready(function(){
     });
 
     let rescuerCoordinates = [];
+    let rescuerMarker;
 
     $.ajax({
         url: 'location_resc.php',
@@ -63,24 +101,64 @@ $(document).ready(function(){
                     const lon = parseFloat(rescuer.longitude);
                     rescuerCoordinates.push([lat, lon]);
     
-                    L.marker([lat, lon], {
+                    rescuerMarker = L.marker([lat, lon], {
                         title: 'Rescuer',
-                        icon: rescuerIcon
+                        icon: rescuerIcon,
+                        draggable: true
                     }).bindPopup("<h2>You</h2><p>Location: " + lat + ', ' + lon + "</p>")
                     .addTo(map);
                 }
 
-                // Loop through the data and create markers for other rescuers
-                for (let key in combinedRescuers.otherResc) {
-                    const rescuer2 = combinedRescuers.otherResc[key];
+                // Loop through the data and create markers for active rescuers
+                for (let key in combinedRescuers.activeResc) {
+                    const rescuer2 = combinedRescuers.activeResc[key];
                     const lat = parseFloat(rescuer2.latitude);
                     const lon = parseFloat(rescuer2.longitude);
     
                     L.marker([lat, lon], {
-                        title: 'Rescuer',
-                        icon: otherRescuerIcon
-                    }).bindPopup("<h2>Other</h2><p>Location: " + lat + ', ' + lon + "</p>")
-                    .addTo(map);
+                        title: 'Active Rescuer',
+                        icon: activeRescuerIcon
+                    }).bindPopup("<h2>Active Rescuer</h2><p>Location: " + lat + ', ' + lon + "</p>")
+                    .addTo(rescuers_active);
+                }
+
+                 // Loop through the data and create markers for inactive rescuers
+                 for (let key in combinedRescuers.inactiveResc) {
+                    const rescuer3 = combinedRescuers.inactiveResc[key];
+                    const lat = parseFloat(rescuer3.latitude);
+                    const lon = parseFloat(rescuer3.longitude);
+    
+                    L.marker([lat, lon], {
+                        title: 'Inactive Rescuer',
+                        icon: inactiveRescuerIcon
+                    }).bindPopup("<h2>Inactive Rescuer</h2><p>Location: " + lat + ', ' + lon + "</p>")
+                    .addTo(rescuers_non_active);
+                }
+
+                // Bind the dragend event to update the rescuer's position
+                rescuerMarker.on('dragend', function (event) {
+                    const newLatLng = event.target.getLatLng();
+                    const newLat = newLatLng.lat;
+                    const newLng = newLatLng.lng;
+
+                    // Update rescuer's position in the database using AJAX
+                    updateRescuerPosition(newLat, newLng);
+                });
+
+                // Function to update rescuer's position in the database
+                function updateRescuerPosition(lat, lon) {
+                    // Send the new position to the server using AJAX
+                    $.ajax({
+                        url: 'upd_resc_pos.php', 
+                        method: 'POST',
+                        data: { latitude: lat, longitude: lon },
+                        success: function(response) {
+                            console.log('Rescuer position updated successfully:', response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('AJAX request error (updateRescuerPosition):', status, error);
+                        }
+                    });
                 }
 
                 //test markers for requests
@@ -116,7 +194,7 @@ $(document).ready(function(){
             console.error("AJAX request error (rescuers): ", status, error);
         }
     });
-    
+
     $.ajax({
         url: 'base_map.php',
         method: 'GET',
@@ -147,101 +225,66 @@ $(document).ready(function(){
         }
     });
 
-// AJAX for Offers(yes) and Offers(no)
+let ballonDetailsRegT = [];
+let ballonDetailsRegW = [];
+let ballonDetailsOffT = [];
+let ballonDetailsOffW = [];
+
+//AJAX for Offers/Requests(yes) and Offers/Requests(no) details
 $.ajax({
-    url: 'offers_and_requests.php',
+    url: 'PopupBalloons.php',
     method: 'GET',
     success: function(response) {
-        console.log("Offers response received", response);
-        try {
-            var combinedData = JSON.parse(response);
+        console.log("Details response received", response);
+        try{
+            var Details = JSON.parse(response);
+            console.log("Parsed details:", Details);
 
-            console.log("Parsed combined data:", combinedData);
-
-            // Function to add a marker to the map if it doesn't already exist
-            function addMarkerIfNotExists(lat, lon, icon, coordinatesSet, type) {
-                const coordinates = lat + ',' + lon;
-                if (!coordinatesSet.has(coordinates)) {
-                    coordinatesSet.add(coordinates);
-
-                    let title, popupContent;
-                    if (type === 'offerYes') {
-                        title = 'Offer Taken';
-                        popupContent = "<h2>Offer taken</h2><p>Location: " + lat + ', ' + lon + "</p>";
-                    } else if (type === 'offerNo') {
-                        title = 'Offer Waiting';
-                        popupContent = "<h2>Offer waiting</h2><p>Location: " + lat + ', ' + lon + "</p>";
-                    } else if (type === 'requestYes') {
-                        title = 'Request Taken';
-                        popupContent = "<h2>Request taken</h2><p>Location: " + lat + ', ' + lon + "</p>";
-                    } else if (type === 'requestNo') {
-                        title = 'Request Waiting';
-                        popupContent = "<h2>Request waiting</h2><p>Location: " + lat + ', ' + lon + "</p>";
-                    }
-
-                    L.marker([lat, lon], {
-                        title: title,
-                        icon: icon
-                    }).bindPopup(popupContent).addTo(map);
-
-                    
-
-                }
+            //req
+            for (let key in Details.reqT) {
+                const details = Details.reqT[key];
+                const fullname = details.full_name;
+                const phone = parseFloat(details.phone);
+                const Tcreated = details.formatted_time_created;
+                const item = details.item;
+                const quantity = parseFloat(details.quantity);
+                const Taccepted = details.formatted_time_accepted;
+                const Rusername = details.rescuer_username;
+                ballonDetailsRegT.push([fullname, phone, Tcreated, item, quantity, Taccepted, Rusername]);
             }
 
-            // Sets for unique coordinates
-            const uniqueoffYes = new Set();
-            const uniqueoffNo = new Set();
-            const uniqueReYes = new Set();
-            const uniqueReNo = new Set();
-
-            // Loop through the data and create markers for Offers(yes)
-            for (let key in combinedData.offersYes) {
-                const offers_y = combinedData.offersYes[key];
-                const lat = parseFloat(offers_y.latitude);
-                const lon = parseFloat(offers_y.longitude);
-
-                addMarkerIfNotExists(lat, lon, offerYesIcon, uniqueoffYes, 'offerYes');
-
-                // Draw a line between each rescuer and the offer
-                rescuerCoordinates.forEach(rescuerCoord => {
-                    const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(map);
-                });
+            for (let key in Details.reqW) {
+                const details = Details.reqW[key];
+                const fullname = details.full_name;
+                const phone = parseFloat(details.phone);
+                const Tcreated = details.formatted_time_created;
+                const item = details.item;
+                const quantity = parseFloat(details.quantity);
+                ballonDetailsRegW.push([fullname, phone, Tcreated, item, quantity]);
             }
 
-            // Loop through the data and create markers for Offers(no)
-            for (let key in combinedData.offersNo) {
-                const offers_n = combinedData.offersNo[key];
-                const lat = parseFloat(offers_n.latitude);
-                const lon = parseFloat(offers_n.longitude);
-
-                addMarkerIfNotExists(lat, lon, offerNoIcon, uniqueoffNo, 'offerNo');
+            //offers
+            for (let key in Details.offT) {
+                const details = Details.offT[key];
+                const fullname = details.full_name;
+                const phone = parseFloat(details.phone);
+                const Tcreated = details.formatted_time_created;
+                const item = details.item;
+                const quantity = parseFloat(details.quantity);
+                const Taccepted = details.formatted_time_accepted;
+                const Rusername = details.rescuer_username;
+                ballonDetailsOffT.push([fullname, phone, Tcreated, item, quantity, Taccepted, Rusername]);
             }
 
-            // Loop through the data and create markers for Requests(yes)
-            for (let key in combinedData.requestsYes) {
-                const requests_y = combinedData.requestsYes[key];
-                const lat = parseFloat(requests_y.latitude);
-                const lon = parseFloat(requests_y.longitude);
-
-                addMarkerIfNotExists(lat, lon, requestsYesIcon, uniqueReYes, 'requestYes');
-
-                // Draw a line between each rescuer and the offer
-                rescuerCoordinates.forEach(rescuerCoord => {
-                    const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(map);
-                });
-
+            for (let key in Details.offW) {
+                const details = Details.offW[key];
+                const fullname = details.full_name;
+                const phone = parseFloat(details.phone);
+                const Tcreated = details.formatted_time_created;
+                const item = details.item;
+                const quantity = parseFloat(details.quantity);
+                ballonDetailsOffW.push([fullname, phone, Tcreated, item, quantity]);
             }
-
-            // Loop through the data and create markers for Requests(no)
-            for (let key in combinedData.requestsNo) {
-                const requests_n = combinedData.requestsNo[key];
-                const lat = parseFloat(requests_n.latitude);
-                const lon = parseFloat(requests_n.longitude);
-
-                addMarkerIfNotExists(lat, lon, requestsNoIcon, uniqueReNo, 'requestNo');
-            }
-
 
         } catch (error) {
             console.error("Error parsing JSON: ", error);
@@ -252,5 +295,154 @@ $.ajax({
     }
 });
 
+
+
+            // Function to add a marker to the map if it doesn't already exist
+            function addMarkerIfNotExists(lat, lon, icon, layerGroup, coordinatesSet, type) {
+                const coordinates = lat + ',' + lon;
+                if (!coordinatesSet.has(coordinates)) {
+                    coordinatesSet.add(coordinates);
+
+                    let title, popupContent;
+                    if (type === 'offerYes') {
+                        const details = ballonDetailsOffT.shift(); // Take the first element
+                        title = 'Offer Taken';
+                        popupContent = "<h2><b>Offer taken</b></h2><p><b>Citizen name:</b> " + details[0] + "</p>" +
+                            "<p><b>Citizen phone:</b> " + details[1] + "</p>" +
+                            "<p><b>Time created:</b> " + details[2] + "</p>" +
+                            "<p><b>Item:</b> " + details[3] + "</p>" +
+                            "<p><b>Quantity:</b> " + details[4] + "</p>" +
+                            "<p><b>Time accepted:</b> " + details[5] + "</p>" +
+                            "<p><b>Rescuer's username:</b> " + details[6] + "</p>";
+                    
+                    } else if (type === 'offerNo') {
+                        const details = ballonDetailsOffW.shift(); // Take the first element
+                        title = 'Offer Waiting';
+                        popupContent = "<h2><b>Offer waiting</b></h2><p id='citizenName'><b>Citizen name:</b> " + details[0] + "</p>" +
+                        "<p id='citizenPhone'><b>Citizen phone:</b> " + details[1] + "</p>" +
+                        "<p id='timeCreated'><b>Time created:</b> " + details[2] + "</p>" +
+                        "<p id='item'><b>Item:</b> " + details[3] + "</p>" +
+                        "<p id='quantity'><b>Quantity:</b> " + details[4] + "</p>" +
+                        "<button onclick='handleOfferButton()'>Receive offer</button>";
+
+                    
+                    } else if (type === 'requestYes') {
+                        const details = ballonDetailsRegT.shift(); // Take the first element
+                        title = 'Request Taken';
+                        popupContent = "<h2><b>Request taken</b></h2><p><b>Citizen name:</b> " + details[0] + "</p>" +
+                            "<p><b>Citizen phone:</b> " + details[1] + "</p>" +
+                            "<p><b>Time created:</b> " + details[2] + "</p>" +
+                            "<p><b>Item:</b> " + details[3] + "</p>" +
+                            "<p><b>Quantity:</b> " + details[4] + "</p>" +
+                            "<p><b>Time accepted:</b> " + details[5] + "</p>" +
+                            "<p><b>Rescuer's username:</b> " + details[6] + "</p>";
+                    
+                    } else if (type === 'requestNo') {
+                        const details = ballonDetailsRegW.shift(); // Take the first element
+                        title = 'Request Waiting';
+                        popupContent = "<h2><b>Request waiting</b></h2><p><b>Citizen name:</b> " + details[0] + "</p>" +
+                            "<p><b>Citizen phone:</b> " + details[1] + "</p>" +
+                            "<p><b>Time created:</b> " + details[2] + "</p>" +
+                            "<p><b>Item:</b> " + details[3] + "</p>" +
+                            "<p><b>Quantity:</b> " + details[4] + "</p>"+
+                            "<button onclick='handleRequestButton()'>Take Request</button>";
+                    }
+                    
+
+                    const marker = L.marker([lat, lon], {
+                        title: title,
+                        icon: icon
+                    }).bindPopup(popupContent).addTo(map);
+
+                    
+                    // Add the marker to the specified layer group
+                    marker.addTo(layerGroup);
+                }
+            }
+
+
+
+            // Sets for unique coordinates
+            const uniqueoffYes = new Set();
+            const uniqueoffNo = new Set();
+            const uniqueReYes = new Set();
+            const uniqueReNo = new Set();
+
+
+
+
+            
+
+// AJAX for Offers/Requests(yes) and Offers/Requests(no)
+$.ajax({
+    url: 'offers_and_requests.php',
+    method: 'GET',
+    success: function(response) {
+        console.log("Offers response received", response);
+        try {
+            var combinedData = JSON.parse(response);
+
+            console.log("Parsed combined data:", combinedData);
+
+
+
+            // Loop through the data and create markers for Offers(yes)
+            for (let key in combinedData.offersYes) {
+                const offers_y = combinedData.offersYes[key];
+                const lat = parseFloat(offers_y.latitude);
+                const lon = parseFloat(offers_y.longitude);
+
+                addMarkerIfNotExists(lat, lon, offerYesIcon, offerYesGroup, uniqueoffYes, 'offerYes');
+
+                // Draw a line between each rescuer and the offer
+                rescuerCoordinates.forEach(rescuerCoord => {
+                    const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(offerYesGroup);
+                });
+            }
+
+            // Loop through the data and create markers for Offers(no)
+            for (let key in combinedData.offersNo) {
+                const offers_n = combinedData.offersNo[key];
+                const lat = parseFloat(offers_n.latitude);
+                const lon = parseFloat(offers_n.longitude);
+
+                addMarkerIfNotExists(lat, lon, offerNoIcon, offerNoGroup, uniqueoffNo, 'offerNo');
+            }
+
+            // Loop through the data and create markers for Requests(yes)
+            for (let key in combinedData.requestsYes) {
+                const requests_y = combinedData.requestsYes[key];
+                const lat = parseFloat(requests_y.latitude);
+                const lon = parseFloat(requests_y.longitude);
+
+                addMarkerIfNotExists(lat, lon, requestsYesIcon, requestYesGroup, uniqueReYes, 'requestYes');
+
+                // Draw a line between each rescuer and the request
+                rescuerCoordinates.forEach(rescuerCoord => {
+                    const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(requestYesGroup);
+                });
+
+            }
+
+            // Loop through the data and create markers for Requests(no)
+            for (let key in combinedData.requestsNo) {
+                const requests_n = combinedData.requestsNo[key];
+                const lat = parseFloat(requests_n.latitude);
+                const lon = parseFloat(requests_n.longitude);
+
+                addMarkerIfNotExists(lat, lon, requestsNoIcon, requestNoGroup, uniqueReNo, 'requestNo');
+            }
+
+
+
+
+        } catch (error) {
+            console.error("Error parsing JSON: ", error);
+        }
+    },
+    error: function(xhr, status, error) {
+        console.error("AJAX request error (Offers): ", status, error);
+    }
+});
 
 });
