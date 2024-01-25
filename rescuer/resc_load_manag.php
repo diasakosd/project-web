@@ -61,6 +61,9 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
                 <tbody></tbody>
             </table>
             <br>
+            <label for="getFromBaseItem">Select Quantity:</label><br>
+            <input type="number" id="getFromBaseItem">
+            <br><br>
             <button type="button" id="LoadBtn">Load cargo.</button>
             <br>
             <br>
@@ -69,5 +72,6 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="base_table-resc.js"></script>
     <script src="extras.js"></script>
+    
 </body>
 </html>

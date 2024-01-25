@@ -9,29 +9,47 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Error: Unable to discharge cargo. You need to be at most 100m away from the base.');
         }
     });
-
-    var loadButton = document.getElementById('LoadBtn');
-
-    loadButton.addEventListener('click', function () {
-        var errorOccurred = true;
-
-        if (errorOccurred) {
-            alert('Error: Unable to load cargo. You need to be at most 100m away from the base.');
-        }
-    });
 });
 
 document.addEventListener('DOMContentLoaded', function () {
     var loadButton = document.getElementById('LoadBtn');
 
     loadButton.addEventListener('click', function () {
-        var errorOccurred = true;
+        // Add your custom load button logic here
+        var selectedQuantity = document.getElementById('getFromBaseItem').value;
+        if (selectedQuantity !== "") {
+            var numericQuantity = parseFloat(selectedQuantity);
 
-        if (errorOccurred) {
-            alert('Error: Unable to load cargo. You need to be at most 100m away from the base.');
+            if (numericQuantity > 0) {
+                // Update the quantity for selected rows
+                var checkedRows = document.querySelectorAll('input[type="checkbox"]:checked');
+                checkedRows.forEach(function (checkbox) {
+                    var row = checkbox.closest('tr');
+                    var baseQuantityCell = row.querySelector('.editable-cell');
+                    var baseQuantity = parseFloat(baseQuantityCell.textContent) || 0;
+                    var itemId = baseQuantityCell.dataset.itemId;
+                    var newValue = baseQuantity - numericQuantity;
+
+                    // Perform validation or additional checks if needed
+                    if (newValue < 0) {
+                        alert('Base does not hold that much quantity. Please enter a valid value.');
+                    } else {
+                        // Update the quantity cell
+                        baseQuantityCell.textContent = newValue;
+                        baseQuantityCell.classList.add('edited-cell'); // Add the class to mark it as edited
+                    }
+                });
+            } else {
+                alert('Please enter a valid quantity.');
+            }
+        } else {
+            alert('Please select a row or enter a quantity.');
         }
     });
 });
+
+
+
 
 document.addEventListener("DOMContentLoaded", function() {
     const checkbox = document.getElementById('check');
@@ -54,5 +72,3 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
-
-
