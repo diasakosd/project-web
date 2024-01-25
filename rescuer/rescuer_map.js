@@ -11,12 +11,30 @@ $(document).ready(function(){
     const map = L.map('rescuer_map');
     map.setView([38.2468, 21.7352], 12);
 
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 39,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        attribution: '© OpenStreetMap'
     }).addTo(map);
     map.zoomControl.setPosition('topright');
     map.attributionControl.setPrefix('');
+
+    var baseMaps = {
+        "OpenStreetMap": osm
+    };
+
+
+    // Create layer groups for OfferYes, OfferNo, RequestYes, and RequestNo
+const offerYesGroup = L.layerGroup().addTo(map);
+const offerNoGroup = L.layerGroup().addTo(map);
+const requestYesGroup = L.layerGroup().addTo(map);
+const requestNoGroup = L.layerGroup().addTo(map);
+// Create an object to hold your overlays
+    const overlays = {
+        "Offer Yes": offerYesGroup,
+        "Offer No": offerNoGroup,
+        "Request Yes": requestYesGroup,
+        "Request No": requestNoGroup
+    };
 
     // Define a custom icon for the rescuer
     const rescuerIcon = L.icon({
@@ -153,7 +171,7 @@ $(document).ready(function(){
             console.error("AJAX request error (rescuers): ", status, error);
         }
     });
-    
+
     $.ajax({
         url: 'base_map.php',
         method: 'GET',
@@ -257,7 +275,7 @@ $.ajax({
 
 
             // Function to add a marker to the map if it doesn't already exist
-            function addMarkerIfNotExists(lat, lon, icon, coordinatesSet, type) {
+            function addMarkerIfNotExists(lat, lon, icon, layerGroup, coordinatesSet, type) {
                 const coordinates = lat + ',' + lon;
                 if (!coordinatesSet.has(coordinates)) {
                     coordinatesSet.add(coordinates);
@@ -308,13 +326,14 @@ $.ajax({
                     }
                     
 
-                    L.marker([lat, lon], {
+                    const marker = L.marker([lat, lon], {
                         title: title,
                         icon: icon
                     }).bindPopup(popupContent).addTo(map);
 
                     
-
+                    // Add the marker to the specified layer group
+                    marker.addTo(layerGroup);
                 }
             }
 
@@ -350,7 +369,7 @@ $.ajax({
                 const lat = parseFloat(offers_y.latitude);
                 const lon = parseFloat(offers_y.longitude);
 
-                addMarkerIfNotExists(lat, lon, offerYesIcon, uniqueoffYes, 'offerYes');
+                addMarkerIfNotExists(lat, lon, offerYesIcon, offerYesGroup, uniqueoffYes, 'offerYes');
 
                 // Draw a line between each rescuer and the offer
                 rescuerCoordinates.forEach(rescuerCoord => {
@@ -364,7 +383,7 @@ $.ajax({
                 const lat = parseFloat(offers_n.latitude);
                 const lon = parseFloat(offers_n.longitude);
 
-                addMarkerIfNotExists(lat, lon, offerNoIcon, uniqueoffNo, 'offerNo');
+                addMarkerIfNotExists(lat, lon, offerNoIcon, offerNoGroup, uniqueoffNo, 'offerNo');
             }
 
             // Loop through the data and create markers for Requests(yes)
@@ -373,7 +392,7 @@ $.ajax({
                 const lat = parseFloat(requests_y.latitude);
                 const lon = parseFloat(requests_y.longitude);
 
-                addMarkerIfNotExists(lat, lon, requestsYesIcon, uniqueReYes, 'requestYes');
+                addMarkerIfNotExists(lat, lon, requestsYesIcon, requestYesGroup, uniqueReYes, 'requestYes');
 
                 // Draw a line between each rescuer and the offer
                 rescuerCoordinates.forEach(rescuerCoord => {
@@ -388,8 +407,17 @@ $.ajax({
                 const lat = parseFloat(requests_n.latitude);
                 const lon = parseFloat(requests_n.longitude);
 
-                addMarkerIfNotExists(lat, lon, requestsNoIcon, uniqueReNo, 'requestNo');
+                addMarkerIfNotExists(lat, lon, requestsNoIcon, requestNoGroup, uniqueReNo, 'requestNo');
             }
+
+
+            var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
+            layerControl.addOverlay(offerYesGroup, "Offer Yes");
+            layerControl.addOverlay(offerNoGroup, "Offer No");
+            layerControl.addOverlay(requestYesGroup, "Request Yes");
+            layerControl.addOverlay(requestNoGroup, "Request No");
+
+
 
 
         } catch (error) {
