@@ -71,6 +71,7 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="base_table-resc.js"></script>
+    <script src="Cargo_Manag.js"></script>
     <script src="extras.js"></script>
     
 </body>

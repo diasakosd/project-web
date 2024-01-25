@@ -18,7 +18,7 @@ if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
 // Get the rescuer name based on the session username
 $username = $_SESSION['username'];
 
-$baseContent = "SELECT category AS Category, item AS Item, quantity AS Quantity FROM `base_storage` GROUP BY item ORDER BY category";
+$baseContent = "SELECT category AS Category, item AS Item, quantity AS Quantity FROM `base_storage` ";
 $result = mysqli_query($db, $baseContent);
 
 if($result){
