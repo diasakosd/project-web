@@ -23,20 +23,13 @@ $(document).ready(function(){
     };
 
 
-    // Create layer groups for OfferYes, OfferNo, RequestYes, and RequestNo
+// Create layer groups for OfferYes, OfferNo, RequestYes, and RequestNo
 const offerYesGroup = L.layerGroup().addTo(map);
 const offerNoGroup = L.layerGroup().addTo(map);
 const requestYesGroup = L.layerGroup().addTo(map);
 const requestNoGroup = L.layerGroup().addTo(map);
-// Create an object to hold your overlays
-    const overlays = {
-        "Offer Yes": offerYesGroup,
-        "Offer No": offerNoGroup,
-        "Request Yes": requestYesGroup,
-        "Request No": requestNoGroup
-    };
     // Add Layers Control to the map
-var layerControl = L.control.layers(baseMaps, overlays).addTo(map);
+var layerControl = L.control.layers(baseMaps).addTo(map);
 
 // Add layers to the Layers Control
 layerControl.addOverlay(offerYesGroup, "Offer Yes");
