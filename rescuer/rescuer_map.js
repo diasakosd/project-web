@@ -24,6 +24,8 @@ $(document).ready(function(){
 
 
 // Create layer groups for OfferYes, OfferNo, RequestYes, and RequestNo
+const rescuers_active = L.layerGroup().addTo(map);
+const rescuers_non_active = L.layerGroup().addTo(map);
 const offerYesGroup = L.layerGroup().addTo(map);
 const offerNoGroup = L.layerGroup().addTo(map);
 const requestYesGroup = L.layerGroup().addTo(map);
@@ -32,6 +34,8 @@ const requestNoGroup = L.layerGroup().addTo(map);
 var layerControl = L.control.layers(baseMaps).addTo(map);
 
 // Add layers to the Layers Control
+layerControl.addOverlay(rescuers_active, "Active Rescuers");
+layerControl.addOverlay(rescuers_non_active, "Non-Active Rescuers");
 layerControl.addOverlay(offerYesGroup, "Offer Yes");
 layerControl.addOverlay(offerNoGroup, "Offer No");
 layerControl.addOverlay(requestYesGroup, "Request Yes");
@@ -43,8 +47,13 @@ layerControl.addOverlay(requestNoGroup, "Request No");
         iconSize: [60, 60]
     });
 
-    const otherRescuerIcon = L.icon({
-        iconUrl: 'rescuer_icon-green.svg', // Change this to the path of your rescuer icon
+    const activeRescuerIcon = L.icon({
+        iconUrl: 'rescuer_icon-green.svg', 
+        iconSize: [60, 60]
+    });
+
+    const inactiveRescuerIcon = L.icon({
+        iconUrl: 'rescuer_icon-red.svg', 
         iconSize: [60, 60]
     });
 
@@ -100,17 +109,30 @@ layerControl.addOverlay(requestNoGroup, "Request No");
                     .addTo(map);
                 }
 
-                // Loop through the data and create markers for other rescuers
-                for (let key in combinedRescuers.otherResc) {
-                    const rescuer2 = combinedRescuers.otherResc[key];
+                // Loop through the data and create markers for active rescuers
+                for (let key in combinedRescuers.activeResc) {
+                    const rescuer2 = combinedRescuers.activeResc[key];
                     const lat = parseFloat(rescuer2.latitude);
                     const lon = parseFloat(rescuer2.longitude);
     
                     L.marker([lat, lon], {
-                        title: 'Rescuer',
-                        icon: otherRescuerIcon
+                        title: 'Active Rescuer',
+                        icon: activeRescuerIcon
                     }).bindPopup("<h2>Other</h2><p>Location: " + lat + ', ' + lon + "</p>")
-                    .addTo(map);
+                    .addTo(rescuers_active);
+                }
+
+                 // Loop through the data and create markers for inactive rescuers
+                 for (let key in combinedRescuers.inactiveResc) {
+                    const rescuer3 = combinedRescuers.inactiveResc[key];
+                    const lat = parseFloat(rescuer3.latitude);
+                    const lon = parseFloat(rescuer3.longitude);
+    
+                    L.marker([lat, lon], {
+                        title: 'Inactive Rescuer',
+                        icon: inactiveRescuerIcon
+                    }).bindPopup("<h2>Other</h2><p>Location: " + lat + ', ' + lon + "</p>")
+                    .addTo(rescuers_non_active);
                 }
 
                 // Bind the dragend event to update the rescuer's position
@@ -374,7 +396,7 @@ $.ajax({
 
                 // Draw a line between each rescuer and the offer
                 rescuerCoordinates.forEach(rescuerCoord => {
-                    const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(map);
+                    const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(offerYesGroup);
                 });
             }
 
@@ -395,9 +417,9 @@ $.ajax({
 
                 addMarkerIfNotExists(lat, lon, requestsYesIcon, requestYesGroup, uniqueReYes, 'requestYes');
 
-                // Draw a line between each rescuer and the offer
+                // Draw a line between each rescuer and the request
                 rescuerCoordinates.forEach(rescuerCoord => {
-                    const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(map);
+                    const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(requestYesGroup);
                 });
 
             }
