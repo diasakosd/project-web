@@ -3,6 +3,7 @@ $(document).ready(function () {
 
     loadButton.addEventListener('click', function () {
         var selectedQuantity = $('#getFromBaseItem').val();
+
         if (selectedQuantity !== "") {
             var numericQuantity = parseFloat(selectedQuantity);
 
@@ -12,6 +13,8 @@ $(document).ready(function () {
                     var baseQuantityCell = row.find('.editable-cell');
                     var itemId = baseQuantityCell.data('item-id');
                     var baseQuantity = parseFloat(baseQuantityCell.text()) || 0;
+                    var category = row.find('.category-cell').text(); // Replace with the actual class or identifier
+                    var item = row.find('.item-cell').text(); // Replace with the actual class or identifier
                     var newValue = baseQuantity - numericQuantity;
 
                     if (newValue < 0) {
@@ -21,7 +24,7 @@ $(document).ready(function () {
                         baseQuantityCell.addClass('edited-cell');
 
                         // Update the quantity in the database using jQuery AJAX
-                        updateQuantityInDatabase(itemId, newValue);
+                        updateQuantityInDatabase(itemId, newValue, category, item);
                     }
                 });
             } else {
@@ -32,11 +35,11 @@ $(document).ready(function () {
         }
     });
 
-    function updateQuantityInDatabase(itemId, newQuantity) {
+    function updateQuantityInDatabase(itemId, newQuantity, category, item) {
         $.ajax({
             url: 'Cargo_Manag.php',
             method: 'POST',
-            data: { item_id: itemId, quantity: newQuantity },
+            data: { item_id: itemId, quantity: newQuantity, category: category, item: item },
             success: function (response) {
                 console.log(response);
                 // Handle the response as needed, e.g., display a success message
@@ -46,5 +49,4 @@ $(document).ready(function () {
             }
         });
     }    
-
 });
