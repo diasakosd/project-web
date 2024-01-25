@@ -118,7 +118,7 @@ layerControl.addOverlay(requestNoGroup, "Request No");
                     L.marker([lat, lon], {
                         title: 'Active Rescuer',
                         icon: activeRescuerIcon
-                    }).bindPopup("<h2>Other</h2><p>Location: " + lat + ', ' + lon + "</p>")
+                    }).bindPopup("<h2>Active Rescuer</h2><p>Location: " + lat + ', ' + lon + "</p>")
                     .addTo(rescuers_active);
                 }
 
@@ -131,7 +131,7 @@ layerControl.addOverlay(requestNoGroup, "Request No");
                     L.marker([lat, lon], {
                         title: 'Inactive Rescuer',
                         icon: inactiveRescuerIcon
-                    }).bindPopup("<h2>Other</h2><p>Location: " + lat + ', ' + lon + "</p>")
+                    }).bindPopup("<h2>Inactive Rescuer</h2><p>Location: " + lat + ', ' + lon + "</p>")
                     .addTo(rescuers_non_active);
                 }
 
