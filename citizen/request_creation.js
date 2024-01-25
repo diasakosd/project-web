@@ -1,101 +1,101 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Fetch announcements and dropdown menu when the page loads
-    fetchAnnouncements();
-    populateDropdowns();
-});
-
-
-function validateForm() {
-    var category = document.getElementById("category").value;
-    var item = document.getElementById("item").value;
-    var quantity = document.getElementById("quantity").value;
-    var status = document.getElementById("status").value;
-
-    if (category === "" || item === "") {
-        // Display an error message
-        document.querySelector('.error_message').innerHTML = "Oops bro kati ksexases.";
-        return false; // Prevent form submission
-    }
- else
-    return true; // Allow form submission
-}
-
-function populateDropdowns() {
     // Fetch initial options for category and item when the page loads
     fetchOptions('category');
     fetchOptions('item');
-}
 
-// Function to fetch options for category or item
-function fetchOptions(field) {
-    // AJAX request to fetch data from PHP script
+    // Add event listener to call fetchOptions on change
+    document.getElementById('category').addEventListener('change', function () {
+        fetchOptions('item', this.value);
+    });
+
+    // Add event listener for form submission
+    document.getElementById('request_creationForm').addEventListener('submit', function () {
+        // Reset error message on form submission
+        document.querySelector('.error_message').innerHTML = '';
+    });
+});
+
+$(document).ready(function () {
+    // Autocomplete for category
+    $("#category").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "fetch_request_creation.php",
+                dataType: "json",
+                data: {
+                    field: 'category',
+                    term: request.term
+                },
+                success: function (data) {
+                    response(data.categories);
+                }
+            });
+        }
+    });
+
+    // Autocomplete for item
+    $("#item").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "fetch_request_creation.php",
+                dataType: "json",
+                data: {
+                    field: 'item',
+                    term: request.term,
+                    selectedCategory: $("#category").val()
+                },
+                success: function (data) {
+                    response(data.items);
+                }
+            });
+        }
+    });
+function fetchOptions(field, selectedCategory = null) {
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            // Parse the JSON response
             var data = JSON.parse(xhr.responseText);
 
-            // Update the dropdown based on the field
-            if (field === 'category') {
-                updateDropdown('category', data.categories);
-            } else if (field === 'item') {
-                updateDropdown('item', data.items);
+            // Check if the response contains the expected field
+            if (data[field + 's']) {
+                updateDropdown(field, data[field + 's']);
+            } else {
+                console.error('Invalid response format');
             }
         }
     };
 
-    // Replace "your_data_fetching_script.php" with your actual PHP script
-    xhr.open("GET", "fetch_request_creation.php?field=" + field, true);
+    var url = "fetch_request_creation.php?field=" + field;
+
+    // Pass selected category to the server if it's not null
+    if (selectedCategory !== null) {
+        url += "&selectedCategory=" + encodeURIComponent(selectedCategory);
+    }
+
+    xhr.open("GET", url, true);
     xhr.send();
 }
 
-// Function to update dropdown options
 function updateDropdown(field, options) {
     var dropdown = document.getElementById(field);
-    
+
     // Clear existing options
     dropdown.innerHTML = '';
+
+    // Add default option
+    var defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.text = "Select " + field.charAt(0).toUpperCase() + field.slice(1);
+    dropdown.add(defaultOption);
 
     // Add new options
     options.forEach(function (option) {
         var optionElement = document.createElement("option");
+        optionElement.value = option;
         optionElement.text = option;
         dropdown.add(optionElement);
     });
+
+    dropdown.value = ""; // Ensure that the default option is selected
 }
-
-$(document).ready(function () {
-
-    // Set current time
-    var currentTime = new Date();
-    $("#currentTime").val(currentTime.toISOString().slice(0, 19).replace("T", " "));
-
-    // Form submission
-    $("#request_creationForm").submit(function (event) {
-        event.preventDefault();
-
-        // Get form data
-        var formData = {
-            item: $("#item").val(),
-            category: $("#category").val(),
-            quantity: $("#quantity").val(),
-            currentTime: $("#currentTime").val()
-        };
-
-        // Send data to the server using AJAX
-        $.ajax({
-            type: "POST",
-            url: "fetch_request_creation.php",  
-            data: formData,
-
-            success: function (response) {
-                // Handle success (if needed)
-                console.log("Request submitted successfully");
-            },
-            error: function (error) {
-                // Handle error (if needed)
-                console.error("Error submitting request:", error);
-            }
-        });
-    });
 });

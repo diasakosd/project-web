@@ -1,50 +1,50 @@
 <?php
-// Connect to the database
+// Your database connection logic here
 $db = mysqli_connect('localhost', 'root', '', 'web');
 
-
-// Check connection
 if (!$db) {
-    echo json_encode(array('error' => 'Connection failed: ' . mysqli_connect_error()));
-    exit();
+    die("Connection failed: " . mysqli_connect_error());
 }
 
-// Fetch categories from the base_storage table
-$query = "SELECT DISTINCT category FROM base_storage";
-$result = mysqli_query($db, $query);
-$categories = array();
+$field = $_GET['field'];
+$term = $_GET['term'];
 
-if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $categories[] = $row['category'];
+if ($field === 'category') {
+    // Autocomplete for category
+    $query = "SELECT DISTINCT category FROM base_storage WHERE category LIKE '$term%'";
+    $result = mysqli_query($db, $query);
+    $categories = array();
+
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $categories[] = $row['category'];
+        }
+
+        echo json_encode(['categories' => $categories]);
+    } else {
+        echo json_encode(['error' => 'Query failed']);
     }
-}
+} elseif ($field === 'item') {
+    // Autocomplete for item
+    $selectedCategory = $_GET['selectedCategory'];
 
-// Fetch items and categories from the base_storage table
-$query = "SELECT DISTINCT category, item FROM base_storage";
-$result = mysqli_query($db, $query);
-$data = array();
+    $query = "SELECT DISTINCT item FROM base_storage WHERE category = '$selectedCategory' AND item LIKE '$term%'";
+    $result = mysqli_query($db, $query);
+    $items = array();
 
-if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $data[] = array(
-            'category' => $row['category'],
-            'item' => $row['item']
-        );
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $items[] = $row['item'];
+        }
+
+        echo json_encode(['items' => $items]);
+    } else {
+        echo json_encode(['error' => 'Query failed']);
     }
-// Close the database connection
-mysqli_close($db);
-
-// Send a JSON response
-header('Content-Type: application/json');
-echo json_encode($data);
 } else {
-// Handle errors
-echo json_encode(array('error' => 'Query failed: ' . mysqli_error($db)));
-
-
-// Close the database connection
-mysqli_close($db);
+    echo json_encode(['error' => 'Invalid field requested']);
 }
 
+// Close connection
+mysqli_close($db);
 ?>
