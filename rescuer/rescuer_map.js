@@ -35,6 +35,14 @@ const requestNoGroup = L.layerGroup().addTo(map);
         "Request Yes": requestYesGroup,
         "Request No": requestNoGroup
     };
+    // Add Layers Control to the map
+var layerControl = L.control.layers(baseMaps, overlays).addTo(map);
+
+// Add layers to the Layers Control
+layerControl.addOverlay(offerYesGroup, "Offer Yes");
+layerControl.addOverlay(offerNoGroup, "Offer No");
+layerControl.addOverlay(requestYesGroup, "Request Yes");
+layerControl.addOverlay(requestNoGroup, "Request No");
 
     // Define a custom icon for the rescuer
     const rescuerIcon = L.icon({
@@ -409,13 +417,6 @@ $.ajax({
 
                 addMarkerIfNotExists(lat, lon, requestsNoIcon, requestNoGroup, uniqueReNo, 'requestNo');
             }
-
-
-            var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
-            layerControl.addOverlay(offerYesGroup, "Offer Yes");
-            layerControl.addOverlay(offerNoGroup, "Offer No");
-            layerControl.addOverlay(requestYesGroup, "Request Yes");
-            layerControl.addOverlay(requestNoGroup, "Request No");
 
 
 
