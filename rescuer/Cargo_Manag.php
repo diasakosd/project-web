@@ -4,21 +4,23 @@ echo "Received request method: $requestMethod";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve the item ID, new quantity, and coordinates
-    if (isset($_POST['item_id']) && isset($_POST['quantity']) && isset($_POST['baseLat']) && isset($_POST['baseLon']) && isset($_POST['rescuerLat']) && isset($_POST['rescuerLon'])) {
+    
 
-        $itemId = $_POST['item_id'];
-        $newQuantity = $_POST['quantity'];
-        $baseLat = $_POST['baseLat'];
-        $baseLon = $_POST['baseLon'];
-        $rescuerLat = $_POST['rescuerLat'];
-        $rescuerLon = $_POST['rescuerLon'];
-        $category = $_POST['category'];
-        $item = $_POST['item'];
+    $itemId = $_POST['item_id'];
+    $newQuantity = $_POST['quantity'];
+    $category = $_POST['category'];
+    $item = $_POST['item'];
+    $baseLat = $_POST['baseLat'];
+    $baseLon = $_POST['baseLon'];
+    $rescuerLat = $_POST['rescuerLat'];
+    $rescuerLon = $_POST['rescuerLon'];
+        
+        
 
         // Check if the distance between rescuer and base is <= 100 meters
         $distance = calculateDistance($baseLat, $baseLon, $rescuerLat, $rescuerLon);
-
-        if ($distance <= 100) {
+        echo $distance;
+        if ($distance <= 0.1) {
             // Connect to the database
             $db = mysqli_connect('localhost', 'root', '', 'web');
 
@@ -102,17 +104,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             echo json_encode(array('status' => 'error', 'message' => 'Rescuer is too far from the base (distance > 100 meters)'));
         }
-    } else {
-        echo json_encode(array('status' => 'error', 'message' => 'Missing item_id, quantity, or coordinates'));
-        exit();
-    }
+    
 } else {
     echo json_encode(array('status' => 'error', 'message' => 'Invalid request method'));
 }
 
 // Function to calculate the distance between two sets of coordinates (in meters)
 function calculateDistance($lat1, $lon1, $lat2, $lon2) {
-    $earthRadius = 6371000; // Earth radius in meters
+    $earthRadius = 6371; // Earth radius in kilometers
+
     $lat1Rad = deg2rad($lat1);
     $lon1Rad = deg2rad($lon1);
     $lat2Rad = deg2rad($lat2);
@@ -124,8 +124,9 @@ function calculateDistance($lat1, $lon1, $lat2, $lon2) {
     $a = sin($dlat / 2) * sin($dlat / 2) + cos($lat1Rad) * cos($lat2Rad) * sin($dlon / 2) * sin($dlon / 2);
     $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
-    $distance = $earthRadius * $c;
+    $distance = $earthRadius * $c * 1000; // Convert distance to meters
 
     return $distance;
 }
+
 ?>
