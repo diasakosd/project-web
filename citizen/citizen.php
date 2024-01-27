@@ -66,7 +66,7 @@ $_SESSION['site'] = '../citizen/citizens.php';
 </div>
 
 
-</div class="input-box">
+<div class="input-box">
     <label for="number">Number of people:</label><br>
     <input type="number" id="number" name="number" placeholder="Number" required min="1" step="1">
     <i class='bx bxs-phone'></i>
