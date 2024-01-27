@@ -3,10 +3,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var dischargeButton = document.getElementById('dischargeBtn');
 
     dischargeButton.addEventListener('click', function () {
-        var errorOccurred = true;
+        var errorOccurred = false;
 
         if (errorOccurred) {
-            alert('Error: Unable to discharge cargo. You need to be at most 100m away from the base.');
+            alert('Error: Unables to discharge cargo. You need to be at most 100m away from the base.');
         }
     });
 });

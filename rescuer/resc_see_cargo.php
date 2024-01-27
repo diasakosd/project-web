@@ -62,7 +62,9 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
                 <tbody></tbody>
         </table>
         <br>
+        <div class="cargo" id="cargo">
         <button type="button" id="dischargeBtn">Discharge cargo.</button>
+        </div>
     </div>
 
     
@@ -71,5 +73,6 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
     <script src="cargo_table.js"></script>
     <script src="Cargo_Manag.js"></script>
     <script src="extras.js"></script>
+    <script src="distance_check.js"></script>
 </body>
 </html>
