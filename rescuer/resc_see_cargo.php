@@ -62,6 +62,9 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
                 <tbody></tbody>
         </table>
         <br>
+        <label for="setToBaseItem">Enter Quantity:</label><br>
+        <input type="number" id="setToBaseItem">
+        <br><br>
         <div class="cargo" id="cargo">
         <button type="button" id="dischargeBtn">Discharge cargo.</button>
         </div>
@@ -71,7 +74,7 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="cargo_table.js"></script>
-    <script src="Cargo_Manag.js"></script>
+    <script src="See_Cargo.js"></script>
     <script src="extras.js"></script>
     <script src="distance_check.js"></script>
 </body>

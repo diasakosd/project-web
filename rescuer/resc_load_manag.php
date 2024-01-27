@@ -61,7 +61,7 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
                 <tbody></tbody>
             </table>
             <br>
-            <label for="getFromBaseItem">Select Quantity:</label><br>
+            <label for="getFromBaseItem">Enter Quantity:</label><br>
             <input type="number" id="getFromBaseItem">
             <br><br>
             <div class="cargo" id="cargo">

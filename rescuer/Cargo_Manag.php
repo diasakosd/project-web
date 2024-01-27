@@ -10,17 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newQuantity = $_POST['quantity'];
     $category = $_POST['category'];
     $item = $_POST['item'];
-    $baseLat = $_POST['baseLat'];
-    $baseLon = $_POST['baseLon'];
-    $rescuerLat = $_POST['rescuerLat'];
-    $rescuerLon = $_POST['rescuerLon'];
-        
-        
 
-        // Check if the distance between rescuer and base is <= 100 meters
-        $distance = calculateDistance($baseLat, $baseLon, $rescuerLat, $rescuerLon);
-        echo $distance;
-        if ($distance <= 0.1) {
             // Connect to the database
             $db = mysqli_connect('localhost', 'root', '', 'web');
 
@@ -41,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_SESSION['username'];
 
             // Retrieve category, item, and old quantity from base_storage
-            $selectBaseStorageQuery = "SELECT category, item, quantity FROM base_storage WHERE id = ?";
+            $selectBaseStorageQuery = "SELECT category, item, quantity FROM base_storage WHERE id = ?"; 
             $stmtSelectBaseStorage = mysqli_prepare($db, $selectBaseStorageQuery);
             mysqli_stmt_bind_param($stmtSelectBaseStorage, "i", $itemId);
             mysqli_stmt_execute($stmtSelectBaseStorage);
@@ -101,32 +91,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             mysqli_stmt_close($stmtUpdateBaseStorage);
             mysqli_close($db);
-        } else {
-            echo json_encode(array('status' => 'error', 'message' => 'Rescuer is too far from the base (distance > 100 meters)'));
-        }
+        
     
 } else {
     echo json_encode(array('status' => 'error', 'message' => 'Invalid request method'));
 }
-
-// Function to calculate the distance between two sets of coordinates (in meters)
-function calculateDistance($lat1, $lon1, $lat2, $lon2) {
-    $earthRadius = 6371; // Earth radius in kilometers
-
-    $lat1Rad = deg2rad($lat1);
-    $lon1Rad = deg2rad($lon1);
-    $lat2Rad = deg2rad($lat2);
-    $lon2Rad = deg2rad($lon2);
-
-    $dlat = $lat2Rad - $lat1Rad;
-    $dlon = $lon2Rad - $lon1Rad;
-
-    $a = sin($dlat / 2) * sin($dlat / 2) + cos($lat1Rad) * cos($lat2Rad) * sin($dlon / 2) * sin($dlon / 2);
-    $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
-
-    $distance = $earthRadius * $c * 1000; // Convert distance to meters
-
-    return $distance;
-}
-
 ?>

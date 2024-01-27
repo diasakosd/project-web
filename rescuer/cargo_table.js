@@ -1,8 +1,8 @@
-$(document).ready(function(){
+$(document).ready(function () {
     $.ajax({
         url: 'cargo_table.php', // PHP file to retrieve data
         method: 'GET',
-        success: function(response){
+        success: function (response) {
             console.log("Response received:", response); // Check the response
             try {
                 var cargoData = JSON.parse(response);
@@ -19,13 +19,13 @@ $(document).ready(function(){
                     var selectAllCheckbox = $('<input type="checkbox" class="select_all_items">');
                     var selectAllCell = $('<th>Select All</th>').append(selectAllCheckbox);
                     headerRow.append(selectAllCell);
-                    
-                    Object.keys(cargoData[0]).forEach(function(key){
+
+                    Object.keys(cargoData[0]).forEach(function (key) {
                         headerRow.append('<th>' + key + '</th>'); // Display headers
                     });
                     $('#loadedCargoTable').append('<thead>' + headerRow.prop('outerHTML') + '</thead>');
 
-                    cargoData.forEach(function(cargo, index){
+                    cargoData.forEach(function (cargo, index) {
                         var row = $('<tr class="item_id"></tr>'); // Create a new row for each cargo item
                         var itemId = index + 1; // Generate item_id starting from 1
 
@@ -33,20 +33,28 @@ $(document).ready(function(){
                         var checkboxCell = $('<td><input type="checkbox"></td>');
                         row.append(checkboxCell);
 
-                        Object.keys(cargo).forEach(function(key){
-                            row.append('<td>' + cargo[key] + '</td>'); // Display data
+                        Object.keys(cargo).forEach(function (key) {
+                            var cellClass = '';
+                            if (key === 'Category') {
+                                cellClass = 'category-cell';
+                            } else if (key === 'Item') {
+                                cellClass = 'item-cell';
+                            } else if (key === 'Quantity') {
+                                cellClass = 'quantity-cell';
+                            }
+                            row.append('<td class="' + cellClass + '">' + cargo[key] + '</td>'); // Display data
                         });
 
                         tableBody.append(row); // Append the row to the table body
 
                         // Handle row click to toggle the checkbox state
-                        row.on('click', function() {
+                        row.on('click', function () {
                             var checkbox = $(this).find('input[type="checkbox"]');
                             checkbox.prop('checked', !checkbox.prop('checked'));
                         });
 
                         // Handle checkbox click to stop propagation -- Actually disabling the checkbox. Act as a row click (see above)
-                        checkboxCell.find('input[type="checkbox"]').on('click', function(event) {
+                        checkboxCell.find('input[type="checkbox"]').on('click', function (event) {
                             event.stopPropagation();
                         });
                     });
@@ -54,24 +62,47 @@ $(document).ready(function(){
                     function selectAllRows() {
                         return $('.item_id');
                     }
-                
-                    $('.select_all_items').on('change', function() {
+
+                    $('.select_all_items').on('change', function () {
                         var isChecked = $(this).prop('checked');
                         var rows = selectAllRows();
-                
-                        rows.each(function() {
+
+                        rows.each(function () {
                             $(this).find('input[type="checkbox"]').prop('checked', isChecked);
                         });
                     });
 
+                    // Call the function to update the table similar to the second JavaScript code
+                    updateTableSimilarToSecondJS();
                 } // If cargoData is empty (no cargo), do nothing (no rows will be added)
             } catch (error) {
                 console.error("Error parsing JSON: ", error);
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error("AJAX request error: ", status, error);
         }
     });
-});
 
+    // Function to update the table similar to the second JavaScript code
+    function updateTableSimilarToSecondJS() {
+        var tableBody = $('#loadedCargoTable tbody');
+
+        if (cargoData.length > 0) {
+            cargoData.forEach(function (cargo, index) {
+                var row = tableBody.find('.item_id').eq(index);
+                var itemId = index + 1;
+
+                Object.keys(cargo).forEach(function (key) {
+                    var cell = row.find('td').eq(Object.keys(cargo).indexOf(key));
+
+                    if (key === 'Quantity') {
+                        cell.text(cargo[key]);
+                    } else {
+                        cell.text(cargo[key]);
+                    }
+                });
+            });
+        }
+    }
+});
