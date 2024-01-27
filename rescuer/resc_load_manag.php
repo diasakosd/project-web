@@ -64,15 +64,18 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
             <label for="getFromBaseItem">Select Quantity:</label><br>
             <input type="number" id="getFromBaseItem">
             <br><br>
+            <div class="cargo" id="cargo">
             <button type="button" id="LoadBtn">Load cargo.</button>
+            </div>
             <br>
             <br>
             <br>
-
+            </div>  
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="base_table-resc.js"></script>
     <script src="Cargo_Manag.js"></script>
     <script src="extras.js"></script>
+    <script src="distance_check.js"></script>
     
 </body>
 </html>
