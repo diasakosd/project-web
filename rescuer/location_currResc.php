@@ -18,18 +18,20 @@ if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
 // Get the rescuer name based on the session username
 $username = $_SESSION['username'];
 
-$baseContent = "SELECT category AS Category, item AS Item, quantity AS Quantity FROM `base_storage` ";
-$result = mysqli_query($db, $baseContent);
+// Query to get the rescuer's coordinates
+$query = "SELECT latitude, longitude FROM rescuers WHERE username = '$username'";
+$result = mysqli_query($db, $query);
 
-if($result){
-    $cargoData = array(); // Initialize an array to hold cargo data
+if ($result) {
+    $cargoData = array(); // Initialize an array to hold rescuer data
 
     while ($row = mysqli_fetch_assoc($result)) {
-        // Append each cargo row to the cargoData array
+        // Append each rescuer row to the cargoData array
         $cargoData[] = $row;
     }
-
     echo json_encode($cargoData);
+} else {
+    echo json_encode(array('error' => 'No rescuer coordinates found'));
 }
 
 // Close the database connection
