@@ -1,12 +1,3 @@
-// Define a function to handle the button click
-function handleOfferButton() {
-    alert('Offer received!');
-}
-
-function handleRequestButton() {
-    alert('Request taken!');
-}
-
 $(document).ready(function(){
     const map = L.map('rescuer_map');
     map.setView([38.2468, 21.7352], 12);
@@ -160,32 +151,6 @@ layerControl.addOverlay(requestNoGroup, "Request No");
                         }
                     });
                 }
-
-                //test markers for requests
-                var marker = L.marker([38.2466, 21.7346]).bindPopup("<h3>Request waiting demo</h3>").addTo(map);
-                marker.setIcon(L.icon({
-                    iconUrl: 'request_waiting.svg',
-                    iconSize: [60, 60],
-                }));
-
-                var marker = L.marker([38.2461, 21.73525]).bindPopup("<h3>Request taken demo</h3>").addTo(map);
-                marker.setIcon(L.icon({
-                    iconUrl: 'request_taken.svg',
-                    iconSize: [60, 60]
-                }));
-
-                //test markers for offers
-                var marker = L.marker([38.24614, 21.73615]).bindPopup("<h3>Offer waiting demo</h3>").addTo(map);
-                marker.setIcon(L.icon({
-                    iconUrl: 'offer_waiting.svg',
-                    iconSize: [60, 60]
-                }));
-
-                var marker = L.marker([38.24655, 21.73582]).bindPopup("<h3>Offer taken demo</h3>").addTo(map);
-                marker.setIcon(L.icon({
-                    iconUrl: 'offer_taken.svg',
-                    iconSize: [60, 60]
-                }));
             } catch (error) {
                 console.error("Error parsing JSON: ", error);
             }

@@ -37,7 +37,7 @@ if ($result) {
 }
 
 // Query Offers waiting
-$queryOfferNo = "SELECT citizens.latitude, citizens.longitude FROM citizens
+$queryOfferNo = "SELECT citizens.latitude, citizens.longitude, citizen_offer.id FROM citizens
 INNER JOIN citizen_offer ON citizens.username = citizen_offer.username 
 WHERE citizen_offer.accepted LIKE 'NO'";
 $result2 = mysqli_query($db, $queryOfferNo);
@@ -72,7 +72,7 @@ if ($result3) {
 }
 
 // Query Requests waiting
-$queryRequestNo = "SELECT citizens.latitude, citizens.longitude FROM citizens
+$queryRequestNo = "SELECT citizens.latitude, citizens.longitude, citizen_request.id FROM citizens
 INNER JOIN citizen_request ON citizens.username = citizen_request.username 
 WHERE citizen_request.accepted LIKE 'NO'";
 $result4 = mysqli_query($db, $queryRequestNo);
