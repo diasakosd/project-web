@@ -46,6 +46,7 @@ $(document).ready(function () {
 
                         // Update the quantity in the database using jQuery AJAX
                         updateQuantityInD(itemId, numericQuantity, category, item);
+                        location.reload();
                     }
                 });
             } else {

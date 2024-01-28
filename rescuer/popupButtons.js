@@ -25,6 +25,7 @@ function handleOfferButton() {
                     data: { AcceptedOffer: accepted, offerID: offer_id, action_type: 'offer' },
                     success: function(response) {
                         console.log('Rescuer received offer successfully:', response);
+                        location.reload();
                     },
                     error: function(xhr, status, error) {
                         console.error('AJAX request error (updateRescuerPosition):', status, error);
@@ -65,6 +66,7 @@ function handleRequestButton() {
                     data: { AcceptedRequest: accepted, requestID: request_id, action_type: 'request' },
                     success: function(response) {
                         console.log('Rescuer took request successfully:', response);
+                        location.reload();
                     },
                     error: function(xhr, status, error) {
                         console.error('AJAX request error (updateRescuerPosition):', status, error);
