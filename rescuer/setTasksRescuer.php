@@ -23,10 +23,13 @@ $username = $_SESSION['username'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tableID = $_POST['tableId'];
-    $Accepted = $_POST['Accepted'];
     $taskID = $_POST['ID'];
+    $action = $_POST['actionType'];
 
+if($action == 'Cancel'){
     if($tableID == 'offerTable'){
+        $Accepted = $_POST['Accepted'];
+
         $offer = "UPDATE citizen_offer SET accepted = '$Accepted', time_accepted = NULL, rescuer_username = NULL WHERE id = '$taskID' AND rescuer_username = '$username'";
         $result = mysqli_query($db, $offer);
     
@@ -47,7 +50,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         echo 'Invalid table ID';
     }
+} else if($action == 'Finish'){
+    $category = $_POST['category'];
+    $item = $_POST['item'];
 
+    if($tableID == 'offerTable'){
+        $offerValue = $_POST['difference'];
+
+        $offer = "DELETE FROM citizen_offer WHERE id = '$taskID' AND rescuer_username = '$username'";
+        $result = mysqli_query($db, $offer);
+        $rescuerTableUpd = "UPDATE rescuer_inventory SET quantity = quantity + '$offerValue' WHERE category = '$category' AND item = '$item' AND username = '$username'";
+        $result2 = mysqli_query($db, $rescuerTableUpd);
+    
+        if ($result && $result2) {
+            echo 'citizen_offer FINISHED successfully!';
+        } else {
+            echo 'ERROR in offer FINISHED';
+        }
+    } else if($tableID == 'requestTable'){
+        $requestValue = $_POST['difference'];
+
+        $request = "DELETE FROM citizen_request WHERE id = '$taskID' AND rescuer_username = '$username'";
+        $result = mysqli_query($db, $request);
+        $rescuerTableUpd = "UPDATE rescuer_inventory SET quantity = quantity - '$requestValue' WHERE category = '$category' AND item = '$item' AND username = '$username'";
+        $result2 = mysqli_query($db, $rescuerTableUpd);
+    
+        if ($result && $result2) {
+            echo 'Task FINISHED successfully!';
+        } else {
+            echo 'ERROR in FINISHED task';
+        }
+    } else {
+        echo 'Invalid table ID';
+    }
+}
     mysqli_close($db);
 }
 ?>
