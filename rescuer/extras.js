@@ -18,10 +18,6 @@ document.addEventListener("DOMContentLoaded", function() {
             chBtn.style.display = 'block'; // Show chBtn when chBtn2 is clicked and sidebar is checked
         }
     });
-});
 
-function handleCancelButton() {
-    alert('Task Cancled successfully!');
-    const accepted = 'NO';
-    
-}
+
+});

@@ -54,7 +54,8 @@ $(document).ready(function() {
                 <td>${row.Item}</td>
                 <td>${row.Quantity}</td>
                 <td><button id="btnFinished">Finished</button></td>
-                <td><button id="btnCancel">Cancel</button></td>
+                <td><button id="btnCancel" data-id="${row.id}" data-table="${tableId}">Cancel</button></td>
+
             `);
             tbody.append(newRow);
         });
@@ -73,4 +74,30 @@ $(document).ready(function() {
         // Populate the requestTable with data
         populateTable(data.requests, 'requestTable');
     });
+
+        // Event delegation for Cancel buttons
+        $(document).on('click', '#btnCancel', function() {
+            var id = $(this).data('id');
+            var tableId = $(this).data('table');
+            handleCancelButton(id, tableId);
+        });
 });
+
+function handleCancelButton(id, tableId) {
+    alert('Task Canceled successfully!');
+    const accepted = 'NO';
+
+    $.ajax({
+        url: 'setTasksRescuer.php',
+        method: 'POST',
+        data: { Accepted: accepted, ID: id, tableId: tableId },
+        success: function (response) {
+            console.log('Rescuer took request successfully:', response);
+            $('#' + tableId + ' button[data-id="' + id + '"]').closest('tr').remove();
+            //location.reload();
+        },
+        error: function (xhr, status, error) {
+            console.error('AJAX request error (handleCancelButton):', status, error);
+        }
+    });
+}
