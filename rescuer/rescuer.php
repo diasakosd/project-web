@@ -58,7 +58,6 @@ $_SESSION['site'] = '../rescuer/rescuer.php';
             <br>
             <label class="table_label" for="requestTable">Accepted Requests:</label>
             <div id="requestTable"></div>
-            <button type="button" id="btnFinished">Finished</button> <button type="button" id="btnCancel">Cancel</button>
         
 
 

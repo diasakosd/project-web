@@ -19,3 +19,9 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+function handleCancelButton() {
+    alert('Task Cancled successfully!');
+    const accepted = 'NO';
+    
+}
