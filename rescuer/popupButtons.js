@@ -1,20 +1,21 @@
 // Define a function to handle the button click
 
 
-function handleOfferButton() {
+function handleOfferButton(id) {
     alert('Offer received!');
     const accepted = 'YES';
 
     $.ajax({
-        url: 'offers_and_requests.php', 
+        url: 'PopupBalloons.php', 
         method: 'GET',
         success: function(response) {
             try {
                 combinedData = JSON.parse(response); let offer_id;
                 
-                for (let key in combinedData.offersNo) {
-                    const offers_n = combinedData.offersNo[key];
-                    offer_id = parseInt(offers_n.id);
+                for (let key in combinedData.offW) {
+                    const offers_n = combinedData.offW[key];
+                    //offer_id = parseInt(offers_n.id);
+                    offer_id = id;
                 }
                 console.log("Citizen Offer ID:", offer_id);
 
