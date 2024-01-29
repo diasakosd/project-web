@@ -225,7 +225,7 @@ $.ajax({
                 const Tcreated = details.formatted_time_created;
                 const item = details.item;
                 const quantity = parseFloat(details.quantity);
-                const id = parseInt(details.id)
+                const id = parseInt(details.id);
                 ballonDetailsRegW.push([fullname, phone, Tcreated, item, quantity, id]);
             }
 
@@ -249,7 +249,7 @@ $.ajax({
                 const Tcreated = details.formatted_time_created;
                 const item = details.item;
                 const quantity = parseFloat(details.quantity);
-                const id = parseInt(details.id)
+                const id = parseInt(details.id);
                 ballonDetailsOffW.push([fullname, phone, Tcreated, item, quantity, id]);
             }
 
@@ -290,7 +290,7 @@ $.ajax({
                         "<p id='timeCreated'><b>Time created:</b> " + details[2] + "</p>" +
                         "<p id='item'><b>Item:</b> " + details[3] + "</p>" +
                         "<p id='quantity'><b>Quantity:</b> " + details[4] + "</p>" +
-                        "<button onclick='handleOfferButton(" + details[5] + ")'>Receive offer" + details[5] +"</button>";
+                        "<button onclick='handleOfferButton(" + details[5] + ")'>Receive offer</button>";
 
                     
                     } else if (type === 'requestYes') {
@@ -312,7 +312,7 @@ $.ajax({
                             "<p><b>Time created:</b> " + details[2] + "</p>" +
                             "<p><b>Item:</b> " + details[3] + "</p>" +
                             "<p><b>Quantity:</b> " + details[4] + "</p>"+
-                            "<button onclick='handleRequestButton()'>Take Request</button>";
+                            "<button onclick='handleRequestButton(" + details[5] + ")'>Take Request</button>";
                     }
                     
 

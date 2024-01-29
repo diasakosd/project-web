@@ -43,21 +43,22 @@ function handleOfferButton(id) {
 }
 
 
-function handleRequestButton() {
+function handleRequestButton(id) {
     alert('Request taken!');
     const accepted = 'YES';
 
     $.ajax({
-        url: 'offers_and_requests.php', 
+        url: 'PopupBalloons.php', 
         method: 'GET',
         success: function(response) {
             try {
                 combinedData = JSON.parse(response); 
                 let request_id;
 
-                for (let key in combinedData.requestsNo) {
-                    const requests_n = combinedData.requestsNo[key];
-                    request_id = parseInt(requests_n.id);
+                for (let key in combinedData.reqW) {
+                    const requests_n = combinedData.reqW[key];
+                    //request_id = parseInt(requests_n.id);
+                    request_id = id;
                 }
                 console.log("Citizen Request ID:", request_id);
 
