@@ -28,14 +28,13 @@ $(document).ready(function() {
         var thead = $('<thead>');
         var headerRow = $('<tr>');
         headerRow.html(`
+            <th>Select</th>
             <th>Fullname</th>
             <th>Telephone</th>
             <th>Created</th>
             <th>Category</th>
             <th>Item</th>
             <th>Quantity</th>
-            <th>Finished</th>
-            <th>Cancel</th>
         `);
         thead.append(headerRow);
         table.append(thead);
@@ -47,19 +46,29 @@ $(document).ready(function() {
         $.each(data, function(index, row) {
             var newRow = $('<tr>');
             newRow.html(`
+                <td><input type="checkbox" class="row-checkbox"></td>
                 <td>${row.Fullname}</td>
                 <td>${row.Telephone}</td>
                 <td>${row.Created}</td>
                 <td>${row.Category}</td>
                 <td>${row.Item}</td>
                 <td>${row.Quantity}</td>
-                <td><button id="btnFinished">Finished</button></td>
-                <td><button id="btnCancel">Cancel</button></td>
             `);
             tbody.append(newRow);
         });
 
         table.append(tbody);
+
+        // Attach click event to each row to toggle checkbox
+        $('#' + tableId + ' tbody tr').on('click', function() {
+            var checkbox = $(this).find('.row-checkbox');
+            checkbox.prop('checked', !checkbox.prop('checked'));
+        });
+
+        // Prevent checkbox click event from propagating to the row
+        $('#' + tableId + ' tbody tr input[type="checkbox"]').on('click', function(e) {
+            e.stopPropagation();
+        });
     }
 
     // Fetch data for the first query (offers)
