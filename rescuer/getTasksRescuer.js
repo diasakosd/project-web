@@ -94,8 +94,27 @@ $(document).ready(function() {
 });
 
 function handleFinishedButton(id, tableId, category, item, difference) {
-    alert('Task Canceled successfully!');
+   
+    $.ajax({
+        url: 'getTasksRescuer.php',
+        type: 'GET',
+        success: function(data) {
+            try {
+                var jsonData = JSON.parse(data);
+                var task = jsonData.requests.find(task => task.id === id);
+                rescuer_quantity = task.Quantity;
 
+            } catch (e) {
+                console.error('Error parsing JSON:', e);
+                console.log('Raw JSON data:', data);
+            }
+        },
+        error: function(error) {
+            console.error('Error fetching data:', error.responseText);
+        }
+    });
+if(rescuer_quantity - difference >=0){
+    alert('Task Finished successfully!');
     $.ajax({
         url: 'setTasksRescuer.php',
         method: 'POST',
@@ -109,6 +128,9 @@ function handleFinishedButton(id, tableId, category, item, difference) {
             console.error('AJAX request error (handleCancelButton):', status, error);
         }
     });
+} else{
+    alert("You can't offer that much quantity of this item yet!\nPlease visit the Base to update your cargo.");
+}
 }
 
 function handleCancelButton(id, tableId) {
@@ -118,7 +140,7 @@ function handleCancelButton(id, tableId) {
     $.ajax({
         url: 'setTasksRescuer.php',
         method: 'POST',
-        data: { Accepted: accepted, ID: id, tableId: tableId, difference: difference, actionType: 'Cancel' },
+        data: { Accepted: accepted, ID: id, tableId: tableId, actionType: 'Cancel' },
         success: function (response) {
             console.log('Rescuer took request successfully:', response);
             $('#' + tableId + ' button[data-id="' + id + '"]').closest('tr').remove();

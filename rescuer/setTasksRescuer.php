@@ -72,7 +72,8 @@ if($action == 'Cancel'){
 
         $request = "DELETE FROM citizen_request WHERE id = '$taskID' AND rescuer_username = '$username'";
         $result = mysqli_query($db, $request);
-        $rescuerTableUpd = "UPDATE rescuer_inventory SET quantity = quantity - '$requestValue' WHERE category = '$category' AND item = '$item' AND username = '$username'";
+        $rescuerTableUpd = "UPDATE rescuer_inventory SET quantity = quantity - '$requestValue' WHERE category = '$category' AND item = '$item' 
+        AND username = '$username' AND quantity >= '$requestValue'";
         $result2 = mysqli_query($db, $rescuerTableUpd);
     
         if ($result && $result2) {
