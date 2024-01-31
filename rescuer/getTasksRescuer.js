@@ -55,7 +55,7 @@ $(document).ready(function() {
                 <td>${row.Category}</td>
                 <td>${row.Item}</td>
                 <td>${row.Quantity}</td>
-                <td><button id="btnFinished" data-id="${row.id}" data-table="${tableId}" 
+                <td><button class="btnFinished" id="btnFinished" data-id="${row.id}" data-table="${tableId}" 
                 data-category="${row.Category}" data-item="${row.Item}" data-quantity="${row.Quantity}">Finished</button></td>
                 <td><button id="btnCancel" data-id="${row.id}" data-table="${tableId}">Cancel</button></td>
 
@@ -78,22 +78,26 @@ $(document).ready(function() {
         populateTable(data.requests, 'requestTable');
     });
 
+   
         // Event delegation for Finished buttons
         $(document).on('click', '#btnFinished', function() {
             var id = $(this).data('id');
             var tableId = $(this).data('table');
             var category = $(this).data('category');
             var item = $(this).data('item');
-            var quantity = $(this).data('quantity');
-            handleFinishedButton(id, tableId, category, item, quantity);
-        });
+            var quantity = $(this).data('quantity');    
+            $.getScript("distance_checkForTasks.js", function () {
+                a(category, item, tableId);
+                handleFinishedButton(id, tableId, category, item, quantity);
+            });
+        });});
         // Event delegation for Cancel buttons
         $(document).on('click', '#btnCancel', function() {
             var id = $(this).data('id');
             var tableId = $(this).data('table');
             handleCancelButton(id, tableId);
         });
-});
+
 
 function handleFinishedButton(id, tableId, category, item, difference) {
     if(tableId == 'offerTable'){
