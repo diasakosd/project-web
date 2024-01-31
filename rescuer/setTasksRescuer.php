@@ -27,9 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['actionType'];
 
 if($action == 'Cancel'){
+    $Accepted = $_POST['Accepted'];
     if($tableID == 'offerTable'){
-        $Accepted = $_POST['Accepted'];
-
         $offer = "UPDATE citizen_offer SET accepted = '$Accepted', time_accepted = NULL, rescuer_username = NULL WHERE id = '$taskID' AND rescuer_username = '$username'";
         $result = mysqli_query($db, $offer);
     
@@ -73,7 +72,7 @@ if($action == 'Cancel'){
         $request = "DELETE FROM citizen_request WHERE id = '$taskID' AND rescuer_username = '$username'";
         $result = mysqli_query($db, $request);
         $rescuerTableUpd = "UPDATE rescuer_inventory SET quantity = quantity - '$requestValue' WHERE category = '$category' AND item = '$item' 
-        AND username = '$username' AND quantity >= '$requestValue'";
+        AND username = '$username'";
         $result2 = mysqli_query($db, $rescuerTableUpd);
     
         if ($result && $result2) {
