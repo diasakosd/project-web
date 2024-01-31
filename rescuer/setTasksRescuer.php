@@ -58,14 +58,19 @@ if($action == 'Cancel'){
 
         $offer = "DELETE FROM citizen_offer WHERE id = '$taskID' AND rescuer_username = '$username'";
         $result = mysqli_query($db, $offer);
-        $rescuerTableUpd = "UPDATE rescuer_inventory SET quantity = quantity + '$offerValue' WHERE category = '$category' AND item = '$item' AND username = '$username'";
-        $result2 = mysqli_query($db, $rescuerTableUpd);
-    
-        if ($result && $result2) {
-            echo 'citizen_offer FINISHED successfully!';
+        // Check if a row with the category and item already exists in rescuer_inventory
+        $checkRescuerInventory = "SELECT * FROM rescuer_inventory WHERE category = '$category' AND item = '$item' AND username = '$username'";
+        $resultCheck = mysqli_query($db, $checkRescuerInventory);
+
+        if (mysqli_num_rows($resultCheck) > 0) {
+            // If the row exists, update the quantity
+            $rescuerTableUpd = "UPDATE rescuer_inventory SET quantity = quantity + '$offerValue' WHERE category = '$category' AND item = '$item' AND username = '$username'";
         } else {
-            echo 'ERROR in offer FINISHED';
+            // If the row doesn't exist, insert a new row
+            $rescuerTableUpd = "INSERT INTO rescuer_inventory (id, username, category, item, quantity) VALUES (NULL, '$username', '$category', '$item', '$offerValue')";
         }
+
+        $result2 = mysqli_query($db, $rescuerTableUpd);
     } else if($tableID == 'requestTable'){
         $requestValue = $_POST['difference'];
 

@@ -96,51 +96,68 @@ $(document).ready(function() {
 });
 
 function handleFinishedButton(id, tableId, category, item, difference) {
-    $.ajax({
-        url: 'cargo_table.php',
-        type: 'GET',
-        success: function(data) {
-            try {
-                var jsonData = JSON.parse(data);console.log('Parsed JSON data:', jsonData);
-                var foundCargoItem = null;
-
-                // Iterate through the array to find the correct cargo item
-                for (var i = 0; i < jsonData.length; i++) {
-                    var cargoItem = jsonData[i];
-                    if (cargoItem.Category === category && cargoItem.Item === item) {
-                        foundCargoItem = cargoItem;
-                        break; // Exit the loop once the item is found
-                    }
-                }
-                var rescuer_quantity = foundCargoItem.Quantity;
-
-                if (rescuer_quantity - difference >= 0) {
-                    alert('Task Finished successfully!'+difference);
-                    $.ajax({
-                        url: 'setTasksRescuer.php',
-                        method: 'POST',
-                        data: { ID: id, tableId: tableId, category: category, item: item, difference: difference, actionType: 'Finish' },
-                        success: function (response) {
-                            console.log('Rescuer took request successfully:', response);
-                            $('#' + tableId + ' button[data-id="' + id + '"]').closest('tr').remove();
-                            //location.reload();
-                        },
-                        error: function (xhr, status, error) {
-                            console.error('AJAX request error (handleCancelButton):', status, error);
-                        }
-                    });
-                } else {
-                    alert("You can't offer that much quantity of this item yet!\nPlease visit the Base to update your cargo."+rescuer_quantity);
-                }
-            } catch (e) {
-                console.error('Error parsing JSON:', e);
-                console.log('Raw JSON data:', data);
+    if(tableId == 'offerTable'){
+        $.ajax({
+            url: 'setTasksRescuer.php',
+            method: 'POST',
+            data: { ID: id, tableId: tableId, category: category, item: item, difference: difference, actionType: 'Finish' },
+            success: function (response) {
+                console.log('Rescuer took offer successfully:', response);
+                $('#' + tableId + ' button[data-id="' + id + '"]').closest('tr').remove();
+                //location.reload();
+            },
+            error: function (xhr, status, error) {
+                console.error('AJAX request error (handleFinishedButton):', status, error);
             }
-        },
-        error: function(error) {
-            console.error('Error fetching data:', error.responseText);
-        }
-    });
+        });
+    }
+    else if(tableId == 'requestTable'){
+        $.ajax({
+            url: 'cargo_table.php',
+            type: 'GET',
+            success: function(data) {
+                try {
+                    var jsonData = JSON.parse(data);console.log('Parsed JSON data:', jsonData);
+                    var foundCargoItem = null;
+
+                    // Iterate through the array to find the correct cargo item
+                    for (var i = 0; i < jsonData.length; i++) {
+                        var cargoItem = jsonData[i];
+                        if (cargoItem.Category === category && cargoItem.Item === item) {
+                            foundCargoItem = cargoItem;
+                            break; // Exit the loop once the item is found
+                        }
+                    }
+                    var rescuer_quantity = foundCargoItem.Quantity;
+
+                    if (rescuer_quantity - difference >= 0) {
+                        alert('Task Finished successfully!'+difference);
+                        $.ajax({
+                            url: 'setTasksRescuer.php',
+                            method: 'POST',
+                            data: { ID: id, tableId: tableId, category: category, item: item, difference: difference, actionType: 'Finish' },
+                            success: function (response) {
+                                console.log('Rescuer took request successfully:', response);
+                                $('#' + tableId + ' button[data-id="' + id + '"]').closest('tr').remove();
+                                //location.reload();
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('AJAX request error (handleFinishedButton):', status, error);
+                            }
+                        });
+                    } else {
+                        alert("You can't offer that much quantity of this item yet!\nPlease visit the Base to update your cargo."+rescuer_quantity);
+                    }
+                } catch (e) {
+                    console.error('Error parsing JSON:', e);
+                    console.log('Raw JSON data:', data);
+                }
+            },
+            error: function(error) {
+                console.error('Error fetching data:', error.responseText);
+            }
+        });
+    }
 }
 
 
