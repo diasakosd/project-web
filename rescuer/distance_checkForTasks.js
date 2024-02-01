@@ -31,92 +31,92 @@ var tasklat, tasklon, resclat, resclon;
             }
         }
     }
-function a(category, item, tableId){
-
-
-    $.ajax({
-        url: 'get_rescuer_coords.php',
-        method: 'GET',
-        success: function (response) {
-            try {
-                // Parse the array of coordinates
-                var rescuerCoordsArray = JSON.parse(response);
+    function a(category, item, tableId) {
+        // Function to get rescuer coordinates
+        function getRescuerCoords() {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: 'get_rescuer_coords.php',
+                    method: 'GET',
+                    success: function (response) {
+                        try {
+                            var rescuerCoordsArray = JSON.parse(response);
     
-                // Check if there's at least one set of coordinates in the array
-                if (rescuerCoordsArray.length > 0) {
-                    // Access the first set of coordinates
-                    var rescuerCoords = rescuerCoordsArray[0];
-    
-                    // Extract latitude and longitude
-                    resclat = rescuerCoords.latitude;
-                    resclon = rescuerCoords.longitude;
-    
-                    
-                } else {
-                    console.error('No rescuer coordinates found in the array.');
-                }
-            } catch (error) {
-                console.error("Error parsing JSON (Rescuer Coords): ", error);
-            }
-        },
-        error: function (xhr, status, error) {
-            console.error("AJAX request error (Rescuer Coords): ", status, error);
+                            if (rescuerCoordsArray.length > 0) {
+                                var rescuerCoords = rescuerCoordsArray[0];
+                                resclat = rescuerCoords.latitude;
+                                resclon = rescuerCoords.longitude;
+                                resolve();
+                            } else {
+                                console.error('No rescuer coordinates found in the array.');
+                                reject('No rescuer coordinates found');
+                            }
+                        } catch (error) {
+                            console.error("Error parsing JSON (Rescuer Coords): ", error);
+                            reject('Error parsing JSON (Rescuer Coords)');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX request error (Rescuer Coords): ", status, error);
+                        reject('AJAX request error (Rescuer Coords)');
+                    }
+                });
+            });
         }
-    });
-
-    if(tableId =='offerTable'){
-        $.ajax({
-            url: 'getTasksRescuer.php',
-            method: 'GET',
-            success: function (response) {
-                try {
-                    var taskCoords = JSON.parse(response);
-                    var foundCargoItem = null;
-                        // Iterate through the array to find the correct cargo item
-                        for (let key in taskCoords.offers) {
-                            var cargoItem = taskCoords.offers[key];
-                            if (cargoItem.Category === category && cargoItem.Item === item) {
-                                foundCargoItem = cargoItem;
-                                break; // Exit the loop once the item is found
-                            }
-                        }                
     
-                    tasklat = foundCargoItem.latitude;
-                    tasklon = foundCargoItem.longitude;
-                } catch (error) {
-                    console.error("Error parsing JSON: ", error);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("AJAX request error (Task Coords): ", status, error);
-            }
-        });showHideFinishedButton(resclat, resclon, tasklat, tasklon, tableId);
-    } else if(tableId =='requestTable'){
-        $.ajax({
-            url: 'getTasksRescuer.php',
-            method: 'GET',
-            success: function (response) {
-                try {
-                    var taskCoords = JSON.parse(response);
-                    var foundCargoItem = null;
-                        // Iterate through the array to find the correct cargo item
-                        for (let key in taskCoords.requests) {
-                            var cargoItem = taskCoords.requests[key];
-                            if (cargoItem.Category === category && cargoItem.Item === item) {
-                                foundCargoItem = cargoItem;
-                                break; // Exit the loop once the item is found
-                            }
-                        }                
+        // Function to get task coordinates
+        function getTaskCoords() {
+            return new Promise(function (resolve, reject) {
+                $.ajax({
+                    url: 'getTasksRescuer.php',
+                    method: 'GET',
+                    success: function (response) {
+                        try {
+                            var taskCoords = JSON.parse(response);
+                            var foundCargoItem = null;
     
-                    tasklat = foundCargoItem.latitude;
-                    tasklon = foundCargoItem.longitude;
-                } catch (error) {
-                    console.error("Error parsing JSON: ", error);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("AJAX request error (Task Coords): ", status, error);
+                            for (let key in taskCoords.offers) {
+                                var cargoItem = taskCoords.offers[key];
+                                if (cargoItem.Category === category && cargoItem.Item === item) {
+                                    foundCargoItem = cargoItem;
+                                    break;
+                                }
+                            }
+    
+                            if (foundCargoItem) {
+                                tasklat = foundCargoItem.latitude;
+                                tasklon = foundCargoItem.longitude;
+                                resolve();
+                            } else {
+                                console.error('No matching task coordinates found.');
+                                reject('No matching task coordinates found');
+                            }
+                        } catch (error) {
+                            console.error("Error parsing JSON (Task Coords): ", error);
+                            reject('Error parsing JSON (Task Coords)');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX request error (Task Coords): ", status, error);
+                        reject('AJAX request error (Task Coords)');
+                    }
+                });
+            });
+        }
+    
+        // Using promises to ensure that both rescuer and task coordinates are obtained
+        getRescuerCoords().then(function () {
+            if (tableId == 'offerTable') {
+                return getTaskCoords();
+            } else if (tableId == 'requestTable') {
+                return getTaskCoords();
             }
+        }).then(function () {
+            // Call showHideFinishedButton after getting both rescuer and task coordinates
+            showHideFinishedButton(resclat, resclon, tasklat, tasklon, tableId);
+        }).catch(function (error) {
+            console.error('Error:', error);
         });
-    }showHideFinishedButton(resclat, resclon, tasklat, tasklon, tableId);
-}
+    }
+    
+    
