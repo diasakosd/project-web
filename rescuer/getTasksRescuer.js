@@ -12,32 +12,6 @@ $.ajax({
             // Parse the JSON response
             var taskData = JSON.parse(response);
 
-            // Process offers
-            if (taskData.offers.length > 0) {
-                for (let key in taskData.offers) {
-                    const offerDetails = taskData.offers[key];
-                    // Extract latitude and longitude for each offer
-                    const offertasklat = offerDetails.latitude;
-                    const offertasklon = offerDetails.longitude;
-
-                    // Call showHideFinishedButton for each offer row
-                    //showHideFinishedButton(resclat, resclon, offertasklat, offertasklon, 'offerTable');
-                }
-            }
-
-            // Process requests
-            if (taskData.requests.length > 0) {
-                for (let key in taskData.requests) {
-                    const requestDetails = taskData.requests[key];
-                    // Extract latitude and longitude for each request
-                    const tasklat = requestDetails.latitude;
-                    const tasklon = requestDetails.longitude;
-
-                    // Call showHideFinishedButton for each request row
-                    //showHideFinishedButton(resclat, resclon, tasklat, tasklon, 'requestTable');
-                }
-            }
-
             // Fetch rescuer coordinates
             $.ajax({
                 url: 'get_rescuer_coords.php',
@@ -238,7 +212,7 @@ function handleFinishedButton(id, tableId, category, item, difference) {
                     var rescuer_quantity = foundCargoItem.Quantity;
 
                     if (rescuer_quantity - difference >= 0) {
-                        alert('Task Finished successfully!'+difference);
+                        alert('Task Finished successfully!');
                         $.ajax({
                             url: 'setTasksRescuer.php',
                             method: 'POST',
@@ -307,10 +281,6 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 }
 
 function showHideFinishedButton(resclat, resclon, tasklat, tasklon, tableId) {
-    console.log('Rescuer Latitude:', resclat);
-    console.log('Rescuer Longitude:', resclon);
-    console.log('Task Latitude:', tasklat);
-    console.log('Task Longitude:', tasklon);
 
     if (resclat && resclon && tasklat && tasklon) {
         
@@ -322,8 +292,7 @@ function showHideFinishedButton(resclat, resclon, tasklat, tasklon, tableId) {
             var rowLat = $(this).find('td').eq(8).text();  // Assuming latitude is in the 8th column
             var rowLon = $(this).find('td').eq(9).text();  // Assuming longitude is in the 9th column
             var button = $('#' + rowId + ' button.btnFinished');
-            var distance = calculateDistance(resclat, resclon, rowLat, rowLon);console.log('Calculated Distance:', distance);
-
+            var distance = calculateDistance(resclat, resclon, rowLat, rowLon);
             console.log('Row ID:', rowId);
 
             if (distance > 50) { // Update the threshold to 50 meters

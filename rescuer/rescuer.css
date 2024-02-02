@@ -297,7 +297,7 @@ cursor: pointer;
     margin: 0 auto; /* Center the block-level element using margin */
 }
 
-#btnFinished{
+.btnFinished{
     background-color: #1cbe32;
     color: white; /* Specify text color */
     font-size:large;
@@ -310,7 +310,7 @@ cursor: pointer;
     display: block; /* Make the button a block-level element */
 }
 
-#btnFinished:hover{
+.btnFinished:hover{
     background-color: rgb(65, 154, 226);
     color: rgb(219, 218, 130); /* Specify text color */
     border-radius: 40px;
@@ -452,7 +452,7 @@ cursor: pointer;
     cursor: pointer;
 }
 
-#btnFinished{
+.btnFinished{
     background-color: #1cbe32;
     color: white; /* Specify text color */
     font-size:large;
