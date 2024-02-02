@@ -138,8 +138,6 @@ $.ajax({
             <th>Quantity</th>
             <th>Finished</th>
             <th>Cancel</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
         `);
         thead.append(headerRow);
         table.append(thead);
@@ -164,8 +162,8 @@ $.ajax({
                 <td><button id="btnCancel" data-id="${row.id}" data-table="${tableId}">Cancel</button></td>
 
                 
-                <td>${row.latitude}</td>
-                <td>${row.longitude}</td>
+                <td style="display: none;">${row.latitude}</td>
+                <td style="display: none;">${row.longitude}</td>
 
             `);
             tbody.append(newRow);
