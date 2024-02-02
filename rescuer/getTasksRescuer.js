@@ -1,6 +1,74 @@
 var rescuer_quantity;
 
 $(document).ready(function() {
+    // Fetch task coordinates
+    $.ajax({
+        url: 'getTasksRescuer.php',
+        method: 'GET',
+        success: function (response) {
+            try {
+                // Parse the JSON response
+                var taskData = JSON.parse(response);
+
+                // Check if there's at least one set of coordinates in the array
+                if (taskData.offers.length > 0) {
+                    // Access the first set of coordinates for offers
+                    var offerCoords = taskData.offers[0];
+                    // Extract latitude and longitude
+                    offertasklat = offerCoords.latitude;
+                    offertasklon = offerCoords.longitude;
+                }
+
+                if (taskData.requests.length > 0) {
+                    // Access the first set of coordinates for requests
+                    var requestCoords = taskData.requests[0];
+                    // Extract latitude and longitude
+                    tasklat = requestCoords.latitude;
+                    tasklon = requestCoords.longitude;
+                }
+
+                // Fetch rescuer coordinates
+                $.ajax({
+                    url: 'get_rescuer_coords.php',
+                    method: 'GET',
+                    success: function (rescuerResponse) {
+                        try {
+                            // Parse the JSON response for rescuer coordinates
+                            var rescuerCoordsArray = JSON.parse(rescuerResponse);
+
+                            // Check if there's at least one set of coordinates in the array
+                            if (rescuerCoordsArray.length > 0) {
+                                // Access the first set of coordinates for the rescuer
+                                var rescuerCoords = rescuerCoordsArray[0];
+
+                                // Extract latitude and longitude
+                                resclat = rescuerCoords.latitude;
+                                resclon = rescuerCoords.longitude;
+                                var tableId = 'offerTable';
+
+                                // Show/hide finished buttons based on coordinates
+                                showHideFinishedButton(resclat, resclon, offertasklat, offertasklon, tableId);
+                            } else {
+                                console.error('No rescuer coordinates found in the array.');
+                            }
+                        } catch (error) {
+                            console.error("Error parsing JSON (Rescuer Coords): ", error);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX request error (Rescuer Coords): ", status, error);
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error parsing JSON (Task Coords): ", error);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("AJAX request error (Task Coords): ", status, error);
+        }
+    });
+
     // Function to make AJAX request
     function fetchData(url, callback) {
         $.ajax({
@@ -48,6 +116,7 @@ $(document).ready(function() {
         // Iterate through the data and append rows to the table
         $.each(data, function(index, row) {
             var newRow = $('<tr>');
+            newRow.attr('id', 'row_' + row.id); // Set a unique id for each row
             newRow.html(`
                 <td>${row.Fullname}</td>
                 <td>${row.Telephone}</td>
@@ -79,92 +148,14 @@ $(document).ready(function() {
     });
 
 
-    // Function to get rescuer and task coordinates
-function getCoordinates() {
-    return new Promise(function (resolve, reject) {
-        var rescuerCoordsPromise = $.ajax({
-            url: 'get_rescuer_coords.php',
-            method: 'GET',
-        });
-
-        var taskCoordsPromise = $.ajax({
-            url: 'getTasksRescuer.php',
-            method: 'GET',
-        });
-
-        var tableId = $(this).data('table');
-var category = $(this).data('category');
-var item = $(this).data('item');
-
-
-        Promise.all([rescuerCoordsPromise, taskCoordsPromise]).then(function (responses) {
-            try {
-                // Parse the array of coordinates
-                var rescuerCoordsArray = JSON.parse(responses[0]);
-
-                if (rescuerCoordsArray.length > 0) {
-                    // Access the first set of coordinates
-                    var rescuerCoords = rescuerCoordsArray[0];
-
-                    // Extract latitude and longitude
-                    resclat = rescuerCoords.latitude;
-                    resclon = rescuerCoords.longitude;
-                } else {
-                    console.error('No rescuer coordinates found in the array.');
-                    reject('No rescuer coordinates found');
-                }
-
-                var taskCoords = JSON.parse(responses[1]);
-                var foundCargoItem = null;
-
-                // Iterate through the array to find the correct cargo item
-                for (let key in taskCoords.offers) {
-                    var cargoItem = taskCoords.offers[key];
-                    console.log('Cargo Item:', cargoItem);
-                    if (cargoItem.Category === category && cargoItem.Item === item) {
-                        foundCargoItem = cargoItem;
-                        break; // Exit the loop once the item is found
-                    }
-                }
-
-                if (foundCargoItem) {
-                    tasklat = foundCargoItem.latitude;
-                    tasklon = foundCargoItem.longitude;
-                    resolve(); // Resolve the promise when both coordinates are obtained
-                } else {
-                    console.error('No matching task coordinates found.');
-                    reject('No matching task coordinates found');
-                }
-            } catch (error) {
-                console.error("Error parsing JSON: ", error);
-                reject('Error parsing JSON');
-            }
-        }).catch(function (error) {
-            console.error("Error in Promise.all: ", error);
-            reject(error);
-        });
-    });
-}
-
-
-$(document).ready(function () {
-    // Call your functions to fetch data and populate tables here
-
-    // Call getCoordinates to get both rescuer and task coordinates
-    getCoordinates().then(function () {
-        // Call showHideFinishedButton after getting both rescuer and task coordinates
-        showHideFinishedButton(resclat, resclon, tasklat, tasklon, tableId);
-    }).catch(function (error) {
-        console.error('Error getting coordinates:', error);
-    });
-});
         // Event delegation for Finished buttons
         $(document).on('click', '#btnFinished', function() {
             var id = $(this).data('id');
             var tableId = $(this).data('table');
             var category = $(this).data('category');
             var item = $(this).data('item');
-            var quantity = $(this).data('quantity');    
+            var quantity = $(this).data('quantity');  
+            handleFinishedButton(id, tableId, category, item, quantity);  
         });});
         // Event delegation for Cancel buttons
         $(document).on('click', '#btnCancel', function() {
@@ -259,36 +250,49 @@ function handleCancelButton(id, tableId) {
     });
 }
 
-var tasklat, tasklon, resclat, resclon;
 
-    // Function to calculate the distance between two coordinates using Haversine formula
-    function calculateDistance(lat1, lon1, lat2, lon2) {
-        const R = 6371; // Radius of the Earth in kilometers
-        const dLat = (lat2 - lat1) * (Math.PI / 180);
-        const dLon = (lon2 - lon1) * (Math.PI / 180);
-        const a =
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const distance = R * c; // Distance in kilometers
-        const distanceInMeters = distance * 1000; // Convert distance to meters
-        return distanceInMeters;
-    }
 
-    function showHideFinishedButton(resclat, resclon, tasklat, tasklon, tableId) {
-        console.log('Rescuer Latitude:', resclat);
-        console.log('Rescuer Longitude:', resclon);
-        console.log('Task Latitude:', tasklat);
-        console.log('Task Longitude:', tasklon);
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; 
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = R * c; 
+    const distanceInMeters = distance * 1000; 
 
-        if (resclat && resclon && tasklat && tasklon) {
-            const distance = calculateDistance(resclat, resclon, tasklat, tasklon);
-            console.log('Calculated Distance:', distance);
+    console.log('Coordinates:', lat1, lon1, lat2, lon2);
+    console.log('Calculated Distance:', distanceInMeters);
 
-            if (distance > 50) {
-                $('.btnFinished[data-table="' + tableId + '"]').hide();
+    return distanceInMeters;
+}
+
+function showHideFinishedButton(resclat, resclon, tasklat, tasklon, tableId) {
+    console.log('Rescuer Latitude:', resclat);
+    console.log('Rescuer Longitude:', resclon);
+    console.log('Task Latitude:', tasklat);
+    console.log('Task Longitude:', tasklon);
+
+    if (resclat && resclon && tasklat && tasklon) {
+        const distance = calculateDistance(resclat, resclon, tasklat, tasklon);
+        console.log('Calculated Distance:', distance);
+
+        // Iterate over each row and hide/show btnFinished based on the row's id
+        $('#' + tableId + ' tbody tr').each(function () {
+            var rowId = $(this).attr('id');
+            var button = $('#' + rowId + ' button.btnFinished');
+
+            console.log('Row ID:', rowId);
+            console.log('Button:', button);
+
+            if (distance > 50) { // Update the threshold to 50 meters
+                button.hide();console.log('Hiding button');
             } else {
-                $('.btnFinished[data-table="' + tableId + '"]').show();
+                button.show();
+                console.log('Showing button');
             }
-        }
+        });
     }
+}
