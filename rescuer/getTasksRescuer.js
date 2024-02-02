@@ -1,73 +1,105 @@
 var rescuer_quantity;
+var resclat; // Declare resclat at the beginning
+var resclon; // Declare resclon at the beginning
 
 $(document).ready(function() {
-    // Fetch task coordinates
-    $.ajax({
-        url: 'getTasksRescuer.php',
-        method: 'GET',
-        success: function (response) {
-            try {
-                // Parse the JSON response
-                var taskData = JSON.parse(response);
+// Fetch task coordinates
+$.ajax({
+    url: 'getTasksRescuer.php',
+    method: 'GET',
+    success: function (response) {
+        try {
+            // Parse the JSON response
+            var taskData = JSON.parse(response);
 
-                // Check if there's at least one set of coordinates in the array
-                if (taskData.offers.length > 0) {
-                    // Access the first set of coordinates for offers
-                    var offerCoords = taskData.offers[0];
-                    // Extract latitude and longitude
-                    offertasklat = offerCoords.latitude;
-                    offertasklon = offerCoords.longitude;
+            // Process offers
+            if (taskData.offers.length > 0) {
+                for (let key in taskData.offers) {
+                    const offerDetails = taskData.offers[key];
+                    // Extract latitude and longitude for each offer
+                    const offertasklat = offerDetails.latitude;
+                    const offertasklon = offerDetails.longitude;
+
+                    // Call showHideFinishedButton for each offer row
+                    //showHideFinishedButton(resclat, resclon, offertasklat, offertasklon, 'offerTable');
                 }
-
-                if (taskData.requests.length > 0) {
-                    // Access the first set of coordinates for requests
-                    var requestCoords = taskData.requests[0];
-                    // Extract latitude and longitude
-                    tasklat = requestCoords.latitude;
-                    tasklon = requestCoords.longitude;
-                }
-
-                // Fetch rescuer coordinates
-                $.ajax({
-                    url: 'get_rescuer_coords.php',
-                    method: 'GET',
-                    success: function (rescuerResponse) {
-                        try {
-                            // Parse the JSON response for rescuer coordinates
-                            var rescuerCoordsArray = JSON.parse(rescuerResponse);
-
-                            // Check if there's at least one set of coordinates in the array
-                            if (rescuerCoordsArray.length > 0) {
-                                // Access the first set of coordinates for the rescuer
-                                var rescuerCoords = rescuerCoordsArray[0];
-
-                                // Extract latitude and longitude
-                                resclat = rescuerCoords.latitude;
-                                resclon = rescuerCoords.longitude;
-                                var tableId = 'offerTable';
-
-                                // Show/hide finished buttons based on coordinates
-                                showHideFinishedButton(resclat, resclon, offertasklat, offertasklon, tableId);
-                            } else {
-                                console.error('No rescuer coordinates found in the array.');
-                            }
-                        } catch (error) {
-                            console.error("Error parsing JSON (Rescuer Coords): ", error);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("AJAX request error (Rescuer Coords): ", status, error);
-                    }
-                });
-
-            } catch (error) {
-                console.error("Error parsing JSON (Task Coords): ", error);
             }
-        },
-        error: function (xhr, status, error) {
-            console.error("AJAX request error (Task Coords): ", status, error);
+
+            // Process requests
+            if (taskData.requests.length > 0) {
+                for (let key in taskData.requests) {
+                    const requestDetails = taskData.requests[key];
+                    // Extract latitude and longitude for each request
+                    const tasklat = requestDetails.latitude;
+                    const tasklon = requestDetails.longitude;
+
+                    // Call showHideFinishedButton for each request row
+                    //showHideFinishedButton(resclat, resclon, tasklat, tasklon, 'requestTable');
+                }
+            }
+
+            // Fetch rescuer coordinates
+            $.ajax({
+                url: 'get_rescuer_coords.php',
+                method: 'GET',
+                success: function (rescuerResponse) {
+                    try {
+                        // Parse the JSON response for rescuer coordinates
+                        var rescuerCoordsArray = JSON.parse(rescuerResponse);
+
+                        // Check if there's at least one set of coordinates in the array
+                        if (rescuerCoordsArray.length > 0) {
+                            // Access the first set of coordinates for the rescuer
+                            var rescuerCoords = rescuerCoordsArray[0];
+
+                            // Extract latitude and longitude
+                            resclat = rescuerCoords.latitude;
+                            resclon = rescuerCoords.longitude;
+
+                            // Call showHideFinishedButton for each offer row after getting rescuer coordinates
+                            if (taskData.offers.length > 0) {
+                                for (let key in taskData.offers) {
+                                    const offerDetails = taskData.offers[key];
+                                    // Extract latitude and longitude for each offer
+                                    const offertasklat = offerDetails.latitude;
+                                    const offertasklon = offerDetails.longitude;
+
+                                    // Call showHideFinishedButton for each offer row
+                                    showHideFinishedButton(resclat, resclon, offertasklat, offertasklon, 'offerTable');
+                                }
+                            }
+
+                            if (taskData.requests.length > 0) {
+                                for (let key in taskData.requests) {
+                                    const requestDetails = taskData.requests[key];
+                                    // Extract latitude and longitude for each offer
+                                    const requesttasklat = requestDetails.latitude;
+                                    const requesttasklon = requestDetails.longitude;
+
+                                    // Call showHideFinishedButton for each offer row
+                                    showHideFinishedButton(resclat, resclon, requesttasklat, requesttasklon, 'requestTable');
+                                }
+                            }
+                        } else {
+                            console.error('No rescuer coordinates found in the array.');
+                        }
+                    } catch (error) {
+                        console.error("Error parsing JSON (Rescuer Coords): ", error);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("AJAX request error (Rescuer Coords): ", status, error);
+                }
+            });
+
+        } catch (error) {
+            console.error("Error parsing JSON (Task Coords): ", error);
         }
-    });
+    },
+    error: function (xhr, status, error) {
+        console.error("AJAX request error (Task Coords): ", status, error);
+    }
+});
 
     // Function to make AJAX request
     function fetchData(url, callback) {
@@ -106,6 +138,8 @@ $(document).ready(function() {
             <th>Quantity</th>
             <th>Finished</th>
             <th>Cancel</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
         `);
         thead.append(headerRow);
         table.append(thead);
@@ -125,8 +159,13 @@ $(document).ready(function() {
                 <td>${row.Item}</td>
                 <td>${row.Quantity}</td>
                 <td><button class="btnFinished" id="btnFinished" data-id="${row.id}" data-table="${tableId}" 
-                data-category="${row.Category}" data-item="${row.Item}" data-quantity="${row.Quantity}">Finished</button></td>
+                data-category="${row.Category}" data-item="${row.Item}" data-quantity="${row.Quantity}"
+                data-latitude="${row.latitude}" data-longitude="${row.longitude}">Finished</button></td>
                 <td><button id="btnCancel" data-id="${row.id}" data-table="${tableId}">Cancel</button></td>
+
+                
+                <td>${row.latitude}</td>
+                <td>${row.longitude}</td>
 
             `);
             tbody.append(newRow);
@@ -276,16 +315,18 @@ function showHideFinishedButton(resclat, resclon, tasklat, tasklon, tableId) {
     console.log('Task Longitude:', tasklon);
 
     if (resclat && resclon && tasklat && tasklon) {
-        const distance = calculateDistance(resclat, resclon, tasklat, tasklon);
-        console.log('Calculated Distance:', distance);
+        
+        
 
         // Iterate over each row and hide/show btnFinished based on the row's id
         $('#' + tableId + ' tbody tr').each(function () {
             var rowId = $(this).attr('id');
+            var rowLat = $(this).find('td').eq(8).text();  // Assuming latitude is in the 8th column
+            var rowLon = $(this).find('td').eq(9).text();  // Assuming longitude is in the 9th column
             var button = $('#' + rowId + ' button.btnFinished');
+            var distance = calculateDistance(resclat, resclon, rowLat, rowLon);console.log('Calculated Distance:', distance);
 
             console.log('Row ID:', rowId);
-            console.log('Button:', button);
 
             if (distance > 50) { // Update the threshold to 50 meters
                 button.hide();console.log('Hiding button');
