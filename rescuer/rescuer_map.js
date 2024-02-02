@@ -26,11 +26,11 @@ var layerControl = L.control.layers(baseMaps).addTo(map);
 
 // Add layers to the Layers Control
 layerControl.addOverlay(rescuers_active, "Active Rescuers");
-layerControl.addOverlay(rescuers_non_active, "Non-Active Rescuers");
-layerControl.addOverlay(offerYesGroup, "Offer Yes");
-layerControl.addOverlay(offerNoGroup, "Offer No");
-layerControl.addOverlay(requestYesGroup, "Request Yes");
-layerControl.addOverlay(requestNoGroup, "Request No");
+layerControl.addOverlay(rescuers_non_active, "Inactive Rescuers");
+layerControl.addOverlay(offerYesGroup, "Offers Accepted");
+layerControl.addOverlay(offerNoGroup, "Offers Waiting");
+layerControl.addOverlay(requestYesGroup, "Requests Accepted");
+layerControl.addOverlay(requestNoGroup, "Requests Waiting");
 
     // Define a custom icon for the rescuer
     const rescuerIcon = L.icon({
@@ -180,6 +180,13 @@ layerControl.addOverlay(requestNoGroup, "Request No");
                         icon: baseIcon
                     }).bindPopup("<h2>Base</h2><p>Location: " + lat + ', ' + lon + "</p>")
                     .addTo(map);
+
+                    L.circle([lat, lon], {
+                        color: 'red',
+                        fillColor: 'red',
+                        fillOpacity: 0.5,
+                        radius: 100  // Set the radius in meters
+                    }).addTo(map);
                 }
             } catch (error) {
                 console.error("Error parsing JSON: ", error);
@@ -365,6 +372,13 @@ $.ajax({
                 rescuerCoordinates.forEach(rescuerCoord => {
                     const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(offerYesGroup);
                 });
+
+                const acceptedOfferCircle = L.circle([lat, lon], {
+                    color: 'green',
+                    fillColor: 'green',
+                    fillOpacity: 0.5,
+                    radius: 50  // Set the radius in meters
+                }).addTo(map);
             }
 
             // Loop through the data and create markers for Offers(no)
@@ -389,6 +403,12 @@ $.ajax({
                     const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(requestYesGroup);
                 });
 
+                const acceptedRequestCircle = L.circle([lat, lon], {
+                    color: 'green',
+                    fillColor: 'green',
+                    fillOpacity: 0.5,
+                    radius: 50  // Set the radius in meters
+                }).addTo(map);
             }
 
             // Loop through the data and create markers for Requests(no)
