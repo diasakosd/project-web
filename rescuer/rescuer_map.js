@@ -96,7 +96,7 @@ layerControl.addOverlay(requestNoGroup, "Requests Waiting");
                         title: 'Rescuer',
                         icon: rescuerIcon,
                         draggable: true
-                    }).bindPopup("<h2>You</h2><p>Location: " + lat + ', ' + lon + "</p>")
+                    }).bindPopup("<h2>You</h2><p><b>Location: </b>" + lat + ', ' + lon + "</p>")
                     .addTo(map);
                 }
 
@@ -105,11 +105,14 @@ layerControl.addOverlay(requestNoGroup, "Requests Waiting");
                     const rescuer2 = combinedRescuers.activeResc[key];
                     const lat = parseFloat(rescuer2.latitude);
                     const lon = parseFloat(rescuer2.longitude);
+                    const user = rescuer2.username;
+                    const phone = rescuer2.phone;
     
                     L.marker([lat, lon], {
                         title: 'Active Rescuer',
                         icon: activeRescuerIcon
-                    }).bindPopup("<h2>Active Rescuer</h2><p>Location: " + lat + ', ' + lon + "</p>")
+                    }).bindPopup("<h2>"+user+"</h2><p><b>Location: </b>" + lat + ', ' + lon + "</p>"+
+                    "<p><b>Telephone: </b>" + phone + "</p>")
                     .addTo(rescuers_active);
                 }
 
@@ -118,11 +121,14 @@ layerControl.addOverlay(requestNoGroup, "Requests Waiting");
                     const rescuer3 = combinedRescuers.inactiveResc[key];
                     const lat = parseFloat(rescuer3.latitude);
                     const lon = parseFloat(rescuer3.longitude);
+                    const user = rescuer3.username;
+                    const phone = rescuer3.phone;
     
                     L.marker([lat, lon], {
                         title: 'Inactive Rescuer',
                         icon: inactiveRescuerIcon
-                    }).bindPopup("<h2>Inactive Rescuer</h2><p>Location: " + lat + ', ' + lon + "</p>")
+                    }).bindPopup("<h2>"+user+"</h2><p><b>Location: </b>" + lat + ', ' + lon + "</p>"+
+                    "<p><b>Telephone: </b>" + phone + "</p>")
                     .addTo(rescuers_non_active);
                 }
 
@@ -378,7 +384,7 @@ $.ajax({
                     fillColor: 'green',
                     fillOpacity: 0.5,
                     radius: 50  // Set the radius in meters
-                }).addTo(map);
+                }).addTo(map).addTo(offerYesGroup);
             }
 
             // Loop through the data and create markers for Offers(no)
@@ -408,7 +414,7 @@ $.ajax({
                     fillColor: 'green',
                     fillOpacity: 0.5,
                     radius: 50  // Set the radius in meters
-                }).addTo(map);
+                }).addTo(map).addTo(requestYesGroup);
             }
 
             // Loop through the data and create markers for Requests(no)

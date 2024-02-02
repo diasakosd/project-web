@@ -185,7 +185,7 @@ function handleFinishedButton(id, tableId, category, item, difference) {
             success: function (response) {
                 console.log('Rescuer took offer successfully:', response);
                 $('#' + tableId + ' button[data-id="' + id + '"]').closest('tr').remove();
-                //location.reload();
+                location.reload();
             },
             error: function (xhr, status, error) {
                 console.error('AJAX request error (handleFinishedButton):', status, error);
@@ -220,7 +220,7 @@ function handleFinishedButton(id, tableId, category, item, difference) {
                             success: function (response) {
                                 console.log('Rescuer took request successfully:', response);
                                 $('#' + tableId + ' button[data-id="' + id + '"]').closest('tr').remove();
-                                //location.reload();
+                                location.reload();
                             },
                             error: function (xhr, status, error) {
                                 console.error('AJAX request error (handleFinishedButton):', status, error);
@@ -253,7 +253,7 @@ function handleCancelButton(id, tableId) {
         success: function (response) {
             console.log('Rescuer took request successfully:', response);
             $('#' + tableId + ' button[data-id="' + id + '"]').closest('tr').remove();
-            //location.reload();
+            location.reload();
         },
         error: function (xhr, status, error) {
             console.error('AJAX request error (handleCancelButton):', status, error);
