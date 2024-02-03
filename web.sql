@@ -79,8 +79,8 @@ CREATE TABLE `announcements` (
 --
 
 INSERT INTO `announcements` (`id`, `title`, `body`, `date_written`, `status`, `admin`) VALUES
-(27, 'nai omw', 'skrlesa', '2023-12-12 11:37:32', 'NO', 'alkis'),
-(28, 'thelw', 'esena', '2023-12-12 11:38:17', 'NO', 'alkis');
+(27, 'Pare pare', 'Dwse', '2023-12-12 11:37:32', 'NO', 'alkis'),
+(28, 'thelw', 'aitima', '2023-12-12 11:38:17', 'NO', 'alkis');
 
 -- --------------------------------------------------------
 
@@ -249,10 +249,10 @@ CREATE TABLE `citizens` (
 --
 
 INSERT INTO `citizens` (`full_name`, `username`, `password`, `phone`, `latitude`, `longitude`) VALUES
-('Poustonios Kyrios', 'malakas', '123', 123, 38.2356, 21.7262),
+('Papadakis Kyrios', 'politis', '123', 123, 38.2356, 21.7262),
 ('Eimai kleutis', 'paki', 'paki', 999, 38.2493, 21.735),
 ('John Papas', 'papas123', 'papas', 123123123, 38.2306, 21.739),
-('Nai kala', 'sasgamaw', 'antreas', 7878, 38.2717, 21.7582);
+('Nai kala', 'giannis', 'antreas', 7878, 38.2717, 21.7582);
 
 --
 -- Δείκτες `citizens`
@@ -294,12 +294,12 @@ CREATE TABLE `citizen_offer` (
 --
 
 INSERT INTO `citizen_offer` (`id`, `username`, `category`, `item`, `quantity`, `time_created`, `accepted`, `time_accepted`, `rescuer_username`) VALUES
-(59, 'malakas', 'Cleaning Supplies', 'Dust mask', 1, '2023-12-19 12:11:22', 'YES', '2023-12-21 12:32:44', 'resquer2'),
-(62, 'sasgamaw', 'Clothing', 'Gloves', 1, '2023-12-19 12:11:47', 'NO', NULL, NULL),
-(63, 'malakas', 'Clothing', 'Men Sneakers', 1, '2023-12-19 12:11:47', 'NO', NULL, NULL),
-(65, 'malakas', 'Clothing', 'Gloves', 1, '2023-12-19 12:11:57', 'NO', NULL, NULL),
-(66, 'malakas', 'Clothing', 'Men Sneakers', 1, '2023-12-19 12:11:57', 'NO', NULL, NULL),
-(67, 'malakas', 'Clothing', 'Pants', 1, '2023-12-19 12:11:57', 'NO', NULL, NULL);
+(59, 'politis', 'Cleaning Supplies', 'Dust mask', 1, '2023-12-19 12:11:22', 'YES', '2023-12-21 12:32:44', 'resquer2'),
+(62, 'giannis', 'Clothing', 'Gloves', 1, '2023-12-19 12:11:47', 'NO', NULL, NULL),
+(63, 'politis', 'Clothing', 'Men Sneakers', 1, '2023-12-19 12:11:47', 'NO', NULL, NULL),
+(65, 'politis', 'Clothing', 'Gloves', 1, '2023-12-19 12:11:57', 'NO', NULL, NULL),
+(66, 'politis', 'Clothing', 'Men Sneakers', 1, '2023-12-19 12:11:57', 'NO', NULL, NULL),
+(67, 'politis', 'Clothing', 'Pants', 1, '2023-12-19 12:11:57', 'NO', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -352,8 +352,8 @@ INSERT INTO `combined_data` (`username`, `password`, `table_name`) VALUES
 ('resquer2', 'resquerpass', 'rescuers'),
 ('papas123', 'papas', 'citizens'),
 ('paki', 'paki', 'citizens'),
-('malakas', '123', 'citizens'),
-('sasgamaw', 'antreas', 'citizens'),
+('politis', '123', 'citizens'),
+('giannis', 'antreas', 'citizens'),
 ('rescuer3', 'rescuer3', 'rescuers'),
 ('rescuer4', 'rescuer4', 'rescuers');
 
