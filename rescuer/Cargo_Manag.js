@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+
     function updateQuantityInDatabase(itemId, newQuantity, category, item) {
         console.log('Updating quantity in the database');
         $.ajax({

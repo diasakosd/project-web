@@ -22,7 +22,7 @@ $(document).ready(function () {
 
             cargoData.forEach(function (cargo, index) {
                 var row = $('<tr class="item_id"></tr>');
-                var itemId = index + 1;
+                var itemId = cargo.id; // Use the actual ID from the cargo data
 
                 // Add a checkbox to each row
                 var checkboxCell = $('<td><input type="checkbox"></td>');
