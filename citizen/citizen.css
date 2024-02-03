@@ -277,3 +277,128 @@ body {
     margin-bottom: 5px; /* Adjust the spacing between categories */
 }
 
+@media only screen and (max-width: 600px) {
+    .logo,  .navbar{
+        display: none;
+    }
+
+    .chBtn{
+        position: center;
+        display: block;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        margin: auto;
+    }
+    
+    .chBtn i.bx.bx-menu{
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: black;
+        font-size: 40px;
+        display: block;
+    }
+
+    /* Your existing CSS styles */
+    .sidebar {
+        /* Define initial sidebar styles */
+        width: 0;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        overflow-x: hidden;
+        transition: width 0.3s ease;
+        display: block;
+    }
+
+    .sidebar.active {
+        /* Define styles when sidebar is active or shown */
+        width: 250px;
+        display: block;
+        
+    }
+    .chBtn2 {
+        position: absolute;
+        top: 10px; /* Adjust as needed for spacing from the top */
+        right: 10px; /* Adjust as needed for spacing from the right */
+        font-size: 24px;
+        cursor: pointer;
+        display: block;
+        width: 40px;
+        height: 40px;
+    }
+
+    .chBtn2 i.bx.bx-menu{
+        color: white;
+        font-size: 40px;
+        display: block;
+    }
+
+    #rescuer_map{
+        width: 300px;
+        height: 600px;
+        right: 8%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #offerTable {
+        width: 70%; /* Set table width to 100% for smaller screens */
+        margin: auto;
+        display: block;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #offerTable th, #offerTable td {
+        font-size: 12px; /* Adjust font size for smaller screens */
+    }
+    #requestTable {
+        width: 70%; /* Set table width to 100% for smaller screens */
+        margin: auto;
+        display: block;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #requestTable th, #requestTable td {
+        font-size: 12px; /* Adjust font size for smaller screens */
+    }
+
+    /* Style for table cells */
+#offerTable td, #offerTable th,
+#requestTable td, #requestTable th {
+    border: 1px solid #ddd; /* Add borders to cells */
+    padding: 8px; /* Add padding to cells */
+    text-align: center;
+}
+
+/* Style for table header cells */
+#offerTable th, #requestTable th {
+    background-color: #0029e2;
+    color: white;
+}
+
+/* Hover effect for cells */
+#offerTable tbody tr:hover, #requestTable tbody tr:hover {
+    background-color: #f16f5d;
+    color: white;
+    cursor: pointer;
+}
+
+.btnFinished{
+    background-color: #1cbe32;
+    color: white; /* Specify text color */
+    font-size:large;
+    border-radius: 40px;
+    border: 1px solid #1cbe32;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 20px; /* Set the same margin-top as the previous button */
+    display: block;
+}
+}

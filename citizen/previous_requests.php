@@ -10,7 +10,7 @@ $_SESSION['site'] = '../citizen/previous_requests.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
     <!-- Add your stylesheets here -->
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="citizen.css">
 </head>
 <body>
 <div class="navbar">

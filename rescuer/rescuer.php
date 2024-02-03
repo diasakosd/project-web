@@ -66,7 +66,6 @@ $_SESSION['site'] = '../rescuer/rescuer.php';
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="getTasksRescuer.js"></script>
     <script src="popupButtons.js"></script>
-    
     <script src="rescuer_map.js"></script>
     <script src="extras.js"></script>
 </body>
