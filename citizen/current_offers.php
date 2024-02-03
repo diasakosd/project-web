@@ -44,7 +44,7 @@ $_SESSION['site'] = '../citizen/current_offers.php';
     <form id="submitAnnouncementsForm"></form>
     <div id="selectedAnnouncementsMessage"></div>
     <!-- Corrected function name in the onclick attribute -->
-    <button type="button" onclick="submitSelectedAnnouncements()">Submit Announcements</button>
+    <button type="button" onclick="submitSelectedAnnouncements()">Delete Announcement</button>
     <div class="successmessage"></div>
 </div>
 

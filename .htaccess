@@ -1,9 +1,0 @@
-RewriteEngine On
-
-<FilesMatch "\.(php|js)$">
-    Header set Cache-Control "max-age=600, public"
-</FilesMatch>
-
-<FilesMatch "\.(png|svg|css)$">
-    Header set Cache-Control "max-age=604800, public"
-</FilesMatch>

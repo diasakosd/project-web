@@ -42,7 +42,7 @@ $_SESSION['site'] = '../citizen/previous_requests.php';
  
     <!-- Add your scripts here -->
     <script src="citizen-details-script.js"></script>
-    <script src="current_offers.js"></script>
+    <script src="previous_requests.js"></script>
    
 </body>
 </html>
