@@ -238,8 +238,110 @@ body {
 }
 
 #rescuer_map{
-    width: 350px;
+    width: 600px;
     height: 600px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#offerTable {
+    width: 100%; 
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+
+#offerTable th, #offerTable td {
+    font-size: 20px; 
+    align-items: center;
+}
+#requestTable {
+    width: 100%; 
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+
+#requestTable th, #requestTable td {
+    font-size: 20px; 
+    align-items: center;
+}
+
+/* Style for table cells */
+#offerTable td, #offerTable th,
+#requestTable td, #requestTable th {
+border: 1px solid #ddd; /* Add borders to cells */
+padding: 8px; /* Add padding to cells */
+text-align: center;
+}
+
+/* Style for table header cells */
+#offerTable th, #requestTable th {
+background-color: #0029e2;
+color: white;
+}
+
+#offerTable tbody tr, #requestTable tbody tr {
+    background-color: #e8ebec;
+}
+
+/* Hover effect for cells */
+#offerTable tbody tr:hover, #requestTable tbody tr:hover {
+background-color: #f16f5d;
+color: white;
+cursor: pointer;
+}
+.table_label {
+    text-align: center; 
+    color: tomato;
+    font-size: 20px;
+    display: block; /* Make the label a block-level element */
+    margin: 0 auto; /* Center the block-level element using margin */
+}
+
+.btnFinished{
+    background-color: #1cbe32;
+    color: white; /* Specify text color */
+    font-size:large;
+    border-radius: 40px;
+    border: 1px solid #1cbe32;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 20px; /* Set the same margin-top as the previous button */
+    display: block; /* Make the button a block-level element */
+}
+
+.btnFinished:hover{
+    background-color: rgb(65, 154, 226);
+    color: rgb(219, 218, 130); /* Specify text color */
+    border-radius: 40px;
+    border: 1px solid rgb(65, 154, 226);
+    cursor: pointer;
+}
+
+#btnCancel{
+    background-color: #b94a22;
+    color: white; /* Specify text color */
+    font-size:large;
+    border-radius: 40px;
+    border: 1px solid #b94a22;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: auto; /* Push the button to the right */
+    margin-top: 20px;
+    display: block; /* Make the button a block-level element */
+}
+
+#btnCancel:hover{
+    background-color: rgb(65, 154, 226);
+    color: rgb(219, 218, 130); /* Specify text color */
+    border-radius: 40px;
+    border: 1px solid rgb(65, 154, 226);
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 600px) {
@@ -248,11 +350,12 @@ body {
     }
 
     .chBtn{
-        position: relative;
+        position: center;
         display: block;
         cursor: pointer;
         width: 40px;
         height: 40px;
+        margin: auto;
     }
     
     .chBtn i.bx.bx-menu{
@@ -299,5 +402,71 @@ body {
         font-size: 40px;
         display: block;
     }
+
+    #rescuer_map{
+        width: 300px;
+        height: 600px;
+        right: 8%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #offerTable {
+        width: 70%; /* Set table width to 100% for smaller screens */
+        margin: auto;
+        display: block;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #offerTable th, #offerTable td {
+        font-size: 12px; /* Adjust font size for smaller screens */
+    }
+    #requestTable {
+        width: 70%; /* Set table width to 100% for smaller screens */
+        margin: auto;
+        display: block;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #requestTable th, #requestTable td {
+        font-size: 12px; /* Adjust font size for smaller screens */
+    }
+
+    /* Style for table cells */
+#offerTable td, #offerTable th,
+#requestTable td, #requestTable th {
+    border: 1px solid #ddd; /* Add borders to cells */
+    padding: 8px; /* Add padding to cells */
+    text-align: center;
+}
+
+/* Style for table header cells */
+#offerTable th, #requestTable th {
+    background-color: #0029e2;
+    color: white;
+}
+
+/* Hover effect for cells */
+#offerTable tbody tr:hover, #requestTable tbody tr:hover {
+    background-color: #f16f5d;
+    color: white;
+    cursor: pointer;
+}
+
+.btnFinished{
+    background-color: #1cbe32;
+    color: white; /* Specify text color */
+    font-size:large;
+    border-radius: 40px;
+    border: 1px solid #1cbe32;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 20px; /* Set the same margin-top as the previous button */
+    display: block;
+}
 
 }

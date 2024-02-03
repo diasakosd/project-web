@@ -1,16 +1,3 @@
-// Functions for additional functionalities or actions
-document.addEventListener('DOMContentLoaded', function () {
-    var dischargeButton = document.getElementById('dischargeBtn');
-
-    dischargeButton.addEventListener('click', function () {
-        var errorOccurred = false;
-
-        if (errorOccurred) {
-            alert('Error: Unables to discharge cargo. You need to be at most 100m away from the base.');
-        }
-    });
-});
-
 document.addEventListener("DOMContentLoaded", function() {
     const checkbox = document.getElementById('check');
     const sidebar = document.getElementById('sidebar');
@@ -31,4 +18,6 @@ document.addEventListener("DOMContentLoaded", function() {
             chBtn.style.display = 'block'; // Show chBtn when chBtn2 is clicked and sidebar is checked
         }
     });
+
+
 });

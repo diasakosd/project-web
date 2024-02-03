@@ -34,9 +34,9 @@ if ($result) {
 }
 
 // Query to get the other rescuers' coordinates
-$query2 = "SELECT latitude, longitude FROM rescuers INNER JOIN citizen_offer ON rescuers.username=citizen_offer.rescuer_username WHERE accepted='YES' AND rescuers.username != '$username'
+$query2 = "SELECT latitude, longitude, rescuers.username, rescuers.phone FROM rescuers INNER JOIN citizen_offer ON rescuers.username=citizen_offer.rescuer_username WHERE accepted='YES' AND rescuers.username != '$username'
 UNION
-SELECT latitude, longitude FROM rescuers INNER JOIN citizen_request ON rescuers.username=citizen_request.rescuer_username WHERE accepted='YES' AND rescuers.username != '$username';";
+SELECT latitude, longitude, rescuers.username, rescuers.phone FROM rescuers INNER JOIN citizen_request ON rescuers.username=citizen_request.rescuer_username WHERE accepted='YES' AND rescuers.username != '$username';";
 $result2 = mysqli_query($db, $query2);
 
 if ($result2) {
@@ -50,7 +50,7 @@ if ($result2) {
     echo json_encode(array('error' => 'No rescuer coordinates found'));
 }
 
-$query3 = "SELECT DISTINCT r.latitude, r.longitude
+$query3 = "SELECT DISTINCT r.latitude, r.longitude, r.username, r.phone
 FROM rescuers r
 LEFT JOIN citizen_request cr ON r.username = cr.rescuer_username AND cr.accepted = 'YES'
 LEFT JOIN citizen_offer co ON r.username = co.rescuer_username AND co.accepted = 'YES'

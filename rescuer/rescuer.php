@@ -51,13 +51,23 @@ $_SESSION['site'] = '../rescuer/rescuer.php';
 
 
             <!-- MAP CODE -->
-            <div id="rescuer_map"></div>
+            <div id="rescuer_map"></div><br>
+        
+            <label class="table_label" for="offerTable">Accepted Offers:</label>
+            <div id="offerTable"></div>
+            <br>
+            <label class="table_label" for="requestTable">Accepted Requests:</label>
+            <div id="requestTable"></div>
+        
 
 
     </div>
     <!-- Add your scripts here -->
-    <script src="extras.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="getTasksRescuer.js"></script>
+    <script src="popupButtons.js"></script>
+    
     <script src="rescuer_map.js"></script>
-    <script src="base_map.js"></script>
+    <script src="extras.js"></script>
 </body>
 </html>

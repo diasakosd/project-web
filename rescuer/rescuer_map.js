@@ -1,12 +1,3 @@
-// Define a function to handle the button click
-function handleOfferButton() {
-    alert('Offer received!');
-}
-
-function handleRequestButton() {
-    alert('Request taken!');
-}
-
 $(document).ready(function(){
     const map = L.map('rescuer_map');
     map.setView([38.2468, 21.7352], 12);
@@ -35,11 +26,11 @@ var layerControl = L.control.layers(baseMaps).addTo(map);
 
 // Add layers to the Layers Control
 layerControl.addOverlay(rescuers_active, "Active Rescuers");
-layerControl.addOverlay(rescuers_non_active, "Non-Active Rescuers");
-layerControl.addOverlay(offerYesGroup, "Offer Yes");
-layerControl.addOverlay(offerNoGroup, "Offer No");
-layerControl.addOverlay(requestYesGroup, "Request Yes");
-layerControl.addOverlay(requestNoGroup, "Request No");
+layerControl.addOverlay(rescuers_non_active, "Inactive Rescuers");
+layerControl.addOverlay(offerYesGroup, "Offers Accepted");
+layerControl.addOverlay(offerNoGroup, "Offers Waiting");
+layerControl.addOverlay(requestYesGroup, "Requests Accepted");
+layerControl.addOverlay(requestNoGroup, "Requests Waiting");
 
     // Define a custom icon for the rescuer
     const rescuerIcon = L.icon({
@@ -105,7 +96,7 @@ layerControl.addOverlay(requestNoGroup, "Request No");
                         title: 'Rescuer',
                         icon: rescuerIcon,
                         draggable: true
-                    }).bindPopup("<h2>You</h2><p>Location: " + lat + ', ' + lon + "</p>")
+                    }).bindPopup("<h2>You</h2><p><b>Location: </b>" + lat + ', ' + lon + "</p>")
                     .addTo(map);
                 }
 
@@ -114,11 +105,14 @@ layerControl.addOverlay(requestNoGroup, "Request No");
                     const rescuer2 = combinedRescuers.activeResc[key];
                     const lat = parseFloat(rescuer2.latitude);
                     const lon = parseFloat(rescuer2.longitude);
+                    const user = rescuer2.username;
+                    const phone = rescuer2.phone;
     
                     L.marker([lat, lon], {
                         title: 'Active Rescuer',
                         icon: activeRescuerIcon
-                    }).bindPopup("<h2>Active Rescuer</h2><p>Location: " + lat + ', ' + lon + "</p>")
+                    }).bindPopup("<h2>"+user+"</h2><p><b>Location: </b>" + lat + ', ' + lon + "</p>"+
+                    "<p><b>Telephone: </b>" + phone + "</p>")
                     .addTo(rescuers_active);
                 }
 
@@ -127,11 +121,14 @@ layerControl.addOverlay(requestNoGroup, "Request No");
                     const rescuer3 = combinedRescuers.inactiveResc[key];
                     const lat = parseFloat(rescuer3.latitude);
                     const lon = parseFloat(rescuer3.longitude);
+                    const user = rescuer3.username;
+                    const phone = rescuer3.phone;
     
                     L.marker([lat, lon], {
                         title: 'Inactive Rescuer',
                         icon: inactiveRescuerIcon
-                    }).bindPopup("<h2>Inactive Rescuer</h2><p>Location: " + lat + ', ' + lon + "</p>")
+                    }).bindPopup("<h2>"+user+"</h2><p><b>Location: </b>" + lat + ', ' + lon + "</p>"+
+                    "<p><b>Telephone: </b>" + phone + "</p>")
                     .addTo(rescuers_non_active);
                 }
 
@@ -160,32 +157,6 @@ layerControl.addOverlay(requestNoGroup, "Request No");
                         }
                     });
                 }
-
-                //test markers for requests
-                var marker = L.marker([38.2466, 21.7346]).bindPopup("<h3>Request waiting demo</h3>").addTo(map);
-                marker.setIcon(L.icon({
-                    iconUrl: 'request_waiting.svg',
-                    iconSize: [60, 60],
-                }));
-
-                var marker = L.marker([38.2461, 21.73525]).bindPopup("<h3>Request taken demo</h3>").addTo(map);
-                marker.setIcon(L.icon({
-                    iconUrl: 'request_taken.svg',
-                    iconSize: [60, 60]
-                }));
-
-                //test markers for offers
-                var marker = L.marker([38.24614, 21.73615]).bindPopup("<h3>Offer waiting demo</h3>").addTo(map);
-                marker.setIcon(L.icon({
-                    iconUrl: 'offer_waiting.svg',
-                    iconSize: [60, 60]
-                }));
-
-                var marker = L.marker([38.24655, 21.73582]).bindPopup("<h3>Offer taken demo</h3>").addTo(map);
-                marker.setIcon(L.icon({
-                    iconUrl: 'offer_taken.svg',
-                    iconSize: [60, 60]
-                }));
             } catch (error) {
                 console.error("Error parsing JSON: ", error);
             }
@@ -215,6 +186,13 @@ layerControl.addOverlay(requestNoGroup, "Request No");
                         icon: baseIcon
                     }).bindPopup("<h2>Base</h2><p>Location: " + lat + ', ' + lon + "</p>")
                     .addTo(map);
+
+                    L.circle([lat, lon], {
+                        color: 'red',
+                        fillColor: 'red',
+                        fillOpacity: 0.5,
+                        radius: 100  // Set the radius in meters
+                    }).addTo(map);
                 }
             } catch (error) {
                 console.error("Error parsing JSON: ", error);
@@ -260,7 +238,8 @@ $.ajax({
                 const Tcreated = details.formatted_time_created;
                 const item = details.item;
                 const quantity = parseFloat(details.quantity);
-                ballonDetailsRegW.push([fullname, phone, Tcreated, item, quantity]);
+                const id = parseInt(details.id);
+                ballonDetailsRegW.push([fullname, phone, Tcreated, item, quantity, id]);
             }
 
             //offers
@@ -283,7 +262,8 @@ $.ajax({
                 const Tcreated = details.formatted_time_created;
                 const item = details.item;
                 const quantity = parseFloat(details.quantity);
-                ballonDetailsOffW.push([fullname, phone, Tcreated, item, quantity]);
+                const id = parseInt(details.id);
+                ballonDetailsOffW.push([fullname, phone, Tcreated, item, quantity, id]);
             }
 
         } catch (error) {
@@ -323,7 +303,7 @@ $.ajax({
                         "<p id='timeCreated'><b>Time created:</b> " + details[2] + "</p>" +
                         "<p id='item'><b>Item:</b> " + details[3] + "</p>" +
                         "<p id='quantity'><b>Quantity:</b> " + details[4] + "</p>" +
-                        "<button onclick='handleOfferButton()'>Receive offer</button>";
+                        "<button onclick='handleOfferButton(" + details[5] + ")'>Receive offer</button>";
 
                     
                     } else if (type === 'requestYes') {
@@ -345,7 +325,7 @@ $.ajax({
                             "<p><b>Time created:</b> " + details[2] + "</p>" +
                             "<p><b>Item:</b> " + details[3] + "</p>" +
                             "<p><b>Quantity:</b> " + details[4] + "</p>"+
-                            "<button onclick='handleRequestButton()'>Take Request</button>";
+                            "<button onclick='handleRequestButton(" + details[5] + ")'>Take Request</button>";
                     }
                     
 
@@ -398,6 +378,13 @@ $.ajax({
                 rescuerCoordinates.forEach(rescuerCoord => {
                     const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(offerYesGroup);
                 });
+
+                const acceptedOfferCircle = L.circle([lat, lon], {
+                    color: 'green',
+                    fillColor: 'green',
+                    fillOpacity: 0.5,
+                    radius: 50  // Set the radius in meters
+                }).addTo(map).addTo(offerYesGroup);
             }
 
             // Loop through the data and create markers for Offers(no)
@@ -422,6 +409,12 @@ $.ajax({
                     const polyline = L.polyline([rescuerCoord, [lat, lon]], { color: 'green' }).addTo(requestYesGroup);
                 });
 
+                const acceptedRequestCircle = L.circle([lat, lon], {
+                    color: 'green',
+                    fillColor: 'green',
+                    fillOpacity: 0.5,
+                    radius: 50  // Set the radius in meters
+                }).addTo(map).addTo(requestYesGroup);
             }
 
             // Loop through the data and create markers for Requests(no)
