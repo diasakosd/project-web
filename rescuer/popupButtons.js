@@ -2,7 +2,7 @@
 
 
 function handleOfferButton(id) {
-    alert('Offer received!');
+   
     const accepted = 'YES';
 
     $.ajax({
@@ -25,6 +25,7 @@ function handleOfferButton(id) {
                     method: 'POST',
                     data: { AcceptedOffer: accepted, offerID: offer_id, action_type: 'offer' },
                     success: function(response) {
+                        alert('Offer received!');
                         console.log('Rescuer received offer successfully:', response);
                         location.reload();
                     },
@@ -44,7 +45,7 @@ function handleOfferButton(id) {
 
 
 function handleRequestButton(id) {
-    alert('Request taken!');
+    
     const accepted = 'YES';
 
     $.ajax({
@@ -67,6 +68,7 @@ function handleRequestButton(id) {
                     method: 'POST',
                     data: { AcceptedRequest: accepted, requestID: request_id, action_type: 'request' },
                     success: function(response) {
+                        alert('Request taken!');
                         console.log('Rescuer took request successfully:', response);
                         location.reload();
                     },

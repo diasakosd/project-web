@@ -43,7 +43,7 @@ $query2 = "SELECT citizens.full_name, citizens.phone,
 DATE_FORMAT(citizen_request.time_created, '%Y-%m-%d %H:%i:%s') AS formatted_time_created, 
 citizen_request.item, citizen_request.quantity, citizen_request.id FROM citizens
 INNER JOIN citizen_request ON citizens.username = citizen_request.username
-WHERE accepted LIKE 'NO'";
+WHERE accepted LIKE 'NO' GROUP BY citizens.username";
 $result2 = mysqli_query($db, $query2);
 
 if ($result2) {
@@ -83,7 +83,7 @@ $query4 = "SELECT citizens.full_name, citizens.phone,
 DATE_FORMAT(citizen_offer.time_created, '%Y-%m-%d %H:%i:%s') AS formatted_time_created, 
 citizen_offer.item, citizen_offer.quantity, citizen_offer.id FROM citizens
 INNER JOIN citizen_offer ON citizens.username = citizen_offer.username
-WHERE accepted LIKE 'NO'";
+WHERE accepted LIKE 'NO' GROUP BY citizens.username";
 $result4 = mysqli_query($db, $query4);
 
 if ($result4) {
