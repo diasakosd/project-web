@@ -20,7 +20,7 @@ $(document).ready(function () {
 
             $('#baseCargoTable').append('<thead>' + headerRow.prop('outerHTML') + '</thead>');
 
-            cargoData.forEach(function (cargo, index) {
+            cargoData.forEach(function (cargo) {
                 var row = $('<tr class="item_id"></tr>');
                 var itemId = cargo.id; // Use the actual ID from the cargo data
 
