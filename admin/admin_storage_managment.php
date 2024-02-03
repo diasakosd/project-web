@@ -111,9 +111,23 @@ $_SESSION['site'] = '../admin/admin_storage_managment.php';
     </div>
 
 <br>
+<!-- Date range selection -->
 <div>
-  <canvas id="myChart" width="800" height="400"></canvas>
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate" name="startDate" required>
+
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate" name="endDate" required>
+
+    <button onclick="updateChart()">Update Chart</button>
 </div>
+
+<!-- Chart container -->
+<div>
+    <canvas id="myChart" width="800" height="400"></canvas>
+</div>
+
+
 
     
 <br>

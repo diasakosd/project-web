@@ -41,7 +41,7 @@ $_SESSION['site'] = '../admin/admin_rescuer_managment.php';
             </div>
             
             <div class="register-form">
-                <form method="post" action="register_get.php" onsubmit="return validateForm()" id="registerForm">
+                <form method="post" action="register_get.php" id="registerForm">
 
 
                     <div class="input-box">
@@ -71,7 +71,7 @@ $_SESSION['site'] = '../admin/admin_rescuer_managment.php';
                 </form>
             </div>
 
-        <p>Already have an account? <a href="index.php">Login</a></p>
+       
                 
     </div>
     <div class="map1" id="map"></div>

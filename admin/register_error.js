@@ -7,6 +7,7 @@ document.getElementById('registerForm').addEventListener('submit', function (eve
     // Call the function to check if the username exists
     checkRegisterUser(usernameInput);
 });
+
 // Function to check if the username exists using AJAX
 function checkRegisterUser(username) {
     // Create a new XMLHttpRequest object
@@ -33,10 +34,15 @@ function checkRegisterUser(username) {
                     regInput.type = 'hidden';
                     regInput.name = 'reg_user';
                     regInput.value = 'true';
-                    registerForm.appendChild(regInput);
+                    document.getElementById('registerForm').appendChild(regInput);
 
-                    // Submit the form using AJAX
-                    submitFormWithAjax();
+                    // Check if form validation is successful before submitting
+                    if (validateForm()) {
+                        // Submit the form using AJAX
+                        submitFormWithAjax();
+                    } else {
+                        displayErrorMessage("Form validation failed.");
+                    }
                 }
             } else {
                 console.error('Error checking username existence');
@@ -69,5 +75,3 @@ function submitFormWithAjax() {
 
     xhr.send(formData);
 }
-
-

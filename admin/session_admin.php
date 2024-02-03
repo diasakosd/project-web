@@ -3,7 +3,7 @@ session_start();
 
 // Redirect to login page if not logged in
 if (!isset($_SESSION['username'])) {
-    header('location: index.php');
+    header('location: ../logout.php');
     exit(); // Stop further execution
 }
 $site = $_SESSION['site'];
