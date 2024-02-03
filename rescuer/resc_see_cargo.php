@@ -1,6 +1,6 @@
 <?php
 include 'session_rescuer.php';
-$_SESSION['site'] = '../rescuer/rescuer.php';
+$_SESSION['site'] = '../rescuer/resc_see_cargo.php';
 
 $db = "localhost";
 $dbUsername = "root";
