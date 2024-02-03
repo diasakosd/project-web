@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // If the category and item already exist, update the quantity
             $sql2 = "UPDATE base_storage SET quantity = quantity + '$newQuantity' WHERE category = '$category' AND item = '$item'";
             $sql = "UPDATE rescuer_inventory SET quantity = quantity - '$newQuantity' WHERE username = '$username' AND category = '$category' AND item = '$item'";
-            $sql3 = "DELETE FROM rescuer_inventory WHERE quantity = 0";
+            $sql3 = "DELETE FROM rescuer_inventory WHERE quantity <= 0";
             if ($conn->query($sql) === TRUE && $conn->query($sql2) === TRUE && $conn->query($sql3) === TRUE) {
                 echo "Update successful" . $category . ' ' . $item;
             } else {
