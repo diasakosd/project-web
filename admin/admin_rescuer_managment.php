@@ -9,7 +9,7 @@ $_SESSION['site'] = '../admin/admin_rescuer_managment.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
     
-    <!-- Adjust the paths to your CSS file and Leaflet map script -->
+    
     <link rel="stylesheet" href="admin.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -40,7 +40,7 @@ $_SESSION['site'] = '../admin/admin_rescuer_managment.php';
                 </div>
             </div>
             
-            <div class="register-form">
+            <div class="register-form"><!--form for rescuer creation-->
                 <form method="post" action="register_get.php" id="registerForm">
 
 
@@ -61,7 +61,7 @@ $_SESSION['site'] = '../admin/admin_rescuer_managment.php';
                         <input type="text" id="phone" name="phone" placeholder="Phone" required>
                         <i class='bx bxs-phone'></i>
                     </div>
-                    <!-- Add hidden input fields for latitude and longitude -->
+                    <!--hidden fields for latitude and longitude-->
                     <input type="hidden" id="clickedLatitude" name="clickedLatitude">
                     <input type="hidden" id="clickedLongitude" name="clickedLongitude">
 
@@ -74,10 +74,10 @@ $_SESSION['site'] = '../admin/admin_rescuer_managment.php';
        
                 
     </div>
-    <div class="map1" id="map"></div>
+    <div class="map1" id="map"></div><!--this is where the map will show up-->
 
-    <script src="rescuer_manage_map.js"></script>
-    <script src="register_error.js"></script>
+    <script src="rescuer_manage_map.js"></script><!-- script for displaying map-->
+    <script src="register_error.js"></script><!--script to display a message when the registration happens or not-->
     <script src="admin-details-script.js"></script>
 </body>
 </html>
