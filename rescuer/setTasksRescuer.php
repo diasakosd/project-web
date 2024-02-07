@@ -86,6 +86,9 @@ if($action == 'Cancel'){
         } else {
             echo 'ERROR in FINISHED task';
         }
+
+        $request3 = "DELETE FROM rescuer_inventory WHERE quantity = 0 AND username = '$username'";
+        $result3 = mysqli_query($db, $request3);
     } else {
         echo 'Invalid table ID';
     }
