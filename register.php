@@ -11,7 +11,7 @@ if (isset($_SESSION['username'])) {
     } elseif ($_SESSION['userRole'] === 'admin') {
         header('location: admin/admin.php');
     } elseif ($_SESSION['userRole'] === 'rescuer') {
-        header('location: rescuer/rescuers.php');
+        header('location: rescuer/rescuer.php');
     }
     exit();
 }
