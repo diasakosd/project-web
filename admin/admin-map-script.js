@@ -21,14 +21,16 @@ requests_noIcon = new LeafIcon({iconUrl: 'icons8-marker-r-50.png'});
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200) {
-        // Include the markers directly as JavaScript code
+        //Include the markers directly as JavaScript code
         eval(xhr.responseText);
 
 
 
 
 
-        // Use markersData variable for creating markers
+       //Use markersData variable for creating markers
+
+       //active-rescuers
         var markers_rescuer_active = [];
         for (var i = 0; i < markers_rescuer_active_Data.length; i++) {
             var marker_rescuer_active = eval(markers_rescuer_active_Data[i]);
@@ -38,7 +40,7 @@ xhr.onreadystatechange = function () {
         var rescuers_active = L.layerGroup(markers_rescuer_active);
 
 
-        // Use markersData variable for creating markers
+        //nonactive-rescuers
         var markers_rescuer_noactive = [];
         for (var i = 0; i < markers_rescuer_noactive_Data.length; i++) {
             var marker_rescuer_noactive = eval(markers_rescuer_noactive_Data[i]);
@@ -47,7 +49,7 @@ xhr.onreadystatechange = function () {
 
         var rescuers_noactive = L.layerGroup(markers_rescuer_noactive);
 
-        // Use markersData variable for creating markers
+      //request-no
         var markers_citizen_request_no = [];
         for (var i = 0; i < markers_citizen_request_Data_no.length; i++) {
             var marker_citizen_request_no = eval(markers_citizen_request_Data_no[i]);
@@ -57,7 +59,7 @@ xhr.onreadystatechange = function () {
         var requests_no = L.layerGroup(markers_citizen_request_no);
 
 
-        // Use markersData variable for creating markers
+       //offer-no
         var markers_citizen_offer_no = [];
         for (var i = 0; i < markers_citizen_offer_Data_no.length; i++) {
             var marker_citizen_offer_no = eval(markers_citizen_offer_Data_no[i]);
@@ -67,7 +69,7 @@ xhr.onreadystatechange = function () {
         var offers_no = L.layerGroup(markers_citizen_offer_no);
 
 
-        // Use markersData variable for creating markers
+        //request-yes
         var markers_citizen_request_yes = [];
         for (var i = 0; i < markers_citizen_request_Data_yes.length; i++) {
             var marker_citizen_request_yes = eval(markers_citizen_request_Data_yes[i]);
@@ -77,7 +79,7 @@ xhr.onreadystatechange = function () {
         var requests_yes = L.layerGroup(markers_citizen_request_yes);
 
 
-        // Use markersData variable for creating markers
+        //offer-yes
         var markers_citizen_offer_yes = [];
         for (var i = 0; i < markers_citizen_offer_Data_yes.length; i++) {
             var marker_citizen_offer_yes = eval(markers_citizen_offer_Data_yes[i]);
@@ -87,7 +89,7 @@ xhr.onreadystatechange = function () {
         var offers_yes = L.layerGroup(markers_citizen_offer_yes);
 
 
-
+        //lines-requests
         var lines_request_yes = [];
         for (var i = 0; i < lines_request_yes_Data.length; i++) {
             var line_request_yes = eval(lines_request_yes_Data[i]);
@@ -98,14 +100,14 @@ xhr.onreadystatechange = function () {
         var lines_request_group = L.layerGroup(lines_request_yes);
 
 
-
+        //lines-offers
             var lines_offer_yes = [];
             for (var i = 0; i < lines_offer_yes_Data.length; i++) {
                 var line_offer_yes = eval(lines_offer_yes_Data[i]);
                 lines_offer_yes.push(line_offer_yes);
             }
             
-            // Create a layer group for all the polylines and add it to the map
+            //Layer group for all the polylines and add it to the map
             var lines_offer_group = L.layerGroup(lines_offer_yes);
 
             
@@ -131,7 +133,7 @@ xhr.onreadystatechange = function () {
         };
 
 
-                  // Assuming you have a Leaflet map object named 'map'
+                  
 var baseIcon = L.icon({
     iconUrl: 'house.png',
     iconSize: [50, 50],
@@ -144,43 +146,43 @@ var baseIcon = L.icon({
 
         var baseMarker = L.marker([baseLocation.lat, baseLocation.lng], { icon: baseIcon, draggable: 'true' }).addTo(map);
 
-        // Set the initial popup content
+        //popup content
         baseMarker.bindPopup('Base Location at: ' + baseLocation.lat + ', ' + baseLocation.lng).openPopup();
 
         baseMarker.on('dragend', function (event) {
             var marker = event.target;
             var position = marker.getLatLng();
 
-            // Update the marker's position in the popup content
+            //Update the marker's position in the popup content
             marker.setPopupContent('Base Location at: ' + position.lat + ', ' + position.lng);
 
-            // Send the new location to the server using AJAX
+            //Send the new location to the server using AJAX
             updateBaseLocation(position.lat, position.lng);
         });
 
         function updateBaseLocation(latitude, longitude) {
-            // Create an XMLHttpRequest object
+            //Create an XMLHttpRequest object
             var xhr = new XMLHttpRequest();
 
-            // Define the PHP script URL
+            //Define the PHP script URL
             var url = 'update_location.php';
 
-            // Create the data to be sent in the request
+            //Create the data to be sent in the request
             var data = 'latitude=' + latitude + '&longitude=' + longitude;
 
-            // Configure the request
+        
             xhr.open('POST', url, true);
             xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-            // Set up the callback function to handle the response
+            //Set up the callback function to handle the response
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    // Handle the response (if needed)
+                    
                     console.log(xhr.responseText);
                 }
             };
 
-            // Send the request with the data
+            //Send the request with the data
             xhr.send(data);
         }
 
@@ -197,7 +199,7 @@ var baseIcon = L.icon({
        layerControl.addOverlay(requests_yes, "Requests Accepted");
        layerControl.addOverlay(offers_yes, "Offers Accepted");
      
-       // Create an overlay map for the line
+       //Create an overlay map for the line
 
        layerControl.addOverlay(lines_offer_group, "Lines - Offers");
        layerControl.addOverlay(lines_request_group, "Lines - Requests");
@@ -210,7 +212,7 @@ var baseIcon = L.icon({
     
 };
 
-// Open the AJAX request
+//Open the AJAX request
 xhr.open("GET", "markers_admin.php", true);
-// Send the request
+//Send the request
 xhr.send();
