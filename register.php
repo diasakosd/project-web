@@ -38,8 +38,6 @@ else{
     <br>
     <br>
     <br>
-    <br>
-    <br>
     <div class="container">
         <div class="top-overlay">
             <br>
