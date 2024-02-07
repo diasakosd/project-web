@@ -141,21 +141,6 @@ layerControl.addOverlay(requestNoGroup, "Requests Waiting");
                     updateRescuerPosition(newLat, newLng);
                 });
 
-setInterval(function () {
-    $.ajax({
-        url: 'get_rescuer_coords.php',
-        method: 'GET',
-        success: function (response) {
-            const position = JSON.parse(response);
-            const { latitude, longitude } = position;
-            updateRescuerPosition(latitude, longitude);
-        },
-        error: function (xhr, status, error) {
-            console.error('AJAX request error (get_rescuer_pos):', status, error);
-        }
-    });
-}, 5000); // Set the interval to check for updates every 5 seconds (adjust as needed)
-
                 //update rescuer's position 
                 function updateRescuerPosition(lat, lon) {
                     $.ajax({
@@ -164,7 +149,7 @@ setInterval(function () {
                         data: { latitude: lat, longitude: lon },
                         success: function(response) {
                             console.log('Rescuer position updated successfully:', response);
-                            
+                            location.reload();
                         },
                         error: function(xhr, status, error) {
                             console.error('AJAX request error (updateRescuerPosition):', status, error);
