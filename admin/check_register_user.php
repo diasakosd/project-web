@@ -1,18 +1,18 @@
 <?php
 
-// connect to the database
+//connect to the database
 $db = mysqli_connect('localhost', 'root', '', 'web');
 
-// Check connection
+
 if (!$db) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// Check if the provided username exists
+//Check if the username already exists
 if (isset($_POST['username'])) {
     $username = mysqli_real_escape_string($db, $_POST['username']);
 
-    // Query to check in combined_data table
+    //Query to seelvt from combined_data table
     $query = "SELECT * FROM combined_data FORCE INDEX (user_data) WHERE username='$username';";
     $result = mysqli_query($db, $query);
 

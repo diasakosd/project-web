@@ -16,26 +16,26 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         };
 
-        // Send the AJAX request
+        //Send the AJAX request
         xhr.send();
     }
 
-    // Function to fetch categories via AJAX and create checkboxes
+    //Function to fetch categories via AJAX and create checkboxes
     function fetchCategories() {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'get_categories.php', true);
         xhr.onload = function () {
             if (xhr.status === 200) {
-                // Update the category menu with checkboxes
+                //Update the category menu with checkboxes
                 document.querySelector('#categoryMenu').innerHTML = xhr.responseText;
 
-                // Add event listener to category checkboxes
+                //Add event listener to category checkboxes
                 var categoryCheckboxes = document.querySelectorAll('.category-checkbox');
                 categoryCheckboxes.forEach(function (checkbox) {
                     checkbox.addEventListener('change', updateTable);
                 });
 
-                // Initial table update
+                //Table update when checkboxed selected
                 updateTable();
             }
         };
