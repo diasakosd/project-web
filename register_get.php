@@ -4,7 +4,7 @@ session_start();
 if (isset($_SESSION['username'])) {
     // Check the user's role
     if ($_SESSION['userRole'] === 'citizen') {
-        header('location: citizen/citizens.php');
+        header('location: citizen/citizen.php');
     } elseif ($_SESSION['userRole'] === 'admin') {
         header('location: admin/admin.php');
     } elseif ($_SESSION['userRole'] === 'rescuer') {
@@ -54,7 +54,7 @@ if (isset($_POST['reg_user'])) {
         $_SESSION['userRole'] = 'citizen';
         $_SESSION['success'] = "You are now registered and logged in";
         $_SESSION['site'] = '../citizen/citizen.php';
-        header('location: citizen/citizens.php');
+        header('location: citizen/citizen.php');
         exit();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 include 'session_citizen.php';
-$_SESSION['site'] = '../citizen/citizens.php';
+$_SESSION['site'] = '../citizen/citizen.php';
 ?>
 
 <!DOCTYPE html>
