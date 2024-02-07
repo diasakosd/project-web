@@ -1,9 +1,9 @@
 <?php
 
 session_start();
-// If the user is already logged in, redirect to the appropriate page
+//If the user is already logged in redirect to the appropriate page
 if (isset($_SESSION['username'])) {
-    // Check the user's role
+    //Check the user's role
     if ($_SESSION['userRole'] === 'citizen') {
         header('location: citizen/citizen.php');
     } elseif ($_SESSION['userRole'] === 'admin') {
@@ -20,27 +20,24 @@ if (!(isset($_POST['username'])) || !(isset($_POST['password']))) {
 unset($_SESSION['username']);
 unset($_SESSION['userRole']);
 
-// initializing variables
 $username = "";
 $password = "";
 $errors = array();
 
-// connect to the database
 $db = mysqli_connect('localhost', 'root', '', 'web');
 
-// Check connection
 if (!$db) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
 
 
-// LOGIN USER
+//LOGIN USER
 if (isset($_POST['login_user'])) {
     $username = mysqli_real_escape_string($db, $_POST['username']);
     $password = mysqli_real_escape_string($db, $_POST['password']);
 
-    // Query to check in combined_data table
+    //Query to check in combined_data table
     $query = "SELECT table_name FROM combined_data FORCE INDEX (user_data) WHERE username='$username' AND password='$password'";
     $result = mysqli_query($db, $query);
     echo "hi5";
@@ -54,7 +51,7 @@ if (isset($_POST['login_user'])) {
                 $_SESSION['username'] = $username;
                 $_SESSION['success'] = "You are now logged in";
 
-                // Redirect based on table_name
+                //Redirect based on table_name
                 if ($table_name == 'citizens') {
                     $_SESSION['userRole'] = 'citizen';
                     $_SESSION['site'] = 'citizen/citizen.php';

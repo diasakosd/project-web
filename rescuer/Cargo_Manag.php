@@ -3,34 +3,27 @@ $requestMethod = $_SERVER['REQUEST_METHOD'];
 echo "Received request method: $requestMethod";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve the item ID, new quantity, and coordinates
     
-
     $itemId = $_POST['item_id'];
     $newQuantity = $_POST['quantity'];
     $category = $_POST['category'];
     $item = $_POST['item'];
 
-            // Connect to the database
             $db = mysqli_connect('localhost', 'root', '', 'web');
 
-            // Check connection
             if (!$db) {
                 echo json_encode(array('status' => 'error', 'message' => 'Connection failed: ' . mysqli_connect_error()));
                 exit();
             }
 
-            // Check if the user is logged in
             session_start();
             if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
                 echo json_encode(array('status' => 'error', 'message' => 'User not logged in'));
                 exit();
             }
 
-            // Get the rescuer name based on the session username
             $username = $_SESSION['username'];
 
-            // Retrieve category, item, and old quantity from base_storage
             $selectBaseStorageQuery = "SELECT category, item, quantity FROM base_storage WHERE id = ?"; 
             $stmtSelectBaseStorage = mysqli_prepare($db, $selectBaseStorageQuery);
             mysqli_stmt_bind_param($stmtSelectBaseStorage, "i", $itemId);
@@ -39,24 +32,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             mysqli_stmt_fetch($stmtSelectBaseStorage);
             mysqli_stmt_close($stmtSelectBaseStorage);
 
-            // Calculate the difference between old and new quantities
+            //difference between old and new quantities
             $quantityDifference = $oldQuantity - $newQuantity;
 
-            // Update the quantity in the database using prepared statement
+            //prepared statement
             $updateBaseStorageQuery = "UPDATE base_storage SET quantity = ? WHERE id = ?";
             $stmtUpdateBaseStorage = mysqli_prepare($db, $updateBaseStorageQuery);
             mysqli_stmt_bind_param($stmtUpdateBaseStorage, "ii", $newQuantity, $itemId);
 
             if (mysqli_stmt_execute($stmtUpdateBaseStorage)) {
-                // Record updated successfully, proceed to insert/update rescuer_inventory table
+                
                 $selectInventoryQuery = "SELECT quantity FROM rescuer_inventory WHERE username = ? AND category = ? AND item = ?";
                 $stmtSelectInventory = mysqli_prepare($db, $selectInventoryQuery);
                 mysqli_stmt_bind_param($stmtSelectInventory, "sss", $username, $category, $item);
                 mysqli_stmt_execute($stmtSelectInventory);
                 mysqli_stmt_store_result($stmtSelectInventory);
 
+                //if row exists update the quantity
                 if (mysqli_stmt_num_rows($stmtSelectInventory) > 0) {
-                    // Row exists, update the quantity
+                    
                     $updateInventoryQuery = "UPDATE rescuer_inventory SET quantity = quantity + ? WHERE username = ? AND category = ? AND item = ?";
                     $stmtUpdateInventory = mysqli_prepare($db, $updateInventoryQuery);
                     mysqli_stmt_bind_param($stmtUpdateInventory, "isss", $quantityDifference, $username, $category, $item);
@@ -69,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     mysqli_stmt_close($stmtUpdateInventory);
                 } else {
-                    // Row does not exist, insert a new row
+                    //if ow does not exist insert a new row
                     $insertInventoryQuery = "INSERT INTO rescuer_inventory (username, category, item, quantity) VALUES (?, ?, ?, ?)";
                     $stmtInsertInventory = mysqli_prepare($db, $insertInventoryQuery);
                     mysqli_stmt_bind_param($stmtInsertInventory, "sssi", $username, $category, $item, $quantityDifference);

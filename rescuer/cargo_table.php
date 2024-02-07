@@ -1,40 +1,36 @@
 <?php
-// Connect to the database
+
 $db = mysqli_connect('localhost', 'root', '', 'web');
 
-// Check connection
 if (!$db) {
     echo json_encode(array('error' => 'Connection failed: ' . mysqli_connect_error()));
     exit();
 }
 
-// Check if the user is logged in
 session_start();
 if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
     echo json_encode(array('error' => 'User not logged in'));
     exit();
 }
 
-// Get the rescuer name based on the session username
 $username = $_SESSION['username'];
 
-// Query to get the categories from the base_storage table 
 $seeContent = "SELECT category AS Category, item AS Item, quantity AS Quantity FROM rescuer_inventory WHERE username = '$username'";
 $result = mysqli_query($db, $seeContent);
 
 if ($result) {
-    $cargoData = array(); // Initialize an array to hold cargo data
+    $cargoData = array(); 
 
     while ($row = mysqli_fetch_assoc($result)) {
-        // Append each cargo row to the cargoData array
+       
         $cargoData[] = $row;
     }
 
     if (empty($cargoData)) {
-        // Send a specific message in JSON format when there's no cargo
+        
         echo json_encode(array('message' => 'You do not have any cargo yet!'));
     } else {
-        // Output cargo data in JSON format
+       
         echo json_encode($cargoData);
     }
 } else {
@@ -42,6 +38,5 @@ if ($result) {
 }
 
 
-// Close the database connection
 mysqli_close($db);
 ?>

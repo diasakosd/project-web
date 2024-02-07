@@ -14,9 +14,7 @@ $conn = mysqli_connect($db, $dbUsername, $dbPassword, $dbName);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
     
-    <!-- Adjust the paths to your CSS file and Leaflet map script -->
     <link rel="stylesheet" href="rescuer.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>

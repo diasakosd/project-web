@@ -3,28 +3,23 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $actionType = $_POST['action_type'];
 
-        // Example connection details; replace with your own
         $servername = "localhost";
         $username = "root";
         $password = "";
         $dbname = "web";
     
-        // Create connection
         $conn = new mysqli($servername, $username, $password, $dbname);
-    
-        // Check connection
+
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-    
-        // Check if the user is logged in
+
         session_start();
         if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
             echo json_encode(array('error' => 'User not logged in'));
             exit();
         }
     
-        // Get the rescuer name based on the session username
         $username = $_SESSION['username'];
 
     if($actionType == 'offer'){
@@ -52,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo 'ERROR in request taken';
         }
     }
-    // Close the database connection
+    
     mysqli_close($conn);
 }
 ?>

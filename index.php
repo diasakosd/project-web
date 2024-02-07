@@ -2,9 +2,9 @@
 
 session_start();
 
-// If the user is already logged in, redirect to the appropriate page
+//If the user is already logged in redirect to the appropriate page
 if (isset($_SESSION['username'])) {
-    // Check the user's role
+    //Check the user's role
     if ($_SESSION['userRole'] === 'citizen') {
         header('location: citizen/citizen.php');
     } elseif ($_SESSION['userRole'] === 'admin') {

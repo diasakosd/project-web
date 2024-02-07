@@ -1,23 +1,20 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-// Connect to the database
+
 $db = mysqli_connect('localhost', 'root', '', 'web');
 
-// Check connection
 if (!$db) {
     echo json_encode(array('error' => 'Connection failed: ' . mysqli_connect_error()));
     exit();
 }
 
-// Check if the user is logged in
 session_start();
 if (!isset($_SESSION['username']) || empty($_SESSION['username'])) {
     echo json_encode(array('error' => 'User not logged in'));
     exit();
 }
 
-// Get the rescuer name based on the session username
 $username = $_SESSION['username'];
 
 
@@ -58,15 +55,15 @@ if($action == 'Cancel'){
 
         $offer = "DELETE FROM citizen_offer WHERE id = '$taskID' AND rescuer_username = '$username'";
         $result = mysqli_query($db, $offer);
-        // Check if a row with the category and item already exists in rescuer_inventory
+        //Check if a row with the item already exists in rescuer_inventory
         $checkRescuerInventory = "SELECT * FROM rescuer_inventory WHERE category = '$category' AND item = '$item' AND username = '$username'";
         $resultCheck = mysqli_query($db, $checkRescuerInventory);
 
         if (mysqli_num_rows($resultCheck) > 0) {
-            // If the row exists, update the quantity
+            //If the row exists update the quantity
             $rescuerTableUpd = "UPDATE rescuer_inventory SET quantity = quantity + '$offerValue' WHERE category = '$category' AND item = '$item' AND username = '$username'";
         } else {
-            // If the row doesn't exist, insert a new row
+            //If the row doesn't exist insert a new row
             $rescuerTableUpd = "INSERT INTO rescuer_inventory (id, username, category, item, quantity) VALUES (NULL, '$username', '$category', '$item', '$offerValue')";
         }
 
