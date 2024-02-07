@@ -22,7 +22,7 @@ if ($result) {
     $cargoData = array(); 
 
     while ($row = mysqli_fetch_assoc($result)) {
-        y
+        
         $cargoData[] = $row;
     }
     echo json_encode($cargoData);
