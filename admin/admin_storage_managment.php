@@ -28,7 +28,7 @@ $_SESSION['site'] = '../admin/admin_storage_managment.php';
         </div>
         <br><br>
         <div class="content">
-            <p>This is your admin page for Storage Managment. Add more content as needed.</p>
+            <p>This is your page for Storage Managment.</p>
         </div>
         <!-- Include any additional HTML content here if needed -->
     </div>

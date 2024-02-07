@@ -66,7 +66,7 @@ $_SESSION['site'] = '../citizen/current_requests.php';
         </div>
         <div class="content">
             <!-- Add your citizen-specific content here -->
-            <p>This is your citizens for CURRENT REQUESTS page.</p>
+            <p>This is your Current Request page.</p>
         </div>
         <div class="logout">
             <p><a href="../logout.php">Logout</a></p>

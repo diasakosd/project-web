@@ -32,7 +32,7 @@ $_SESSION['site'] = '../admin/admin_announcements.php';
         <div class="header"></div>
         <br><br>
         <div class="content">
-            <p>This is your admin page for Announcements. Add more content as needed.</p>
+            <p>This is your page for Announcements.</p>
         </div>
     </div>
 

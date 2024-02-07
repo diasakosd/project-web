@@ -29,7 +29,7 @@ $_SESSION['site'] = '../admin/admin_rescuer_managment.php';
         <div class="header"></div>
         <br><br>
         <div class="content">
-            <p>This is your admin page for Rescuer Managment. Add more content as needed.</p>
+            <p>This is your page for Rescuer Managment.</p>
         </div>
     </div>
         <div class="container1">

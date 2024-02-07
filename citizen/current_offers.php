@@ -65,7 +65,7 @@ $_SESSION['site'] = '../citizen/current_offers.php';
         </div>
         <div class="content">
             <!-- Add your citizen-specific content here -->
-            <p>This is your citizens for CURRENT OFFERS page. Add more content as needed.</p>
+            <p>This is your Current Offers page.</p>
         </div>
         <div class="logout">
             <p><a href="../logout.php">Logout</a></p>
@@ -82,7 +82,7 @@ $_SESSION['site'] = '../citizen/current_offers.php';
     <form id="submitAnnouncementsForm"></form>
     <div id="selectedAnnouncementsMessage"></div>
     <!-- Corrected function name in the onclick attribute -->
-    <button type="button" onclick="submitSelectedAnnouncements()">Delete Announcement</button>
+    <button type="button" onclick="submitSelectedAnnouncements()">Delete Offer</button>
     <div class="successmessage"></div>
 </div>
 

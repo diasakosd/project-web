@@ -30,7 +30,7 @@ $_SESSION['site'] = '../admin/admin.php';
         </div>
         <br>
         <div class="content">
-            <p>This is your admin page. Add more content as needed.</p>
+            <p>This is your admin page.</p>
         </div>
         <!-- Include any additional HTML content here if needed -->
     </div>
