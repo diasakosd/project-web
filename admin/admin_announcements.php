@@ -32,7 +32,7 @@ $_SESSION['site'] = '../admin/admin_announcements.php';
         <div class="header"></div>
         <br><br>
         <div class="content">
-            <p>This is your admin page for Announcements. Add more content as needed.</p>
+            <p>This is your page for Announcements.</p>
         </div>
     </div>
 
@@ -46,26 +46,26 @@ $_SESSION['site'] = '../admin/admin_announcements.php';
             <br>
             <label for="selectedItems">Select Items:</label><br>
             <select id="selectedItems" name="selectedItems[]" multiple>
-                <!-- Items will be populated dynamically using JavaScript -->
+                <!--Items will be populated asycronically using Javascript-->
             </select>
 
-            <!-- Hidden field to store the category for each selected item -->
+            <!--Hidden field to save each selected item-->
             <input type="hidden" id="itemCategories" name="itemCategories" value="">
 
             <br>
             <button type="button" onclick="submitForm()">Submit</button>
         </form>
 
-        <!-- Display a message if the insertion was successful -->
+        <!--Message if the insertion was successful-->
         <div id="successMessage"></div>
-        <!-- Display selected items and categories -->
+        <!--Display the selected items and categories-->
         <div id="selectedItemsMessage"></div>
 
-    <!-- Include the JavaScript file -->
-    <script src="announcement_script.js"></script>
+    
+    <script src="announcement_script.js"></script><!--script for handling the announcements-->
 
 
-    <!-- Add your scripts here -->
-    <script src="admin-details-script.js"></script>
+ 
+    <script src="admin-details-script.js"></script><!--script for displaying admin name-->
 </body>
 </html>

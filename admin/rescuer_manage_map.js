@@ -17,14 +17,14 @@ map.on('click', function (e) {
         .setContent("You clicked the map at " + e.latlng.toString())
         .openOn(map);
 
-    // Set the latitude and longitude in hidden form fields
+    //Set the latitude and longitude in hidden form fields
     document.getElementById('clickedLatitude').value = clickedLatitude;
     document.getElementById('clickedLongitude').value = clickedLongitude;
 });
 
-// Add a function to validate the form before submission
+
 function validateForm() {
-    // Check if latitude and longitude are set
+    //Check if latitude and longitude are set
     var clickedLatitude = document.getElementById('clickedLatitude').value;
     var clickedLongitude = document.getElementById('clickedLongitude').value;
 
@@ -33,6 +33,6 @@ function validateForm() {
         return false;
     }
 
-    // The form is valid, allow submission
+  
     return true;
 }

@@ -2,19 +2,19 @@
 var flag = 0;
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Attach submit event to the form
+    //Attach submit event to the form
     var form = document.querySelector('form');
     form.addEventListener('submit', function (event) {
-        // Check if both URL and file are provided
+        //Check if both URL and file are provided
         var url = document.getElementById('url').value;
         var fileInput = document.getElementById('file');
 
         if (url.trim() === '' && fileInput.files.length === 0) {
-            // Prevent form submission
+            //Prevent form submission
             event.preventDefault();
             flag = 0;
         } else if (url.trim() !== '' && fileInput.files.length > 0) {
-            // Prevent form submission
+            //Prevent form submission
             event.preventDefault();
             flag = 0;
         } else {

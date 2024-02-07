@@ -1,7 +1,7 @@
 const ctx = document.getElementById('myChart');
-let myChart; // Declare a variable to hold the chart instance
+let myChart; //Declare a variable to strore the chart state
 
-// Fetch data from the server using AJAX
+//Fetch data using AJAX
 function fetchDataByDateRange(startDate, endDate) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
@@ -19,10 +19,10 @@ function fetchDataByDateRange(startDate, endDate) {
   });
 }
 
-// Use async function to wait for data before creating the chart
+//Use async function to wait for data before creating the chart
 async function createChart() {
   try {
-    // Initial load without date filter
+    //Initial load without date filter
     const data = await fetchDataByDateRange('', '');
     renderChart(data);
   } catch (error) {
@@ -30,9 +30,9 @@ async function createChart() {
   }
 }
 
-// Function to render or update the chart
+//Function to render or update the chart
 function renderChart(data) {
-  // Destroy the existing chart if it exists
+  //Destroy the existing chart if it exists
   if (myChart) {
     myChart.destroy();
   }
@@ -57,7 +57,7 @@ function renderChart(data) {
   });
 }
 
-// Function to update the chart based on the selected date range
+//Function to update the chart based on the selected date range
 async function updateChart() {
   try {
     const startDate = document.getElementById('startDate').value;
@@ -70,5 +70,5 @@ async function updateChart() {
   }
 }
 
-// Call the function to create the chart initially
+//Call the function to create the chart initially
 createChart();

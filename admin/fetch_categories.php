@@ -1,12 +1,12 @@
 <?php
-// Connect to the database (adjust the connection details)
+//Connect to the database
 $db = mysqli_connect('localhost', 'root', '', 'web');
 
 if (!$db) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// Fetch categories from the base_storage table
+//Fetch categories from the base_storage table
 $query = "SELECT DISTINCT category FROM base_storage";
 $result = mysqli_query($db, $query);
 

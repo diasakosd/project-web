@@ -9,7 +9,7 @@ $_SESSION['site'] = '../admin/admin_storage_managment.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
     
-    <!-- Adjust the paths to your CSS file and Leaflet map script -->
+
     <link rel="stylesheet" href="admin.css">
 </head>
 <body>
@@ -28,13 +28,13 @@ $_SESSION['site'] = '../admin/admin_storage_managment.php';
         </div>
         <br><br>
         <div class="content">
-            <p>This is your admin page for Storage Managment. Add more content as needed.</p>
+            <p>This is your page for Storage Managment.</p>
         </div>
-        <!-- Include any additional HTML content here if needed -->
+
     </div>
 <br>
 
-<div class="table-container">
+<div class="table-container"><!--this is where the Js script will display the table-->
     <div class="table-content">
         <div class="table_base" id="tableBase"></div>
     </div>
@@ -46,9 +46,9 @@ $_SESSION['site'] = '../admin/admin_storage_managment.php';
 
 
 <br>
-<button id="updateTableBtn">Update Table</button>
+<button id="updateTableBtn">Update Table</button><!--Button that when pushed will update the table if something changes-->
 <br><br>
-<div class="update-form">
+<div class="update-form"> <!--form to delte/add/update from the base storage-->
     <form id="updateTableForm" method="post" action="update_table.php" novalidate>
 
         <div class="input-box">
@@ -87,7 +87,7 @@ $_SESSION['site'] = '../admin/admin_storage_managment.php';
 
 
 <br><br>
-    <div class="form-container">
+    <div class="form-container"><!--form to upload the url and file-->
         <p><h3>Update the Storage Table either by URL or File</h3></p>
         <br>
         <form id = "jsonForm" action="table_storage.php" method="post" onsubmit="return validate_url_file()" enctype="multipart/form-data">
@@ -111,7 +111,7 @@ $_SESSION['site'] = '../admin/admin_storage_managment.php';
     </div>
 
 <br>
-<!-- Date range selection -->
+<!--date input for the graph-->
 <div>
     <label for="startDate">Start Date:</label>
     <input type="date" id="startDate" name="startDate" required>
@@ -124,7 +124,7 @@ $_SESSION['site'] = '../admin/admin_storage_managment.php';
 
 <!-- Chart container -->
 <div>
-    <canvas id="myChart" width="800" height="400"></canvas>
+    <canvas id="myChart" width="800" height="400"></canvas><!--Chartjs display-->
 </div>
 
 
@@ -132,14 +132,14 @@ $_SESSION['site'] = '../admin/admin_storage_managment.php';
     
 <br>
 
-    <!-- Add your scripts here -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="graph.js"></script>
-    <script src="update_table_error.js"></script>
-    <script src="url-file.js"></script>
-    <script src ="url-file-validate.js"></script>
-    <script src="clear_file.js"></script>
-    <script src="base_table.js"></script>
-   <script src="admin-details-script.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script><!--form to upload the url-->
+    <script src="graph.js"></script><!--script to handle the chart-->
+    <script src="update_table_error.js"></script><!--form to handle the table update/add/delete-->
+    <script src="url-file.js"></script><!--script to handle check if the file or url is empty-->
+    <script src ="url-file-validate.js"></script><!--script to post the url/file to storage-->
+    <script src="clear_file.js"></script><!--resets the value of file-->
+    <script src="base_table.js"></script><!--script to display the table-->
+   <script src="admin-details-script.js"></script><!--script to display the admin's name-->
 </body>
 </html>

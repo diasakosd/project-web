@@ -65,7 +65,7 @@ $_SESSION['site'] = '../citizen/previous_offers.php';
         </div>
         <div class="content">
             <!-- Add your citizen-specific content here -->
-            <p>This is your citizens for PREVIOUS OFFERS page. Add more content as needed.</p>
+            <p>This is your Previous Offers page.</p>
         </div>
         <div class="logout">
             <p><a href="../logout.php">Logout</a></p>

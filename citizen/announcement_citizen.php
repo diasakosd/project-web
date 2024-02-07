@@ -64,9 +64,9 @@ $_SESSION['site'] = '../citizen/announcement_citizen.php';
         <div class="header">
             
         </div>
-        <br><br>
+        <br>
         <div class="content">
-            <p>This is your citizen page. Add more content as needed.</p>
+            <p>This is your announcements-submit page.</p>
         </div>
         <!-- Include any additional HTML content here if needed -->
     </div>
