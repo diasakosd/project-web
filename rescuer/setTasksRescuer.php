@@ -74,11 +74,12 @@ if($action == 'Cancel'){
     } else if($tableID == 'requestTable'){
         $requestValue = $_POST['difference'];
 
-        $request = "DELETE FROM citizen_request WHERE id = '$taskID' AND rescuer_username = '$username'";
-        $result = mysqli_query($db, $request);
         $rescuerTableUpd = "UPDATE rescuer_inventory SET quantity = quantity - '$requestValue' WHERE category = '$category' AND item = '$item' 
         AND username = '$username'";
         $result2 = mysqli_query($db, $rescuerTableUpd);
+        
+        $request = "DELETE FROM citizen_request WHERE id = '$taskID' AND rescuer_username = '$username'";
+        $result = mysqli_query($db, $request);
     
         if ($result && $result2) {
             echo 'Task FINISHED successfully!';
