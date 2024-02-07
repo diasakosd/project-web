@@ -84,7 +84,7 @@ body {
 
 .login-form,
 .register-form {
-    margin-top: 20px;
+    padding-top: 10px;
 }
 
 form {
@@ -123,8 +123,31 @@ button:hover {
 
 
 .map {
-    height: 40%; 
-    width: 98%; 
+    height: 35%; 
+    width: 100%; 
     margin: 10px 0;
   }
   
+  @media only screen and (max-width: 600px) {
+    body{
+    background: url('world_mobile.png');
+    }
+.container{
+    height: 820px;
+}
+.top-overlay{
+    position:absolute;
+    height: 10px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+.register-form{
+    padding-top: 10px;
+    
+}
+    .map {
+        height: 50%; 
+        width: 100%; 
+      }
+}
