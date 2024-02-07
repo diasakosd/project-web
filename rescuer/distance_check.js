@@ -1,20 +1,18 @@
-// distance_check.js
-
 $(document).ready(function () {
     let resclat, resclon;
     let baselat, baselon;
 
-    // Function to calculate the distance between two coordinates using Haversine formula
+    //Distance between two coordinates using Haversine formula
     function calculateDistance(lat1, lon1, lat2, lon2) {
-        const R = 6371; // Radius of the Earth in kilometers
+        const R = 6371; //Radius of the earth in kilometers
         const dLat = (lat2 - lat1) * (Math.PI / 180);
         const dLon = (lon2 - lon1) * (Math.PI / 180);
         const a =
             Math.sin(dLat / 2) * Math.sin(dLat / 2) +
             Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        const distance = R * c; // Distance in kilometers
-        const distanceInMeters = distance * 1000; // Convert distance to meters
+        const distance = R * c; //Distance in kilometers
+        const distanceInMeters = distance * 1000; //Convert distance to meters
         return distanceInMeters;
     }
 
@@ -36,7 +34,6 @@ $(document).ready(function () {
         }
     }
 
-    // Fetch the base coordinates using AJAX
     $.ajax({
         url: 'get_base_coords.php',
         method: 'GET',
@@ -55,21 +52,17 @@ $(document).ready(function () {
         }
     });
 
-// Fetch the rescuer's coordinates using AJAX
 $.ajax({
     url: 'get_rescuer_coords.php',
     method: 'GET',
     success: function (response) {
         try {
-            // Parse the array of coordinates
             var rescuerCoordsArray = JSON.parse(response);
 
-            // Check if there's at least one set of coordinates in the array
             if (rescuerCoordsArray.length > 0) {
-                // Access the first set of coordinates
+
                 var rescuerCoords = rescuerCoordsArray[0];
 
-                // Extract latitude and longitude
                 resclat = rescuerCoords.latitude;
                 resclon = rescuerCoords.longitude;
 

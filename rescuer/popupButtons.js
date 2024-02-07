@@ -1,11 +1,7 @@
-// Define a function to handle the button click
-
-
 function handleOfferButton(id) {
     const accepted = 'YES';
 
     try {
-        // Make the second AJAX request inside the success callback
         $.ajax({
             url: 'popupButtons.php',
             method: 'POST',

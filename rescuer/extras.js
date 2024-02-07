@@ -6,16 +6,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
     checkbox.addEventListener('change', function() {
         if (this.checked) {
-            sidebar.style.width = '250px'; // Show sidebar by setting its width
-            chBtn.style.display = 'none'; // Show chBtn
+            sidebar.style.width = '250px'; 
+            chBtn.style.display = 'none'; 
         } else {
-            sidebar.style.width = '0'; // Hide sidebar by setting its width to 0
+            sidebar.style.width = '0'; //Hide sidebar 
         }
     });
 
     chBtn2.addEventListener('click', function() {
         if (checkbox.checked) {
-            chBtn.style.display = 'block'; // Show chBtn when chBtn2 is clicked and sidebar is checked
+            chBtn.style.display = 'block'; //Show chBtn when chBtn2 is clicked and sidebar is checked
         }
     });
 

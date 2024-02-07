@@ -1,7 +1,6 @@
 $(document).ready(function () {
-    var cargoData; // Declare cargoData outside the AJAX call to make it accessible globally
+    var cargoData; 
 
-    // Function to render the cargo table
     function renderCargoTable() {
         var tableBody = $('#baseCargoTable tbody');
         tableBody.empty();
@@ -22,14 +21,14 @@ $(document).ready(function () {
 
             cargoData.forEach(function (cargo) {
                 var row = $('<tr class="item_id"></tr>');
-                var itemId = cargo.id; // Use the actual ID from the cargo data
+                var itemId = cargo.id; 
 
-                // Add a checkbox to each row
+                //Add a checkbox to each row
                 var checkboxCell = $('<td><input type="checkbox"></td>');
                 row.append(checkboxCell);
 
                 Object.keys(cargo).forEach(function (key) {
-                    // Display data
+                    
                     if (key === 'Quantity') {
                         row.append('<td class="editable-cell" data-item-id="' + itemId + '">' + cargo[key] + '</td>');
                     } else {
@@ -39,13 +38,13 @@ $(document).ready(function () {
 
                 tableBody.append(row);
 
-                // Handle row click to toggle the checkbox state
+                //Handle row click to toggle the checkbox state
                 row.on('click', function () {
                     var checkbox = $(this).find('input[type="checkbox"]');
                     checkbox.prop('checked', !checkbox.prop('checked'));
                 });
 
-                // Handle checkbox click to stop propagation -- Actually disabling the checkbox. Act as a row click (see above)
+                //Handle checkbox click to stop propagation -- Actually disabling the checkbox. Act as a row click (see above)
                 checkboxCell.find('input[type="checkbox"]').on('click', function (event) {
                     event.stopPropagation();
                 });
@@ -53,7 +52,6 @@ $(document).ready(function () {
         }
     }
 
-    // AJAX call to get initial cargo data
     $.ajax({
         url: 'base_get-resc.php',
         method: 'GET',

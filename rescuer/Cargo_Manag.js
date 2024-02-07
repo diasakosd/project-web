@@ -9,7 +9,6 @@ $(document).ready(function () {
             data: {  item_id: itemId, quantity: newQuantity, category: category, item: item },
             success: function (response) {
                 console.log('Update success:', response);
-                // Handle the response as needed, e.g., display a success message
             },
             error: function (xhr, status, error) {
                 console.error('Update error:', status, error);
@@ -32,8 +31,8 @@ $(document).ready(function () {
                     var baseQuantityCell = row.find('.editable-cell');
                     var itemId = baseQuantityCell.data('item-id');
                     var baseQuantity = parseFloat(baseQuantityCell.text()) || 0;
-                    var category = row.find('.category-cell').text(); // Replace with the actual class or identifier
-                    var item = row.find('.item-cell').text(); // Replace with the actual class or identifier
+                    var category = row.find('.category-cell').text(); 
+                    var item = row.find('.item-cell').text(); 
                     var newValue = baseQuantity - numericQuantity;
                     
                     if (newValue < 0) {
@@ -41,8 +40,6 @@ $(document).ready(function () {
                     } else {
                         baseQuantityCell.text(newValue);
                         baseQuantityCell.addClass('edited-cell');
-
-                        // Update the quantity in the database using jQuery AJAX
                         updateQuantityInDatabase(itemId, newValue, category, item);
                     }
                 });

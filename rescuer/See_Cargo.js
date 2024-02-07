@@ -28,7 +28,7 @@ $(document).ready(function () {
                 $('input[type="checkbox"]:checked').each(function () {
                     var row = $(this).closest('tr');
 
-                    // Retrieve data from the row
+                    //Retrieve data from the row
                     var rescuerQuantityCell = row.find('.editable-cell');
                     var itemId = rescuerQuantityCell.data('item-id');
                     var category = row.find('.category-cell').text();
@@ -44,7 +44,6 @@ $(document).ready(function () {
                         rescuerQuantityCell.text(newValue);
                         rescuerQuantityCell.addClass('edited-cell');
 
-                        // Update the quantity in the database using jQuery AJAX
                         updateQuantityInD(itemId, numericQuantity, category, item);
                         location.reload();
                     }
