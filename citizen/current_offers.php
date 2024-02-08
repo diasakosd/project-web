@@ -8,7 +8,7 @@ $_SESSION['site'] = '../citizen/current_offers.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
-    <!-- Add your stylesheets here -->
+
     <link rel="stylesheet" href="citizen.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -64,7 +64,7 @@ $_SESSION['site'] = '../citizen/current_offers.php';
         <div class="header">
         </div>
         <div class="content">
-            <!-- Add your citizen-specific content here -->
+           
             <p>This is your Current Offers page.</p>
         </div>
         <div class="logout">
@@ -86,7 +86,7 @@ $_SESSION['site'] = '../citizen/current_offers.php';
     <div class="successmessage"></div>
 </div>
 
-<!-- Include your scripts here -->
+<!-- Scripts -->
 <script src="citizen-details-script.js"></script>
 <script src="current_offers.js"></script>
 <script src="create_offers_checkboxes.js"></script>

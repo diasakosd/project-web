@@ -1,12 +1,10 @@
-// autocomplete_request_creation.js
-
 document.addEventListener('DOMContentLoaded', function () {
     var categoryInput = document.getElementById('autocompleteCategory');
     var itemInput = document.getElementById('autocompleteItem');
 
     categoryInput.addEventListener('input', function () {
         updateAutocomplete('category', categoryInput.value, 'categoryList');
-        itemInput.value = ''; // Clear item input when category changes
+        itemInput.value = ''; 
     });
 
     itemInput.addEventListener('input', function () {

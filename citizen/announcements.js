@@ -1,9 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Fetch announcements when the page loads
+    //Fetch announcements when the page loads
     fetchAnnouncements();
 });
 
-// Function to fetch announcements via AJAX
+//Function to fetch announcements via AJAX
 function fetchAnnouncements() {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', 'fetch_announcements.php', true);

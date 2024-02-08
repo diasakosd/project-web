@@ -1,5 +1,5 @@
 <?php
-// Your database connection logic here
+
 $db = mysqli_connect('localhost', 'root', '', 'web');
 
 if (!$db) {
@@ -12,7 +12,7 @@ if (isset($_GET['type']) && isset($_GET['input'])) {
 
     $sql = "SELECT DISTINCT $type FROM base_storage WHERE $type LIKE '$input%'";
 
-    // Filter items based on the selected category
+    //Filter items based on the selected category
     if ($type === 'item' && isset($_GET['category'])) {
         $category = mysqli_real_escape_string($db, $_GET['category']);
         $sql .= " AND category = '$category'";

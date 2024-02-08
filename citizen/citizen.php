@@ -10,7 +10,7 @@ $_SESSION['site'] = '../citizen/citizen.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
-    <!-- Add your stylesheets here -->
+    
     <link rel="stylesheet" href="citizen.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -74,7 +74,7 @@ $_SESSION['site'] = '../citizen/citizen.php';
         <div class="container">
             <div class="header"></div>
             <div class="content">
-                <!-- Add your citizen-specific content here -->
+                
                 <p>Make your request here.</p>
             </div>
 
@@ -142,7 +142,7 @@ $_SESSION['site'] = '../citizen/citizen.php';
 </div>
 
 
-        <!-- Add your scripts and stylesheets here -->
+        <!-- Scripts  -->
  
     <script src="citizen-details-script.js"></script>
     <script src="autocomplete_request_creation.js"></script>
