@@ -410,7 +410,7 @@ $.ajax({
                     color: 'green',
                     fillColor: 'green',
                     fillOpacity: 0.5,
-                    radius: 50  // Set the radius in meters
+                    radius: 50  //radius in meters
                 }).addTo(map).addTo(requestYesGroup);
             }
 
@@ -442,13 +442,13 @@ const rescuerIcon = L.icon({
     iconUrl: 'rescuer_icon.svg', 
     iconSize: [60, 60]
 });
-// update rescuer's position 
+
 function updateRescuerPosition(lat, lon) {
     if (rescuerMarker) {
-        // If the marker exists, update its position
+        //If the marker exists update its position
         rescuerMarker.setLatLng([lat, lon]);
     } else {
-        // If the marker doesn't exist, create it
+        //If the marker doesn't exist create it
         rescuerMarker = L.marker([lat, lon], {
             title: 'Rescuer',
             icon: rescuerIcon,
@@ -456,7 +456,6 @@ function updateRescuerPosition(lat, lon) {
         }).bindPopup("<h2>You</h2><p><b>Location: </b>" + lat + ', ' + lon + "</p>")
         .addTo(map);
 
-        // Add dragend event only once when the marker is created
         rescuerMarker.on('dragend', function (event) {
             const newLatLng = event.target.getLatLng();
             const newLat = newLatLng.lat;
@@ -466,7 +465,7 @@ function updateRescuerPosition(lat, lon) {
         });
     }
 
-    // Update the line connecting rescuer and offer/request markers
+    //update the line connecting rescuer and offer/request markers
     [offerYesGroup, offerNoGroup, requestYesGroup, requestNoGroup].forEach(function (group) {
         group.eachLayer(function (layer) {
             if (layer instanceof L.Polyline) {
@@ -476,7 +475,7 @@ function updateRescuerPosition(lat, lon) {
         });
     });
 
-    // Update the rescuer's position in the database
+    //update the rescuer's position in the database
     $.ajax({
         url: 'upd_resc_pos.php', 
         method: 'POST',
