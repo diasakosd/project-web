@@ -490,4 +490,3 @@ function updateRescuerPosition(lat, lon) {
         }
     });
 }
-
