@@ -88,7 +88,7 @@ $_SESSION['site'] = '../citizen/citizen.php';
 <div class="request-form1">
     <form method="post" action="submit_autocomplete_request.php" onsubmit="return validateForm()" id="autocompleteForm">
         <div class="input-box">
-         select with autocomplete:<br>
+         Select with autocomplete:<br>
             <br>
             <label for="autocompleteCategory">Category:</label><br>
             <input type="text" id="autocompleteCategory" name="category" list="categoryList" required>
@@ -118,7 +118,7 @@ $_SESSION['site'] = '../citizen/citizen.php';
 <div class="request-form2">
     <form method="post" action="fetch_dropdown.php" id="dropdownForm">
         <div class="dropdown-box">
-            select with dropdown menu:<br>
+            Select with dropdown menu:<br>
             <br>
             <label for="dropdownCategory">Choose Category:</label><br>
             <select id="dropdownCategory" name="category"></select>

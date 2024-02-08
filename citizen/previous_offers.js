@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Fetch announcements when the page loads
+    //Fetch announcements when the page loads
     fetchAnnouncements();
 });
 
