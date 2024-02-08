@@ -16,7 +16,7 @@ let map;
 initializeMap();
 
 function initializeMap() {
-    console.log("SE KALESA");
+
     $(document).ready(function () {
         if (!map) {
             map = L.map('rescuer_map');
