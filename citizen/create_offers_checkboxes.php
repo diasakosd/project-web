@@ -6,8 +6,11 @@ if (!$db) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+session_start();
+$username = $_SESSION['username'];
 
-$query = "SELECT id, time_created, accepted, time_accepted FROM citizen_offer WHERE accepted != 'DONE'";
+
+$query = "SELECT id, time_created, accepted, time_accepted FROM citizen_offer WHERE username = '$username' AND accepted != 'DONE'";
 $result = mysqli_query($db, $query);
 
 if ($result) {

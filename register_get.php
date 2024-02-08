@@ -53,6 +53,7 @@ mysqli_close($db);
 $_SESSION['username'] = $username;
 $_SESSION['userRole'] = 'citizen';
 $_SESSION['success'] = "You are now registered and logged in";
+$_SESSION['site'] = '../citizen/citizen.php';
 
 // Return JSON response
 echo json_encode(['success' => true, 'redirect' => 'citizen/citizen.php']);

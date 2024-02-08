@@ -8,8 +8,10 @@ if (!$db) {
     exit();
 }
 
+session_start();
+$username = $_SESSION['username'];
 
-$query = "SELECT * FROM citizen_offer WHERE accepted = 'DONE'";
+$query = "SELECT * FROM citizen_offer WHERE username = '$username' AND accepted = 'DONE'";
 
 $result = mysqli_query($db, $query);
 
