@@ -1,7 +1,7 @@
-// dropdown_request_creation.js
+
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Fetch and populate the category dropdown
+    //Fetch and populate the category dropdown
     var xhrCategory = new XMLHttpRequest();
 
     xhrCategory.onreadystatechange = function () {
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     xhrCategory.open('GET', 'fetch_categories.php', true);
     xhrCategory.send();
 
-    // Event listener for category dropdown change
+  
     document.getElementById('dropdownCategory').addEventListener('change', function () {
         var category = this.value;
         var xhrItem = new XMLHttpRequest();

@@ -1,5 +1,5 @@
 <?php
-// Your database connection logic here
+
 $db = mysqli_connect('localhost', 'root', '', 'web');
 
 if (!$db) {

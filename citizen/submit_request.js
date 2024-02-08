@@ -1,8 +1,8 @@
-// submit_request.js
+
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('dropdownForm').addEventListener('submit', function (event) {
-        event.preventDefault(); // Prevent the default form submission
+        event.preventDefault(); //Prevent the default form submission
 
         var category = document.getElementById('dropdownCategory').value;
         var item = document.getElementById('dropdownItem').value;
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                // Handle the response (e.g., display a success message)
+                //Handle the response (e.g., display a success message)
                 alert(xhr.responseText);
             }
         };

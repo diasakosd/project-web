@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchAnnouncements();
 });
 
-// Function to fetch announcements via AJAX
+//Function to fetch announcements via AJAX
 function fetchAnnouncements() {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', 'fetch_previous_offers.php', true);

@@ -8,7 +8,6 @@ $_SESSION['site'] = '../citizen/announcement_citizen.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
-    <!-- Add your stylesheets here -->
     <link rel="stylesheet" href="citizen.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -68,7 +67,7 @@ $_SESSION['site'] = '../citizen/announcement_citizen.php';
         <div class="content">
             <p>This is your announcements-submit page.</p>
         </div>
-        <!-- Include any additional HTML content here if needed -->
+        
     </div>
 
     <div class="announcement-container">
@@ -85,7 +84,7 @@ $_SESSION['site'] = '../citizen/announcement_citizen.php';
 </div>
 
     <br><br>
-<!-- Add your scripts here -->
+<!-- Scripts -->
 <script src="create_checkboxes.js"></script>
 <script src="announcements.js"></script>
 
