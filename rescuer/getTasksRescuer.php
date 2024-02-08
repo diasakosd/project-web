@@ -18,7 +18,7 @@ $username = $_SESSION['username'];
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $offer = "SELECT full_name AS Fullname, phone AS Telephone, time_created AS Created, category AS Category, item AS Item, quantity AS Quantity, 
     citizen_offer.id, citizens.latitude, citizens.longitude FROM citizens 
-    INNER JOIN citizen_offer ON citizen_offer.username = citizens.username WHERE citizen_offer.rescuer_username = '$username'";
+    INNER JOIN citizen_offer ON citizen_offer.username = citizens.username WHERE citizen_offer.rescuer_username = '$username' AND accepted LIKE 'YES'";
     $result = mysqli_query($db, $offer);
 
     if ($result) {
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     $request = "SELECT full_name AS Fullname, phone AS Telephone, time_created AS Created, category AS Category, item AS Item, quantity AS Quantity, 
     citizen_request.id, citizens.latitude, citizens.longitude FROM citizens 
-    INNER JOIN citizen_request ON citizen_request.username = citizens.username WHERE citizen_request.rescuer_username = '$username'";
+    INNER JOIN citizen_request ON citizen_request.username = citizens.username WHERE citizen_request.rescuer_username = '$username'AND accepted LIKE 'YES'";
     $result2 = mysqli_query($db, $request);
 
     if ($result2) {

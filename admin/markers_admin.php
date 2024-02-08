@@ -27,15 +27,31 @@ if ($resultBaseLocation && mysqli_num_rows($resultBaseLocation) > 0) {
 }
 
 
-//Fetch data from the rescuers, rescuer_inventory, and citizens_request tables
 $query0 = "SELECT r.username, r.latitude, r.longitude, 
-    GROUP_CONCAT(CONCAT('<li>', ri.category, ': ', ri.item, ' (', ri.quantity, ')','</li>') SEPARATOR '') AS items
+    GROUP_CONCAT(DISTINCT CONCAT('<li>', ri.category, ': ', ri.item, ' (', ri.quantity, ')','</li>') SEPARATOR '') AS items
     FROM rescuers r
     LEFT JOIN rescuer_inventory ri ON r.username = ri.username
     LEFT JOIN citizen_offer co ON r.username = co.rescuer_username
     LEFT JOIN citizen_request cr ON r.username = cr.rescuer_username
-    WHERE co.rescuer_username IS NULL AND cr.rescuer_username IS NULL
-    GROUP BY r.username";
+    WHERE 
+    (co.accepted = 'DONE' OR co.accepted IS NULL) AND 
+    (cr.accepted = 'DONE' OR cr.accepted IS NULL)
+    GROUP BY r.username
+    HAVING 
+    r.username NOT IN (
+        SELECT rescuer_username
+        FROM (
+            SELECT rescuer_username FROM citizen_offer WHERE accepted = 'YES'
+            UNION
+            SELECT rescuer_username FROM citizen_request WHERE accepted = 'YES'
+        ) AS t
+    );
+";
+
+
+
+
+
 
 $result0 = mysqli_query($db, $query0);
 

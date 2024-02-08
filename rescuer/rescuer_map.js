@@ -1,80 +1,97 @@
-$(document).ready(function(){
-    const map = L.map('rescuer_map');
-    map.setView([38.2468, 21.7352], 12);
+let rescuerMarker;
+let offerYesGroup;
+let rescuers_active;
+let rescuers_non_active;
+let offerNoGroup;
+let requestYesGroup;
+let requestNoGroup;
+let layerControl;
 
-    var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 39,
-        attribution: '© OpenStreetMap'
-    }).addTo(map);
-    map.zoomControl.setPosition('topright');
-    map.attributionControl.setPrefix('');
+const uniqueoffYes = new Set();
+const uniqueoffNo = new Set();
+const uniqueReYes = new Set();
+const uniqueReNo = new Set();
+let map;
 
-    var baseMaps = {
-        "OpenStreetMap": osm
-    };
+initializeMap();
 
+function initializeMap() {
+    console.log("SE KALESA");
+    $(document).ready(function () {
+        if (!map) {
+            map = L.map('rescuer_map');
+            map.setView([38.2468, 21.7352], 12);
 
-//layer groups for OfferYes, OfferNo, RequestYes, and RequestNo
-const rescuers_active = L.layerGroup().addTo(map);
-const rescuers_non_active = L.layerGroup().addTo(map);
-const offerYesGroup = L.layerGroup().addTo(map);
-const offerNoGroup = L.layerGroup().addTo(map);
-const requestYesGroup = L.layerGroup().addTo(map);
-const requestNoGroup = L.layerGroup().addTo(map);
+            var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 39,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+            map.zoomControl.setPosition('topright');
+            map.attributionControl.setPrefix('');
 
-var layerControl = L.control.layers(baseMaps).addTo(map);
+            var baseMaps = {
+                "OpenStreetMap": osm
+            };
+        }
 
-//add layers to the Layers Control
-layerControl.addOverlay(rescuers_active, "Active Rescuers");
-layerControl.addOverlay(rescuers_non_active, "Inactive Rescuers");
-layerControl.addOverlay(offerYesGroup, "Offers Accepted");
-layerControl.addOverlay(offerNoGroup, "Offers Waiting");
-layerControl.addOverlay(requestYesGroup, "Requests Accepted");
-layerControl.addOverlay(requestNoGroup, "Requests Waiting");
+        rescuers_active = L.layerGroup().addTo(map);
+        rescuers_non_active = L.layerGroup().addTo(map);
+        offerYesGroup = L.layerGroup().addTo(map);
+        offerNoGroup = L.layerGroup().addTo(map);
+        requestYesGroup = L.layerGroup().addTo(map);
+        requestNoGroup = L.layerGroup().addTo(map);
 
-    //icons:
-    const rescuerIcon = L.icon({
-        iconUrl: 'rescuer_icon.svg', 
-        iconSize: [60, 60]
-    });
+        layerControl = L.control.layers(baseMaps).addTo(map);
 
-    const activeRescuerIcon = L.icon({
-        iconUrl: 'rescuer_icon-green.svg', 
-        iconSize: [60, 60]
-    });
+        layerControl.addOverlay(rescuers_active, "Active Rescuers");
+        layerControl.addOverlay(rescuers_non_active, "Inactive Rescuers");
+        layerControl.addOverlay(offerYesGroup, "Offers Accepted");
+        layerControl.addOverlay(offerNoGroup, "Offers Waiting");
+        layerControl.addOverlay(requestYesGroup, "Requests Accepted");
+        layerControl.addOverlay(requestNoGroup, "Requests Waiting");
 
-    const inactiveRescuerIcon = L.icon({
-        iconUrl: 'rescuer_icon-red.svg', 
-        iconSize: [60, 60]
-    });
+        const rescuerIcon = L.icon({
+            iconUrl: 'rescuer_icon.svg',
+            iconSize: [60, 60]
+        });
 
-    const baseIcon = L.icon({
-        iconUrl: 'house.png',
-        iconSize: [60, 60]
-    });
+        const activeRescuerIcon = L.icon({
+            iconUrl: 'rescuer_icon-green.svg',
+            iconSize: [60, 60]
+        });
 
-    const offerYesIcon = L.icon({
-        iconUrl: 'offer_taken.svg',
-        iconSize: [60, 60]
-    });
+        const inactiveRescuerIcon = L.icon({
+            iconUrl: 'rescuer_icon-red.svg',
+            iconSize: [60, 60]
+        });
 
-    const offerNoIcon = L.icon({
-        iconUrl: 'offer_waiting.svg',
-        iconSize: [60, 60]
-    });
+        const baseIcon = L.icon({
+            iconUrl: 'house.png',
+            iconSize: [60, 60]
+        });
 
-    const requestsYesIcon = L.icon({
-        iconUrl: 'request_taken.svg',
-        iconSize: [60, 60]
-    });
+        const offerYesIcon = L.icon({
+            iconUrl: 'offer_taken.svg',
+            iconSize: [60, 60]
+        });
 
-    const requestsNoIcon = L.icon({
-        iconUrl: 'request_waiting.svg',
-        iconSize: [60, 60]
-    });
+        const offerNoIcon = L.icon({
+            iconUrl: 'offer_waiting.svg',
+            iconSize: [60, 60]
+        });
+
+        const requestsYesIcon = L.icon({
+            iconUrl: 'request_taken.svg',
+            iconSize: [60, 60]
+        });
+
+        const requestsNoIcon = L.icon({
+            iconUrl: 'request_waiting.svg',
+            iconSize: [60, 60]
+        });
 
     let rescuerCoordinates = [];
-    let rescuerMarker;
+
 
     $.ajax({
         url: 'location_resc.php',
@@ -91,13 +108,13 @@ layerControl.addOverlay(requestNoGroup, "Requests Waiting");
                     const lat = parseFloat(rescuer.latitude);
                     const lon = parseFloat(rescuer.longitude);
                     rescuerCoordinates.push([lat, lon]);
-    
                     rescuerMarker = L.marker([lat, lon], {
                         title: 'Rescuer',
                         icon: rescuerIcon,
                         draggable: true
                     }).bindPopup("<h2>You</h2><p><b>Location: </b>" + lat + ', ' + lon + "</p>")
                     .addTo(map);
+
                 }
 
                 //create markers for active rescuers
@@ -132,30 +149,21 @@ layerControl.addOverlay(requestNoGroup, "Requests Waiting");
                     .addTo(rescuers_non_active);
                 }
 
-                //dragend event to update the rescuer's position
                 rescuerMarker.on('dragend', function (event) {
+                    console.log("Dragend event triggered");
                     const newLatLng = event.target.getLatLng();
                     const newLat = newLatLng.lat;
                     const newLng = newLatLng.lng;
-
+                
+                    console.log("New Latitude:", newLat);
+                    console.log("New Longitude:", newLng);
+                
                     updateRescuerPosition(newLat, newLng);
-                });
 
-                //update rescuer's position 
-                function updateRescuerPosition(lat, lon) {
-                    $.ajax({
-                        url: 'upd_resc_pos.php', 
-                        method: 'POST',
-                        data: { latitude: lat, longitude: lon },
-                        success: function(response) {
-                            console.log('Rescuer position updated successfully:', response);
-                            location.reload();
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('AJAX request error (updateRescuerPosition):', status, error);
-                        }
-                    });
-                }
+                });
+                
+                
+
             } catch (error) {
                 console.error("Error parsing JSON: ", error);
             }
@@ -428,3 +436,58 @@ $.ajax({
 });
 
 });
+
+}
+const rescuerIcon = L.icon({
+    iconUrl: 'rescuer_icon.svg', 
+    iconSize: [60, 60]
+});
+// update rescuer's position 
+function updateRescuerPosition(lat, lon) {
+    if (rescuerMarker) {
+        // If the marker exists, update its position
+        rescuerMarker.setLatLng([lat, lon]);
+    } else {
+        // If the marker doesn't exist, create it
+        rescuerMarker = L.marker([lat, lon], {
+            title: 'Rescuer',
+            icon: rescuerIcon,
+            draggable: true
+        }).bindPopup("<h2>You</h2><p><b>Location: </b>" + lat + ', ' + lon + "</p>")
+        .addTo(map);
+
+        // Add dragend event only once when the marker is created
+        rescuerMarker.on('dragend', function (event) {
+            const newLatLng = event.target.getLatLng();
+            const newLat = newLatLng.lat;
+            const newLng = newLatLng.lng;
+
+            updateRescuerPosition(newLat, newLng);
+        });
+    }
+
+    // Update the line connecting rescuer and offer/request markers
+    [offerYesGroup, offerNoGroup, requestYesGroup, requestNoGroup].forEach(function (group) {
+        group.eachLayer(function (layer) {
+            if (layer instanceof L.Polyline) {
+                // Update the coordinates of the existing line
+                layer.setLatLngs([rescuerMarker.getLatLng(), layer.getLatLngs()[1]]);
+            }
+        });
+    });
+
+    // Update the rescuer's position in the database
+    $.ajax({
+        url: 'upd_resc_pos.php', 
+        method: 'POST',
+        data: { latitude: lat, longitude: lon },
+        success: function(response) {
+            console.log('Rescuer position updated successfully:', response);
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX request error (updateRescuerPosition):', status, error);
+        }
+    });
+}
+

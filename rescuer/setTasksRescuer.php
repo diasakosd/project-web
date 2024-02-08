@@ -53,7 +53,7 @@ if($action == 'Cancel'){
     if($tableID == 'offerTable'){
         $offerValue = $_POST['difference'];
 
-        $offer = "DELETE FROM citizen_offer WHERE id = '$taskID' AND rescuer_username = '$username'";
+        $offer = "UPDATE citizen_offer SET accepted = 'DONE' WHERE id = '$taskID' AND rescuer_username = '$username'";
         $result = mysqli_query($db, $offer);
         //Check if a row with the item already exists in rescuer_inventory
         $checkRescuerInventory = "SELECT * FROM rescuer_inventory WHERE category = '$category' AND item = '$item' AND username = '$username'";
@@ -75,7 +75,7 @@ if($action == 'Cancel'){
         AND username = '$username'";
         $result2 = mysqli_query($db, $rescuerTableUpd);
         
-        $request = "DELETE FROM citizen_request WHERE id = '$taskID' AND rescuer_username = '$username'";
+        $request = "UPDATE citizen_request SET accepted = 'DONE' WHERE id = '$taskID' AND rescuer_username = '$username'";
         $result = mysqli_query($db, $request);
     
         if ($result && $result2) {
