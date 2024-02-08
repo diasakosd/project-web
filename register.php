@@ -47,7 +47,7 @@ else{
         </div>
         
         <div class="register-form">
-            <form method="post" action="register_get.php" onsubmit="return validateForm()" id="registerForm">
+            <form method="post" action="register_get.php" id="registerForm">
 
             <div class="input-box">
                 <label for="full_name">Fullname:</label><br>

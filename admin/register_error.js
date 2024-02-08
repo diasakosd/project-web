@@ -13,7 +13,7 @@ function checkRegisterUser(username) {
     //Create a new XMLHttpRequest object
     const xhr = new XMLHttpRequest();
 
-    //POST request to check_register_user.php
+    
     xhr.open('POST', 'check_register_user.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -21,12 +21,12 @@ function checkRegisterUser(username) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
-                //Parse the JSON response
+                
                 const response = JSON.parse(xhr.responseText);
 
                 //Check if the username exists
                 if (response.userExists) {
-                    //Display error message
+                   
                     displayErrorMessage("This user already exists");
                 } else {
                     //Set the reg_user parameter to true
@@ -54,13 +54,13 @@ function checkRegisterUser(username) {
     xhr.send(`username=${username}`);
 }
 
-//Function to display error message
+//display error message
 function displayErrorMessage(message) {
     const errorMessageContainer = document.querySelector(".error_message");
     errorMessageContainer.innerHTML = `<p style="color: red;">${message}</p>`;
 }
 
-//Function to submit the form using AJAX
+//submit the form using AJAX
 function submitFormWithAjax() {
     const formData = new FormData(document.getElementById('registerForm'));
     const xhr = new XMLHttpRequest();
@@ -68,7 +68,7 @@ function submitFormWithAjax() {
     xhr.open('POST', 'register_get.php', true);
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            //Display the response message
+            
             displayErrorMessage(xhr.responseText);
         }
     };
