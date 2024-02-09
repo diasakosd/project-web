@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 09, 2024 at 06:09 PM
+-- Generation Time: Feb 09, 2024 at 07:16 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -74,13 +74,6 @@ CREATE TABLE `announcements` (
   `admin` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `announcements`
---
-
-INSERT INTO `announcements` (`id`, `title`, `body`, `date_written`, `status`, `admin`) VALUES
-(33, 'ddssdd', 'ssssd', '2024-02-09 18:55:49', 'NO', 'damianos');
-
 -- --------------------------------------------------------
 
 --
@@ -93,13 +86,6 @@ CREATE TABLE `announcements_items` (
   `category` varchar(255) NOT NULL,
   `item` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `announcements_items`
---
-
-INSERT INTO `announcements_items` (`id`, `announcement_id`, `category`, `item`) VALUES
-(14, 33, 'Clothing', 'Blanket');
 
 -- --------------------------------------------------------
 
@@ -323,11 +309,11 @@ CREATE TABLE `citizens` (
 --
 
 INSERT INTO `citizens` (`full_name`, `username`, `password`, `phone`, `latitude`, `longitude`) VALUES
-('Giannis Papadopoulos', 'giannis', 'antreas', 7878, 38.2717, 21.7582),
-('Prokopis Diasakos', 'paki', 'paki', 999, 38.2493, 21.735),
-('John Papas', 'papas123', 'papas', 123123123, 38.2306, 21.739),
-('Papadakis Kyrios', 'politis', '123', 123, 38.2356, 21.7262),
-('Politis One', 'politis1', 'politis1', 123, 38.2505, 21.7419);
+('Giannis Papadopoulos', 'giannis', 'antreas', 7878, 38.2036, 21.7341),
+('Prokopis Diasakos', 'paki', 'paki', 999, 38.2029, 21.7255),
+('John Papas', 'papas123', 'papas', 123123123, 38.206, 21.7601),
+('Papadakis Kyrios', 'politis', '123', 123, 38.229, 21.7894),
+('Politis One', 'politis1', 'politis1', 123, 38.2565, 21.7935);
 
 --
 -- Triggers `citizens`
@@ -373,7 +359,15 @@ INSERT INTO `citizen_offer` (`id`, `username`, `category`, `item`, `quantity`, `
 (77, 'politis', 'Cleaning Supplies', 'Broom', 1, '2024-02-09 16:56:14', 'NO', NULL, NULL),
 (79, 'papas123', 'Cleaning Supplies', 'Cleaning rag', 1, '2024-02-09 16:56:53', 'YES', '2024-02-09 16:59:47', 'rescuer5'),
 (80, 'giannis', 'Cleaning Supplies', 'Scrub brush', 1, '2024-02-09 16:58:26', 'NO', NULL, NULL),
-(81, 'giannis', 'Cleaning Supplies', 'Towels', 1, '2024-02-09 16:58:26', 'NO', NULL, NULL);
+(81, 'giannis', 'Cleaning Supplies', 'Towels', 1, '2024-02-09 16:58:26', 'NO', NULL, NULL),
+(82, 'paki', 'Μedicines', 'nurofen', 1, '2024-02-09 17:58:16', 'NO', NULL, NULL),
+(83, 'paki', 'Tools', 'Batteries', 1, '2024-02-09 17:58:16', 'NO', NULL, NULL),
+(84, 'paki', 'Tools', 'Can Opener', 1, '2024-02-09 17:58:16', 'NO', NULL, NULL),
+(86, 'paki', 'Clothing', 'Blanket', 1, '2024-02-09 17:58:31', 'NO', NULL, NULL),
+(87, 'politis1', 'Animal Care', 'dog food', 1, '2024-02-09 17:58:54', 'NO', NULL, NULL),
+(88, 'politis1', 'Μedicines', 'xanax', 1, '2024-02-09 17:58:54', 'NO', NULL, NULL),
+(89, 'politis1', 'Tools', 'Flashlight', 1, '2024-02-09 17:58:54', 'NO', NULL, NULL),
+(90, 'politis1', 'Tools', 'Hammer', 1, '2024-02-09 17:58:54', 'NO', NULL, NULL);
 
 --
 -- Triggers `citizen_offer`
@@ -431,7 +425,14 @@ INSERT INTO `citizen_request` (`id`, `username`, `category`, `item`, `quantity`,
 (24, 'politis', 'Humanitarian Shelters', 'CELINA Dynamic Small Shelter ', 4, '2024-02-09 16:56:35', 'NO', NULL, NULL),
 (25, 'papas123', 'Disability and Assistance Items', 'Wheelchairs', 3, '2024-02-09 16:57:18', 'YES', '2024-02-09 16:59:27', 'rescuer5'),
 (26, 'giannis', 'pet supplies', 'burn pads', 2, '2024-02-09 16:58:59', 'YES', '2024-02-09 16:59:35', 'rescuer5'),
-(27, 'giannis', 'Insect Repellents', 'spray', 7, '2024-02-09 16:59:12', 'YES', '2024-02-09 17:00:00', 'rescuer3');
+(27, 'giannis', 'Insect Repellents', 'spray', 7, '2024-02-09 16:59:12', 'YES', '2024-02-09 17:00:00', 'rescuer3'),
+(28, 'papas123', 'Medical Supplies', 'Antiseptic', 8, '2024-02-09 17:54:13', 'NO', NULL, NULL),
+(29, 'papas123', 'Clothing', 'Trousers', 2, '2024-02-09 17:54:27', 'NO', NULL, NULL),
+(30, 'papas123', 'Earthquake Safety', 'Disposable toilet', 2, '2024-02-09 17:54:37', 'NO', NULL, NULL),
+(31, 'giannis', 'Kitchen Supplies', 'Dishes', 5, '2024-02-09 17:55:16', 'NO', NULL, NULL),
+(32, 'giannis', 'Tools', 'Shovel', 3, '2024-02-09 17:55:29', 'NO', NULL, NULL),
+(33, 'politis', 'Electronic Devices', 'Radio', 3, '2024-02-09 17:55:50', 'NO', NULL, NULL),
+(34, 'politis', 'Animal Care', 'cat food', 4, '2024-02-09 17:56:02', 'NO', NULL, NULL);
 
 --
 -- Triggers `citizen_request`
@@ -513,9 +514,9 @@ CREATE TABLE `rescuers` (
 --
 
 INSERT INTO `rescuers` (`username`, `password`, `phone`, `latitude`, `longitude`) VALUES
-('rescuer3', 'rescuer3', 123123123, 38.2462, 21.7367),
-('rescuer4', 'rescuer4', 123, 38.2494, 21.7354),
-('rescuer5', 'rescuer5', 662231, 38.2331, 21.7279),
+('rescuer3', 'rescuer3', 123123123, 38.2406, 21.801),
+('rescuer4', 'rescuer4', 123, 38.2031, 21.767),
+('rescuer5', 'rescuer5', 662231, 38.1934, 21.7021),
 ('resquer1', 'resquerpass', 2147483647, 38.2487, 21.738),
 ('resquer2', 'resquerpass', 2147483647, 38.2411, 21.7425);
 
@@ -680,13 +681,13 @@ ALTER TABLE `rescuer_inventory`
 -- AUTO_INCREMENT for table `announcements`
 --
 ALTER TABLE `announcements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `announcements_items`
 --
 ALTER TABLE `announcements_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `base_storage`
@@ -698,19 +699,19 @@ ALTER TABLE `base_storage`
 -- AUTO_INCREMENT for table `citizen_offer`
 --
 ALTER TABLE `citizen_offer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT for table `citizen_request`
 --
 ALTER TABLE `citizen_request`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `rescuer_inventory`
 --
 ALTER TABLE `rescuer_inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- Constraints for dumped tables
