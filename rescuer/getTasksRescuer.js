@@ -164,12 +164,13 @@ $.ajax({
 
 function handleFinishedButton(id, tableId, category, item, difference) {
     if(tableId == 'offerTable'){
-        alert('Task Completed successfully!');
+       
         $.ajax({
             url: 'setTasksRescuer.php',
             method: 'POST',
             data: { ID: id, tableId: tableId, category: category, item: item, difference: difference, actionType: 'Finish' },
             success: function (response) {
+                alert('Task Completed successfully!');
                 console.log('Rescuer took offer successfully:', response);
                 $('#' + tableId + ' button[data-id="' + id + '"]').closest('tr').remove();
                 location.reload();
@@ -217,7 +218,7 @@ function handleFinishedButton(id, tableId, category, item, difference) {
                         alert("You can't offer that much quantity of this item yet!\nPlease visit the Base to update your cargo.");
                     }
                 } catch (e) {
-                    console.error('Error parsing JSON:', e);
+                    alert("You can't offer that much quantity of this item yet!\nPlease visit the Base to update your cargo.");
                     console.log('Raw JSON data:', data);
                 }
             },
